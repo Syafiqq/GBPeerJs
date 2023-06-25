@@ -4,6 +4,7 @@ PODS:
   - Cuckoo/Swift (1.10.3)
   - GBPeerJs (0.0.1):
     - LanguageManager-iOS (~> 1.2.6-beta.2)
+  - GBWebRTC (114.0.5735.124)
   - LanguageManager-iOS (1.2.6-beta.2)
   - Nimble (12.0.1)
   - Quick (6.1.0)
@@ -13,6 +14,7 @@ PODS:
 DEPENDENCIES:
   - Cuckoo (~> 1.10)
   - GBPeerJs (from `./`)
+  - GBWebRTC (= 114.0.5735.124)
   - LanguageManager-iOS (~> 1.2.6-beta.2)
   - Nimble (~> 12.0)
   - Quick (~> 6.1)
@@ -21,6 +23,7 @@ DEPENDENCIES:
 
 SPEC REPOS:
   https://bitbucket.org/beautyfu/ios-pod-specs.git:
+    - GBWebRTC
     - LanguageManager-iOS
   trunk:
     - Cuckoo
@@ -36,12 +39,13 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   Cuckoo: 930598bd4ae95860c658b3eea30903d946ebef36
   GBPeerJs: 2adad6659f33e4e8eb208a93b6a0fb690877493f
+  GBWebRTC: 9a6c3809e5dabfeeee757a024761d725dfedc065
   LanguageManager-iOS: 5fac7a37b621cf2841d136ad6c46f21f15bb4de1
   Nimble: b279b3ca9e094508778aab5c76417be158d3ad04
   Quick: 6676ffb409bf04abba2ff23902af2407bfc6ac90
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
   SwiftLint: 1ac76dac888ca05cb0cf24d0c85887ec1209961d
 
-PODFILE CHECKSUM: f78afd2faaf8d69fc8091e1cc27b6f7196d3663f
+PODFILE CHECKSUM: 1dc77ec8f846fcebaafbb45fc3076792d4d06081
 
 COCOAPODS: 1.12.1

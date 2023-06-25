@@ -12,7 +12,7 @@ Description
 
   s.requires_arc            = true
 
-  s.ios.deployment_target   = '11.0'
+  s.ios.deployment_target   = '11.2'
 
   s.source_files            = 'Sources/GBPeerJs/GBPeerJs/**/*.swift'
 

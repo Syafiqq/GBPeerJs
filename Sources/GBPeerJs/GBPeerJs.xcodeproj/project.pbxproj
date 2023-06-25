@@ -98,6 +98,9 @@
 				593ED24B2935CFA9007BC45A /* GBPeerJs.docc */,
 				65B8CCF436BFA68301C842E8 /* GBPeerJs.swift */,
 				59D145852936F0B700339673 /* i18n */,
+				65B8CB20CAFB86C34D2224CC /* Domain */,
+				65B8C996FF9ADD8BF38B5188 /* Data */,
+				65B8CBB16915C1982CC69E88 /* Presentation */,
 			);
 			path = GBPeerJs;
 			sourceTree = "<group>";
@@ -130,6 +133,27 @@
 			);
 			name = Pods;
 			path = ../../Pods;
+			sourceTree = "<group>";
+		};
+		65B8C996FF9ADD8BF38B5188 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
+		65B8CB20CAFB86C34D2224CC /* Domain */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Domain;
+			sourceTree = "<group>";
+		};
+		65B8CBB16915C1982CC69E88 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Presentation;
 			sourceTree = "<group>";
 		};
 		878E0B7A7ACFFF4724765B96 /* Frameworks */ = {

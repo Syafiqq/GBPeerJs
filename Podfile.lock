@@ -1,0 +1,43 @@
+PODS:
+  - Cuckoo (1.10.3):
+    - Cuckoo/Swift (= 1.10.3)
+  - Cuckoo/Swift (1.10.3)
+  - GBPeerJs (0.0.1):
+    - LanguageManager-iOS (~> 1.2.6-beta.2)
+  - LanguageManager-iOS (1.2.6-beta.2)
+  - Nimble (12.0.1)
+  - Quick (6.1.0)
+  - SwiftLint (0.52.2)
+
+DEPENDENCIES:
+  - Cuckoo (~> 1.10)
+  - GBPeerJs (from `./`)
+  - LanguageManager-iOS (~> 1.2.6-beta.2)
+  - Nimble (~> 12.0)
+  - Quick (~> 6.1)
+  - SwiftLint (~> 0.51)
+
+SPEC REPOS:
+  https://bitbucket.org/beautyfu/ios-pod-specs.git:
+    - LanguageManager-iOS
+  trunk:
+    - Cuckoo
+    - Nimble
+    - Quick
+    - SwiftLint
+
+EXTERNAL SOURCES:
+  GBPeerJs:
+    :path: "./"
+
+SPEC CHECKSUMS:
+  Cuckoo: 930598bd4ae95860c658b3eea30903d946ebef36
+  GBPeerJs: 3669e602f28df706932be13e9dd515bd63b69812
+  LanguageManager-iOS: 5fac7a37b621cf2841d136ad6c46f21f15bb4de1
+  Nimble: b279b3ca9e094508778aab5c76417be158d3ad04
+  Quick: 6676ffb409bf04abba2ff23902af2407bfc6ac90
+  SwiftLint: 1ac76dac888ca05cb0cf24d0c85887ec1209961d
+
+PODFILE CHECKSUM: 37178e650272323ae072bf1986c8a982b596f254
+
+COCOAPODS: 1.12.1

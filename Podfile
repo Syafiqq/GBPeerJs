@@ -21,7 +21,7 @@ def lib_test_pods
 end
 
 def example_lib_pods
-  pod 'GBPeerJs', :path => './'
+  lib_pods
 end
 
 target 'GBPeerJs' do

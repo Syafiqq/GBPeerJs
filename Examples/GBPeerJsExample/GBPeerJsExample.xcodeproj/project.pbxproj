@@ -16,6 +16,8 @@
 		5962A4CA2935DFA200183658 /* GBPeerJsExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5962A4C92935DFA200183658 /* GBPeerJsExampleTests.swift */; };
 		5962A4D42935DFA200183658 /* GBPeerJsExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5962A4D32935DFA200183658 /* GBPeerJsExampleUITests.swift */; };
 		5962A4D62935DFA200183658 /* GBPeerJsExampleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5962A4D52935DFA200183658 /* GBPeerJsExampleUITestsLaunchTests.swift */; };
+		5996B6AD2A48882A00B224D7 /* GBPeerJs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5996B6AC2A48882A00B224D7 /* GBPeerJs.framework */; };
+		5996B6AE2A48882A00B224D7 /* GBPeerJs.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5996B6AC2A48882A00B224D7 /* GBPeerJs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		8AE6DF00C2621EBAF89816B8 /* Pods_GBPeerJsExample_GBPeerJsExampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B918DDD2951E369B2EAC3AA8 /* Pods_GBPeerJsExample_GBPeerJsExampleUITests.framework */; };
 		A3F62B095EBD54CB58E525AF /* Pods_GBPeerJsExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B7F02D18FDAAAFE64A644C9 /* Pods_GBPeerJsExample.framework */; };
 /* End PBXBuildFile section */
@@ -37,6 +39,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		5996B6AF2A48882A00B224D7 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				5996B6AE2A48882A00B224D7 /* GBPeerJs.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		000691E42DCB89CE2C2240A0 /* Pods-GBPeerJsExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GBPeerJsExampleTests.release.xcconfig"; path = "Target Support Files/Pods-GBPeerJsExampleTests/Pods-GBPeerJsExampleTests.release.xcconfig"; sourceTree = "<group>"; };
 		107C63735F152D798633262C /* Pods-GBPeerJsExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GBPeerJsExample.debug.xcconfig"; path = "Target Support Files/Pods-GBPeerJsExample/Pods-GBPeerJsExample.debug.xcconfig"; sourceTree = "<group>"; };
@@ -53,6 +69,7 @@
 		5962A4CF2935DFA200183658 /* GBPeerJsExampleUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GBPeerJsExampleUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5962A4D32935DFA200183658 /* GBPeerJsExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBPeerJsExampleUITests.swift; sourceTree = "<group>"; };
 		5962A4D52935DFA200183658 /* GBPeerJsExampleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBPeerJsExampleUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		5996B6AC2A48882A00B224D7 /* GBPeerJs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GBPeerJs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		716D753FD77C149DDE6A5FE1 /* Pods-GBPeerJsExample-GBPeerJsExampleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GBPeerJsExample-GBPeerJsExampleUITests.debug.xcconfig"; path = "Target Support Files/Pods-GBPeerJsExample-GBPeerJsExampleUITests/Pods-GBPeerJsExample-GBPeerJsExampleUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		A26519B706EE68860F1FFA54 /* Pods-GBPeerJsExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GBPeerJsExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-GBPeerJsExampleTests/Pods-GBPeerJsExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B918DDD2951E369B2EAC3AA8 /* Pods_GBPeerJsExample_GBPeerJsExampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GBPeerJsExample_GBPeerJsExampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,6 +83,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5996B6AD2A48882A00B224D7 /* GBPeerJs.framework in Frameworks */,
 				A3F62B095EBD54CB58E525AF /* Pods_GBPeerJsExample.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -144,6 +162,7 @@
 		8127A5D3838CD9E3B9355832 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5996B6AC2A48882A00B224D7 /* GBPeerJs.framework */,
 				1B7F02D18FDAAAFE64A644C9 /* Pods_GBPeerJsExample.framework */,
 				B918DDD2951E369B2EAC3AA8 /* Pods_GBPeerJsExample_GBPeerJsExampleUITests.framework */,
 				FA45B8C4696D0CBC88488962 /* Pods_GBPeerJsExampleTests.framework */,
@@ -178,6 +197,7 @@
 				5962A4AC2935DFA100183658 /* Frameworks */,
 				5962A4AD2935DFA100183658 /* Resources */,
 				A6516F984BD8140B620082AC /* [CP] Embed Pods Frameworks */,
+				5996B6AF2A48882A00B224D7 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);

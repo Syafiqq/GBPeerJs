@@ -4,19 +4,26 @@
 
 import Foundation
 
-public enum GBPeerJsInitializationErrorReason: Error {
-    case createPeerConnectionFailed
-}
-
-public enum GBPeerJsMakeOfferErrorReason: Error {
-    case createLocalOfferFailed(Error?)
-    case setLocalDescriptionFailed(Error?)
-    case submitLocalOfferFailed(Error?)
-    case unknownError(Error?)
-}
-
 public enum GBPeerJsError: Error {
-    case webRtcInitError(reason: GBPeerJsInitializationErrorReason)
-    case webRtcMakeOfferError(reason: GBPeerJsMakeOfferErrorReason)
-    case unknownPeerConnection
+    case webRtcCommonError(reason: WebRtcCommonErrorReason)
+    case webRtcLocalOfferError(reason: WebRtcLocalOfferErrorReason)
+}
+
+public extension GBPeerJsError {
+    enum WebRtcCommonErrorReason: Error {
+        case createPeerConnectionFailed
+        case unknownPeerConnection
+    }
+
+    enum WebRtcLocalOfferErrorReason: Error {
+        case createLocalOfferFailed(Error?)
+        case setLocalDescriptionFailed(Error?)
+        case submitLocalOfferFailed(Error?)
+        case unknownError(Error?)
+    }
+
+    enum WebRtcRemoteOfferErrorReason: Error {
+        case setRemoteDescriptionFailed(Error?)
+        case unknownError(Error?)
+    }
 }

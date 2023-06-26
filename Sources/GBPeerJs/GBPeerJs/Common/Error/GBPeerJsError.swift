@@ -8,6 +8,7 @@ public enum GBPeerJsError: Error {
     case webRtcCommonError(reason: WebRtcCommonErrorReason)
     case webRtcLocalOfferError(reason: WebRtcLocalOfferErrorReason)
     case webRtcRemoteOfferError(reason: WebRtcRemoteOfferErrorReason)
+    case webRtcLocalAnswerError(reason: WebRtcLocalAnswerErrorReason)
 }
 
 public extension GBPeerJsError {
@@ -25,6 +26,13 @@ public extension GBPeerJsError {
 
     enum WebRtcRemoteOfferErrorReason: Error {
         case setRemoteDescriptionFailed(Error?)
+        case unknownError(Error?)
+    }
+
+    enum WebRtcLocalAnswerErrorReason: Error {
+        case createLocalAnswerFailed(Error?)
+        case setLocalDescriptionFailed(Error?)
+        case submitLocalAnswerFailed(Error?)
         case unknownError(Error?)
     }
 }

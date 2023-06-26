@@ -68,6 +68,7 @@ protocol Connection: AnyObject {
     func setPeerConnection(_ peer: RTCPeerConnection)
 }
 
+// swiftlint:disable:next type_body_length
 class Negotiator: NSObject {
     weak var connection: Connection?
     let logger: ILogger
@@ -171,14 +172,13 @@ class Negotiator: NSObject {
                     }
 
                     var bag = [Disposable]()
-
                     let disposable = createOfferAsync(mediaConstraint: mediaConstraint)
                             .do(
                                     onSuccess: { [weak self] _ in
                                         self?.logger.log("Created offer.")
                                     },
                                     onError: { [weak self] error in
-                                        self?.logger.log("Failed to createOffer, ", error)
+                                        self?.logger.log("Failed to create offer, ", error)
                                     }
                             )
                             /*.map {
@@ -270,7 +270,11 @@ class Negotiator: NSObject {
     }
 
     // swiftlint:disable:next function_body_length
-    func handleSDP(type: String, sdp: String) -> Completable {
+    func handleSDP(
+            type: String,
+            sdp: String,
+            answerMediaConstraint: RTCMediaConstraints? = nil
+    ) -> Completable {
         func setRemoteDescriptionAsync(offer: RTCSessionDescription) -> Completable {
             Completable.create(subscribe: { [weak self] observer in
                 guard let self = self else {
@@ -324,7 +328,16 @@ class Negotiator: NSObject {
                             .andThen(
                                     Completable.deferred {
                                         if type == "OFFER" {
-                                            return self.makeAnswer()
+                                            let constraint: RTCMediaConstraints
+                                            if let answerMediaConstraint = answerMediaConstraint {
+                                                constraint = answerMediaConstraint
+                                            } else {
+                                                constraint = RTCMediaConstraints(
+                                                        mandatoryConstraints: nil,
+                                                        optionalConstraints: nil
+                                                )
+                                            }
+                                            return self.makeAnswer(mediaConstraint: constraint)
                                         }
                                         return Completable.empty()
                                     }
@@ -356,8 +369,162 @@ class Negotiator: NSObject {
         )
     }
 
-    private func makeAnswer() -> Completable {
-        fatalError("not yet implemented")
+    // swiftlint:disable:next function_body_length
+    func makeAnswer(mediaConstraint: RTCMediaConstraints) -> Completable {
+        func createAnswerAsync(mediaConstraint: RTCMediaConstraints) -> Single<RTCSessionDescription> {
+            Single.create { [weak self] observer in
+                guard let self = self else {
+                    observer(.error(RxError.disposed(object: Self.self)))
+                    return Disposables.create()
+                }
+
+                if let peerConnection = self.connection?.peerConnection {
+                    peerConnection.answer(
+                            for: mediaConstraint,
+                            completionHandler: { [weak self] description, error in
+                                if self == nil {
+                                    observer(.error(RxError.disposed(object: Self.self)))
+                                } else if let error = error {
+                                    observer(.error(
+                                            GBPeerJsError.WebRtcLocalAnswerErrorReason.createLocalAnswerFailed(error)
+                                    ))
+                                } else if let description = description {
+                                    observer(.success(description))
+                                } else {
+                                    observer(.error(
+                                            GBPeerJsError.WebRtcLocalAnswerErrorReason.createLocalAnswerFailed(nil)
+                                    ))
+                                }
+                            }
+                    )
+                } else {
+                    observer(.error(GBPeerJsError.WebRtcCommonErrorReason.unknownPeerConnection))
+                }
+                return Disposables.create()
+            }
+        }
+
+        func setLocalDescriptionAsync(answer: RTCSessionDescription) -> Completable {
+            Completable.create(subscribe: { [weak self] observer in
+                guard let self = self else {
+                    observer(.error(RxError.disposed(object: Self.self)))
+                    return Disposables.create()
+                }
+
+                if let peerConnection = self.connection?.peerConnection {
+                    peerConnection.setLocalDescription(
+                            answer,
+                            completionHandler: { [weak self] error in
+                                if self == nil {
+                                    observer(.error(RxError.disposed(object: Self.self)))
+                                } else if let error = error {
+                                    observer(.error(
+                                            GBPeerJsError.WebRtcLocalAnswerErrorReason.setLocalDescriptionFailed(error)
+                                    ))
+                                } else {
+                                    observer(.completed)
+                                }
+                            }
+                    )
+                } else {
+                    observer(.error(GBPeerJsError.WebRtcCommonErrorReason.unknownPeerConnection))
+                }
+                return Disposables.create()
+            })
+        }
+
+        return Completable.create(
+                subscribe: { [weak self] observer in
+                    guard let self = self else {
+                        observer(.error(RxError.disposed(object: Self.self)))
+                        return Disposables.create()
+                    }
+
+                    var bag = [Disposable]()
+                    let disposable = createAnswerAsync(mediaConstraint: mediaConstraint)
+                            .do(
+                                    onSuccess: { [weak self] _ in
+                                        self?.logger.log("Created answer.")
+                                    },
+                                    onError: { [weak self] error in
+                                        self?.logger.log("Failed to create answer, ", error)
+                                    }
+                            )
+                            /*.map {
+                                // Modify answer
+                                if self.connection.options.sdpTransform,
+                                   typeof self.connection.options.sdpTransform === "function" {
+                                    answer.sdp =
+                                            self.connection.options.sdpTransform(answer.sdp) || answer.sdp
+                                }
+                            }*/
+                            .flatMap({ answer in
+                                setLocalDescriptionAsync(answer: answer)
+                                        .do(
+                                                onError: { [weak self] error in
+                                                    self?.logger.log("Failed to setLocalDescription, ", error)
+                                                },
+                                                onCompleted: { [weak self] in
+                                                    let peer = self?.connection?.peer ?? "-"
+                                                    self?.logger.log("Set localDescription:\(answer.sdp) for:\(peer)")
+                                                }
+                                        )
+                                        .andThen(Single.just(answer))
+                            })
+                            .subscribe(
+                                    onSuccess: { [weak self] (answer: RTCSessionDescription) in
+                                        guard let self = self else {
+                                            observer(.error(RxError.disposed(object: Self.self)))
+                                            return
+                                        }
+
+                                        let answerEntity = OfferRequestEntity(
+                                                type: ServerMessageType.answer.rawValue,
+                                                payload: OfferRequestEntity.Payload(
+                                                        sdp: OfferRequestEntity.SDP(
+                                                                sdp: answer.sdp,
+                                                                type: RTCSessionDescription.string(for: answer.type)
+                                                        ),
+                                                        type: self.connection?.type.rawValue ?? "",
+                                                        connectionId: self.connection?.connectionId ?? "",
+                                                        browser: Util.browser()
+                                                ),
+                                                dst: self.connection?.peer ?? ""
+                                        )
+
+                                        let answerEncoder = JSONEncoder()
+                                        do {
+                                            let answerData = try answerEncoder.encode(answerEntity)
+                                            if let result = String(data: answerData, encoding: .utf8) {
+                                                self.connection?.provider?.socket?.send(result)
+                                                observer(.completed)
+                                            } else {
+                                                observer(.error(GBPeerJsError.webRtcLocalAnswerError(
+                                                        reason: .submitLocalAnswerFailed(nil)
+                                                )))
+                                            }
+                                        } catch {
+                                            observer(.error(GBPeerJsError.webRtcLocalAnswerError(
+                                                    reason: .submitLocalAnswerFailed(error)
+                                            )))
+                                        }
+                                    },
+                                    onError: { [weak self] error in
+                                        if self == nil {
+                                            observer(.error(RxError.disposed(object: Self.self)))
+                                        } else if let error = error as? GBPeerJsError.WebRtcLocalAnswerErrorReason {
+                                            observer(.error(GBPeerJsError.webRtcLocalAnswerError(reason: error)))
+                                        } else {
+                                            observer(.error(GBPeerJsError.webRtcLocalAnswerError(
+                                                    reason: .unknownError(error)
+                                            )))
+                                        }
+                                    }
+                            )
+                    bag.append(disposable)
+                    return Disposables.create(bag)
+                }
+        )
     }
 }
 

@@ -304,7 +304,7 @@ class Negotiator: NSObject {
 
         let sdp = RTCSessionDescription(type: RTCSessionDescription.type(for: type), sdp: sdp)
 
-        logger.log("Setting remote description", sdp.sdp);
+        logger.log("Setting remote description", sdp.sdp)
 
         return setRemoteDescriptionAsync(offer: sdp)
                 .do(

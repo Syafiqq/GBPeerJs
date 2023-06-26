@@ -627,31 +627,6 @@ class Negotiator: NSObject {
 }
 
 extension Negotiator {
-    /*startConnection(options: any) {
-        if (self.webRtcCommonError.type === ConnectionType.Media && options._stream) {
-            self._addTracksToConnection(options._stream, peerConnection)
-        }
-
-        // What do we need to do now?
-        if (options.originator) {
-            if (self.webRtcCommonError.type === ConnectionType.Data) {
-                const dataConnection = <DataConnection>(<unknown>self.webRtcCommonError)
-
-                const config: RTCDataChannelInit = { ordered: !!options.reliable }
-
-                const dataChannel = peerConnection.createDataChannel(
-                    dataConnection.label,
-                    config,
-                )
-                dataConnection.initialize(dataChannel)
-            }
-
-            self._makeOffer()
-        } else {
-            self.handleSDP("OFFER", options.sdp)
-        }
-    }*/
-
     // swiftlint:disable:next function_body_length
     private func doStartConnection(
             stream: RTCMediaStream? = nil,

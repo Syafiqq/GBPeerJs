@@ -6,8 +6,41 @@ import Foundation
 import WebRTC
 import RxSwift
 
-enum ConnectionType {
+enum ConnectionType: String {
+    // swiftlint:disable explicit_enum_raw_value
     case media
+    // swiftlint:enable explicit_enum_raw_value
+}
+
+enum Util {
+    static func browser() -> String {
+        UIDevice.current.userInterfaceIdiom == .pad
+                ? "iPad"
+                : UIDevice.current.userInterfaceIdiom == .phone
+                ? "iPhone"
+                : "iPod"
+    }
+}
+
+enum ServerMessageType: String {
+    // @formatter:off
+    case heartbeat  = "HEARTBEAT"
+    case candidate  = "CANDIDATE"
+    case offer      = "OFFER"
+    case answer     = "ANSWER"
+    case open       = "OPEN" // The connection to the server is open.
+    case error      = "ERROR" // Server error.
+    case idTaken    = "ID-TAKEN" // The selected ID is taken.
+    case invalidKey = "INVALID-KEY" // The given API key cannot be found.
+    case leave      = "LEAVE" // Another peer has closed its connection to this peer.
+    case expire     = "EXPIRE" // The offer sent to a peer has expired without response.
+    // @formatter:on
+}
+
+struct OfferRequestEntity: Encodable {
+    let type: String
+    let payload: Payload
+    let dst: String
 }
 
 struct NegotiatorEntity {
@@ -16,15 +49,21 @@ struct NegotiatorEntity {
     var peerConstraint: RTCMediaConstraints
 }
 
+protocol SocketProvider: AnyObject {
+    func send(_ message: String)
+}
+
 protocol PeerProvider: AnyObject {
+    var socket: SocketProvider? { get }
 }
 
 protocol Connection: AnyObject {
     var peer: String { get }
     var connectionId: String { get }
     var type: ConnectionType { get }
-    var provider: PeerProvider { get }
+    var provider: PeerProvider? { get }
     var originator: Bool { get }
+    var peerConnection: RTCPeerConnection { get }
 
     func setPeerConnection(_ peer: RTCPeerConnection)
 }
@@ -46,7 +85,7 @@ class Negotiator: NSObject {
             stream: RTCMediaStream,
             peerConnection: RTCPeerConnection
     ) {
-        logger.log("add tracks from stream \(stream.streamId) to peer initialization")
+        logger.log("add tracks from stream \(stream.streamId) to peer webRtcInitError")
 
         /*guard (peerConnection.canAddTrack) else {
             logger.error("Your browser does't support RTCPeerConnection#addTrack. Ignored.")
@@ -58,8 +97,166 @@ class Negotiator: NSObject {
         }
     }
 
-    func makeOffer() -> Completable {
-        fatalError("not yet implemented")
+    // swiftlint:disable:next function_body_length
+    func makeOffer(
+            mediaConstraint: RTCMediaConstraints
+    ) -> Completable {
+        func createOfferAsync() -> Single<RTCSessionDescription> {
+            Single.create { [weak self] observer in
+                guard let self = self else {
+                    observer(.error(RxError.disposed(object: Self.self)))
+                    return Disposables.create()
+                }
+
+                if let peerConnection = self.connection?.peerConnection {
+                    peerConnection.offer(
+                            for: mediaConstraint,
+                            completionHandler: { [weak self] description, error in
+                                if let error = error {
+                                    observer(.error(GBPeerJsMakeOfferErrorReason.createLocalOfferFailed(error)))
+                                } else if let description = description {
+                                    observer(.success(description))
+                                } else {
+                                    observer(.error(GBPeerJsMakeOfferErrorReason.createLocalOfferFailed(nil)))
+                                }
+                            }
+                    )
+                } else {
+                    observer(.error(GBPeerJsError.unknownPeerConnection))
+                }
+                return Disposables.create()
+            }
+        }
+
+        func setLocalDescriptionAsync(offer: RTCSessionDescription) -> Completable {
+            Completable.create(subscribe: { [weak self] observer in
+                guard let self = self else {
+                    observer(.error(RxError.disposed(object: Self.self)))
+                    return Disposables.create()
+                }
+
+                if let peerConnection = self.connection?.peerConnection {
+                    peerConnection.setLocalDescription(
+                            offer,
+                            completionHandler: { [weak self] error in
+                                if let error = error {
+                                    observer(.error(GBPeerJsMakeOfferErrorReason.setLocalDescriptionFailed(error)))
+                                } else {
+                                    observer(.completed)
+                                }
+                            }
+                    )
+                } else {
+                    observer(.error(GBPeerJsError.unknownPeerConnection))
+                }
+                return Disposables.create()
+            })
+        }
+
+        return Completable.create(
+                subscribe: { [weak self] observer in
+                    guard let self = self else {
+                        observer(.error(RxError.disposed(object: Self.self)))
+                        return Disposables.create()
+                    }
+
+                    var bag = [Disposable]()
+
+                    let disposable = createOfferAsync()
+                            .do(
+                                    onSuccess: { [weak self] _ in
+                                        self?.logger.log("Created offer.")
+                                    },
+                                    onError: { [weak self] error in
+                                        self?.logger.log("Failed to createOffer, ", error)
+                                    }
+                            )
+                            /*.map {
+                                // Modify offer
+                                if self.connection.options.sdpTransform,
+                                   typeof self.connection.options.sdpTransform === "function" {
+                                    offer.sdp =
+                                            self.connection.options.sdpTransform(offer.sdp) || offer.sdp
+                                }
+                            }*/
+                            .flatMap({ offer in
+                                setLocalDescriptionAsync(offer: offer)
+                                        .do(
+                                                onError: { [weak self] error in
+                                                    self?.logger.log("Failed to setLocalDescription, ", error)
+                                                },
+                                                onCompleted: { [weak self] in
+                                                    let peer = self?.connection?.peer ?? "-"
+                                                    self?.logger.log("Set localDescription:\(offer.sdp) for:\(peer)")
+                                                }
+                                        )
+                                        .andThen(Single.just(offer))
+                            })
+                            .subscribe(
+                                    onSuccess: { [weak self] (offer: RTCSessionDescription) in
+                                        guard let self = self else {
+                                            return
+                                        }
+
+                                        /*if (self.connection.type === ConnectionType.Data) {
+                                            const dataConnection = <DataConnection > (<unknown > self.connection)
+
+                                            payload = {
+                                                ...payload,
+                                                label: dataConnection.label,
+                                                reliable: dataConnection.reliable,
+                                                serialization: dataConnection.serialization,
+                                            }
+                                        }*/
+
+                                        let offerEntity = OfferRequestEntity(
+                                                type: ServerMessageType.offer.rawValue,
+                                                payload: OfferRequestEntity.Payload(
+                                                        sdp: .init(
+                                                                sdp: offer.sdp,
+                                                                type: RTCSessionDescription.string(for: offer.type)
+                                                        ),
+                                                        type: self.connection?.type.rawValue ?? "",
+                                                        connectionId: self.connection?.connectionId ?? "",
+                                                        browser: Util.browser()
+                                                ),
+                                                dst: self.connection?.peer ?? ""
+                                        )
+
+                                        let offerEncoder = JSONEncoder()
+                                        do {
+                                            let offerData = try offerEncoder.encode(offerEntity)
+                                            if let result = String(data: offerData, encoding: .utf8) {
+                                                self.connection?.provider?.socket?.send(result)
+                                                observer(.completed)
+                                            } else {
+                                                observer(.error(GBPeerJsError.webRtcMakeOfferError(
+                                                        reason: .submitLocalOfferFailed(nil)
+                                                )))
+                                            }
+                                        } catch {
+                                            observer(.error(GBPeerJsError.webRtcMakeOfferError(
+                                                    reason: .submitLocalOfferFailed(error)
+                                            )))
+                                        }
+                                    },
+                                    onError: { [weak self] error in
+                                        guard self != nil else {
+                                            return
+                                        }
+                                        if let error = error as? GBPeerJsMakeOfferErrorReason {
+                                            observer(.error(GBPeerJsError.webRtcMakeOfferError(reason: error)))
+                                        } else {
+                                            observer(.error(GBPeerJsError.webRtcMakeOfferError(
+                                                    reason: .unknownError(error)
+                                            )))
+                                        }
+                                    }
+                            )
+                    bag.append(disposable)
+                    return Disposables.create(bag)
+                }
+        )
     }
 
     func handleSDP(_ sss: String, _ vvv: Any) -> Completable {
@@ -69,14 +266,14 @@ class Negotiator: NSObject {
 
 extension Negotiator {
     /*startConnection(options: any) {
-        if (self.initialization.type === ConnectionType.Media && options._stream) {
+        if (self.webRtcInitError.type === ConnectionType.Media && options._stream) {
             self._addTracksToConnection(options._stream, peerConnection)
         }
 
         // What do we need to do now?
         if (options.originator) {
-            if (self.initialization.type === ConnectionType.Data) {
-                const dataConnection = <DataConnection>(<unknown>self.initialization)
+            if (self.webRtcInitError.type === ConnectionType.Data) {
+                const dataConnection = <DataConnection>(<unknown>self.webRtcInitError)
 
                 const config: RTCDataChannelInit = { ordered: !!options.reliable }
 
@@ -97,6 +294,7 @@ extension Negotiator {
     private func doStartConnection(
             stream: RTCMediaStream? = nil,
             originator: Bool = false,
+            originatorConstraint: RTCMediaConstraints? = nil,
             data: NegotiatorEntity
     ) -> Completable {
         Completable.create(
@@ -110,7 +308,7 @@ extension Negotiator {
                     do {
                         let peerConnection = try self.startPeerConnection(data: data)
 
-                        // Set the initialization's PC.
+                        // Set the webRtcInitError's PC.
                         self.connection?.setPeerConnection(peerConnection)
 
                         if self.connection?.type == .media,
@@ -137,7 +335,13 @@ extension Negotiator {
                                 dataConnection.initialize(dataChannel)
                             }*/
 
-                            let disposable = makeOffer()
+                            let constraint: RTCMediaConstraints
+                            if let originatorConstraint = originatorConstraint {
+                                constraint = originatorConstraint
+                            } else {
+                                constraint = RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
+                            }
+                            let disposable = makeOffer(mediaConstraint: constraint)
                                     .subscribe(
                                             onCompleted: { [weak self] in
                                                 guard self != nil else {
@@ -186,7 +390,7 @@ extension Negotiator {
 
         guard let peerConnection = data.peerFactory
                 .peerConnection(with: data.peerConfig, constraints: data.peerConstraint, delegate: nil) else {
-            throw GBPeerJsError.initialization(reason: .createPeerConnectionFailed)
+            throw GBPeerJsError.webRtcInitError(reason: .createPeerConnectionFailed)
         }
 
         setupListeners(peerConnection: peerConnection)
@@ -195,10 +399,10 @@ extension Negotiator {
     }
 
     private func setupListeners(peerConnection: RTCPeerConnection) {
-        /*let peerId = initialization?.peer
-        let connectionId = initialization?.connectionId
-        let connectionType = initialization?.type
-        let provider = initialization?.provider
+        /*let peerId = webRtcInitError?.peer
+        let connectionId = webRtcInitError?.connectionId
+        let connectionType = webRtcInitError?.type
+        let provider = webRtcInitError?.provider
 
         // ICE CANDIDATES.
         logger.log("Listening for ICE candidates.")
@@ -228,25 +432,25 @@ extension Negotiator {
                 logger.log(
                         "iceConnectionState is failed, closing connections to " + peerId,
                         )
-                self.initialization.emit(
+                self.webRtcInitError.emit(
                         "error",
-                        new Error("Negotiation of initialization to " + peerId + " failed."),
+                        new Error("Negotiation of webRtcInitError to " + peerId + " failed."),
                 )
-                self.initialization.close()
+                self.webRtcInitError.close()
                 break
             case "closed":
                 logger.log(
                         "iceConnectionState is closed, closing connections to " + peerId,
                         )
-                self.initialization.emit(
+                self.webRtcInitError.emit(
                         "error",
                         new Error("Connection to " + peerId + " closed."),
                 )
-                self.initialization.close()
+                self.webRtcInitError.close()
                 break
             case "disconnected":
                 logger.log(
-                        "iceConnectionState changed to disconnected on the initialization with " +
+                        "iceConnectionState changed to disconnected on the webRtcInitError with " +
                                 peerId,
                         )
                 break
@@ -255,7 +459,7 @@ extension Negotiator {
                 break
             }
 
-            self.initialization.emit(
+            self.webRtcInitError.emit(
                     "iceStateChanged",
                     peerConnection.iceConnectionState,
                     )
@@ -269,11 +473,11 @@ extension Negotiator {
             logger.log("Received data channel")
 
             const dataChannel = evt.channel
-            const initialization = <DataConnection > (
+            const webRtcInitError = <DataConnection > (
                     provider.getConnection(peerId, connectionId)
             )
 
-            initialization.initialize(dataChannel)
+            webRtcInitError.initialize(dataChannel)
         }
 
         // MEDIACONNECTION.
@@ -283,10 +487,10 @@ extension Negotiator {
             logger.log("Received remote stream")
 
             const stream = evt.streams[0]
-            const initialization = provider.getConnection(peerId, connectionId)
+            const webRtcInitError = provider.getConnection(peerId, connectionId)
 
-            if (initialization.type === ConnectionType.Media) {
-                const mediaConnection = <MediaConnection > initialization
+            if (webRtcInitError.type === ConnectionType.Media) {
+                const mediaConnection = <MediaConnection > webRtcInitError
 
                 self._addStreamToMediaConnection(stream, mediaConnection)
             }
@@ -304,7 +508,7 @@ extension Negotiator {
 
         logger.log("Received remote stream")
 
-        logger.log("add stream \(stream.streamId) to media initialization \(connectionId ?? "-")")
+        logger.log("add stream \(stream.streamId) to media webRtcInitError \(connectionId ?? "-")")
 
         if let track = stream.audioTracks.first {
             track.isEnabled = true
@@ -394,3 +598,17 @@ extension Negotiator {
         print("WebRTC - didOpen dataChannel | New data channel has been opened.")
     }
 }*/
+
+extension OfferRequestEntity {
+    struct Payload: Encodable {
+        let sdp: SDP
+        let type: String
+        let connectionId: String
+        let browser: String
+    }
+
+    struct SDP: Encodable {
+        let sdp: String
+        let type: String
+    }
+}

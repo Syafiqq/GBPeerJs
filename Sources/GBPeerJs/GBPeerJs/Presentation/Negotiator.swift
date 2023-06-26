@@ -101,7 +101,7 @@ class Negotiator: NSObject {
     func makeOffer(
             mediaConstraint: RTCMediaConstraints
     ) -> Completable {
-        func createOfferAsync() -> Single<RTCSessionDescription> {
+        func createOfferAsync(mediaConstraint: RTCMediaConstraints) -> Single<RTCSessionDescription> {
             Single.create { [weak self] observer in
                 guard let self = self else {
                     observer(.error(RxError.disposed(object: Self.self)))

@@ -72,6 +72,7 @@ protocol Connection: AnyObject {
     var peerConnection: RTCPeerConnection { get }
 
     func setPeerConnection(_ peer: RTCPeerConnection)
+    func addStream(_ stream: RTCMediaStream)
 }
 
 // swiftlint:disable:next type_body_length
@@ -102,6 +103,15 @@ class Negotiator: NSObject {
         stream.audioTracks.forEach {
             peerConnection.add($0, streamIds: [stream.streamId])
         }
+    }
+
+    func addStreamToMediaConnection(
+            stream: RTCMediaStream,
+            mediaConnection: Connection
+    ) {
+        logger.log("add stream \(stream.streamId) to media connection \(mediaConnection.connectionId)")
+
+        mediaConnection.addStream(stream);
     }
 
     // swiftlint:disable:next function_body_length

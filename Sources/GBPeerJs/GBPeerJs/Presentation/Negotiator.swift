@@ -92,7 +92,7 @@ class Negotiator: NSObject {
             stream: RTCMediaStream,
             peerConnection: RTCPeerConnection
     ) {
-        logger.log("add tracks from stream \(stream.streamId) to peer webRtcCommonError")
+        logger.log("add tracks from stream \(stream.streamId) to peer initialization")
 
         /*guard (peerConnection.canAddTrack) else {
             logger.error("Your browser does't support RTCPeerConnection#addTrack. Ignored.")

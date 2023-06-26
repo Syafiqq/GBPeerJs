@@ -4,11 +4,17 @@
 
 import Foundation
 import WebRTC
+import RxSwift
 
 enum ConnectionType {
     case media
 }
 
+struct NegotiatorEntity {
+    var peerFactory: RTCPeerConnectionFactory
+    var peerConfig: RTCConfiguration
+    var peerConstraint: RTCMediaConstraints
+}
 
 protocol PeerProvider: AnyObject {
 }
@@ -18,6 +24,9 @@ protocol Connection: AnyObject {
     var connectionId: String { get }
     var type: ConnectionType { get }
     var provider: PeerProvider { get }
+    var originator: Bool { get }
+
+    func setPeerConnection(_ peer: RTCPeerConnection)
 }
 
 class Negotiator: NSObject {
@@ -29,32 +38,45 @@ class Negotiator: NSObject {
         self.logger = logger
     }
 
-    func startConnection(data: NegotiatorEntity) throws {
-        try doStartConnection(data: data)
+    func startConnection(data: NegotiatorEntity) -> Completable {
+        doStartConnection(data: data)
     }
-}
 
-struct NegotiatorEntity {
-    var peerFactory: RTCPeerConnectionFactory
-    var peerConfig: RTCConfiguration
-    var peerConstraint: RTCMediaConstraints
+    func addTracksToConnection(
+            stream: RTCMediaStream,
+            peerConnection: RTCPeerConnection
+    ) {
+        logger.log("add tracks from stream \(stream.streamId) to peer initialization")
+
+        /*guard (peerConnection.canAddTrack) else {
+            logger.error("Your browser does't support RTCPeerConnection#addTrack. Ignored.")
+            return
+        }*/
+
+        stream.audioTracks.forEach {
+            peerConnection.add($0, streamIds: [stream.streamId])
+        }
+    }
+
+    func makeOffer() -> Completable {
+        fatalError("not yet implemented")
+    }
+
+    func handleSDP(_ sss: String, _ vvv: Any) -> Completable {
+        fatalError("not yet implemented")
+    }
 }
 
 extension Negotiator {
     /*startConnection(options: any) {
-        const peerConnection = self._startPeerConnection()
-
-        // Set the connection's PC.
-        self.connection.peerConnection = peerConnection
-
-        if (self.connection.type === ConnectionType.Media && options._stream) {
+        if (self.initialization.type === ConnectionType.Media && options._stream) {
             self._addTracksToConnection(options._stream, peerConnection)
         }
 
         // What do we need to do now?
         if (options.originator) {
-            if (self.connection.type === ConnectionType.Data) {
-                const dataConnection = <DataConnection>(<unknown>self.connection)
+            if (self.initialization.type === ConnectionType.Data) {
+                const dataConnection = <DataConnection>(<unknown>self.initialization)
 
                 const config: RTCDataChannelInit = { ordered: !!options.reliable }
 
@@ -71,10 +93,90 @@ extension Negotiator {
         }
     }*/
 
+    // swiftlint:disable:next function_body_length
     private func doStartConnection(
+            stream: RTCMediaStream? = nil,
+            originator: Bool = false,
             data: NegotiatorEntity
-    ) throws {
-        let peerConnection = try startPeerConnection(data: data)
+    ) -> Completable {
+        Completable.create(
+                subscribe: { [weak self] observer in
+                    guard let self = self else {
+                        observer(.error(RxError.disposed(object: Self.self)))
+                        return Disposables.create()
+                    }
+
+                    var bag = [Disposable]()
+                    do {
+                        let peerConnection = try self.startPeerConnection(data: data)
+
+                        // Set the initialization's PC.
+                        self.connection?.setPeerConnection(peerConnection)
+
+                        if self.connection?.type == .media,
+                           let stream = stream {
+                            self.addTracksToConnection(
+                                    stream: stream,
+                                    peerConnection: peerConnection
+                            )
+                        }
+
+                        // What do we need to do now?
+                        if originator {
+                            /*if connection?.type == .data {
+                                const dataConnection = <DataConnection > (<unknown > self.connection)
+
+                                const config: RTCDataChannelInit = {
+                                    ordered: !!options.reliable
+                                }
+
+                                const dataChannel = peerConnection.createDataChannel(
+                                        dataConnection.label,
+                                        config,
+                                        )
+                                dataConnection.initialize(dataChannel)
+                            }*/
+
+                            let disposable = makeOffer()
+                                    .subscribe(
+                                            onCompleted: { [weak self] in
+                                                guard self != nil else {
+                                                    return
+                                                }
+                                                observer(.completed)
+                                            },
+                                            onError: { [weak self] error in
+                                                guard self != nil else {
+                                                    return
+                                                }
+                                                observer(.error(error))
+                                            }
+                                    )
+                            bag.append(disposable)
+                        } else {
+                            let disposable = handleSDP("OFFER", "")
+                                    .subscribe(
+                                            onCompleted: { [weak self] in
+                                                guard self != nil else {
+                                                    return
+                                                }
+                                                observer(.completed)
+                                            },
+                                            onError: { [weak self] error in
+                                                guard self != nil else {
+                                                    return
+                                                }
+                                                observer(.error(error))
+                                            }
+                                    )
+                            bag.append(disposable)
+                        }
+                    } catch {
+                        observer(.error(error))
+                    }
+                    return Disposables.create(bag)
+                }
+        )
     }
 
     private func startPeerConnection(
@@ -84,7 +186,7 @@ extension Negotiator {
 
         guard let peerConnection = data.peerFactory
                 .peerConnection(with: data.peerConfig, constraints: data.peerConstraint, delegate: nil) else {
-            throw GBPeerJsError.connection(reason: .createPeerConnectionFailed)
+            throw GBPeerJsError.initialization(reason: .createPeerConnectionFailed)
         }
 
         setupListeners(peerConnection: peerConnection)
@@ -93,10 +195,10 @@ extension Negotiator {
     }
 
     private func setupListeners(peerConnection: RTCPeerConnection) {
-        /*let peerId = connection?.peer
-        let connectionId = connection?.connectionId
-        let connectionType = connection?.type
-        let provider = connection?.provider
+        /*let peerId = initialization?.peer
+        let connectionId = initialization?.connectionId
+        let connectionType = initialization?.type
+        let provider = initialization?.provider
 
         // ICE CANDIDATES.
         logger.log("Listening for ICE candidates.")
@@ -126,25 +228,25 @@ extension Negotiator {
                 logger.log(
                         "iceConnectionState is failed, closing connections to " + peerId,
                         )
-                self.connection.emit(
+                self.initialization.emit(
                         "error",
-                        new Error("Negotiation of connection to " + peerId + " failed."),
+                        new Error("Negotiation of initialization to " + peerId + " failed."),
                 )
-                self.connection.close()
+                self.initialization.close()
                 break
             case "closed":
                 logger.log(
                         "iceConnectionState is closed, closing connections to " + peerId,
                         )
-                self.connection.emit(
+                self.initialization.emit(
                         "error",
                         new Error("Connection to " + peerId + " closed."),
                 )
-                self.connection.close()
+                self.initialization.close()
                 break
             case "disconnected":
                 logger.log(
-                        "iceConnectionState changed to disconnected on the connection with " +
+                        "iceConnectionState changed to disconnected on the initialization with " +
                                 peerId,
                         )
                 break
@@ -153,7 +255,7 @@ extension Negotiator {
                 break
             }
 
-            self.connection.emit(
+            self.initialization.emit(
                     "iceStateChanged",
                     peerConnection.iceConnectionState,
                     )
@@ -167,11 +269,11 @@ extension Negotiator {
             logger.log("Received data channel")
 
             const dataChannel = evt.channel
-            const connection = <DataConnection > (
+            const initialization = <DataConnection > (
                     provider.getConnection(peerId, connectionId)
             )
 
-            connection.initialize(dataChannel)
+            initialization.initialize(dataChannel)
         }
 
         // MEDIACONNECTION.
@@ -181,10 +283,10 @@ extension Negotiator {
             logger.log("Received remote stream")
 
             const stream = evt.streams[0]
-            const connection = provider.getConnection(peerId, connectionId)
+            const initialization = provider.getConnection(peerId, connectionId)
 
-            if (connection.type === ConnectionType.Media) {
-                const mediaConnection = <MediaConnection > connection
+            if (initialization.type === ConnectionType.Media) {
+                const mediaConnection = <MediaConnection > initialization
 
                 self._addStreamToMediaConnection(stream, mediaConnection)
             }
@@ -202,7 +304,7 @@ extension Negotiator {
 
         logger.log("Received remote stream")
 
-        logger.log("add stream \(stream.streamId) to media connection \(connectionId ?? "-")")
+        logger.log("add stream \(stream.streamId) to media initialization \(connectionId ?? "-")")
 
         if let track = stream.audioTracks.first {
             track.isEnabled = true
@@ -222,7 +324,8 @@ extension Negotiator {
     }
 
     func peerConnectionShouldNegotiate(_ peerConnection: RTCPeerConnection) {
-        print("WebRTC - peerConnectionShouldNegotiate | Called when negotiation is needed, for example ICE has restarted.")
+        print("WebRTC - peerConnectionShouldNegotiate |
+ Called when negotiation is needed, for example ICE has restarted.")
     }
 
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceConnectionState) {

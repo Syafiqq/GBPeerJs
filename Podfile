@@ -12,6 +12,7 @@ def lib_pods
   pod 'LanguageManager-iOS', '~> 1.2.6-beta.2'
   pod 'Starscream', '~> 3'
   pod 'GBWebRTC', '= 114.0.5735.124'
+  pod 'RxSwift', '~> 5'
 end
 
 def lib_test_pods

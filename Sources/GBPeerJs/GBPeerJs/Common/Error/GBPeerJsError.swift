@@ -4,10 +4,10 @@
 
 import Foundation
 
-public enum GBPeerJsError: Error {
-    case connection(reason: GBPeerJsConnectionErrorReason)
+public enum GBPeerJsInitializationErrorReason: Error {
+    case createPeerConnectionFailed
 }
 
-public enum GBPeerJsConnectionErrorReason: Error {
-    case createPeerConnectionFailed
+public enum GBPeerJsError: Error {
+    case initialization(reason: GBPeerJsInitializationErrorReason)
 }

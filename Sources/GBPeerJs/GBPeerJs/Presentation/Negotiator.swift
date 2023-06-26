@@ -112,10 +112,9 @@ class Negotiator: NSObject {
                     peerConnection.offer(
                             for: mediaConstraint,
                             completionHandler: { [weak self] description, error in
-                                guard self != nil else {
-                                    return
-                                }
-                                if let error = error {
+                                if self == nil {
+                                    observer(.error(RxError.disposed(object: Self.self)))
+                                } else if let error = error {
                                     observer(.error(
                                             GBPeerJsError.WebRtcLocalOfferErrorReason.createLocalOfferFailed(error)
                                     ))
@@ -146,10 +145,9 @@ class Negotiator: NSObject {
                     peerConnection.setLocalDescription(
                             offer,
                             completionHandler: { [weak self] error in
-                                guard self != nil else {
-                                    return
-                                }
-                                if let error = error {
+                                if self == nil {
+                                    observer(.error(RxError.disposed(object: Self.self)))
+                                } else if let error = error {
                                     observer(.error(
                                             GBPeerJsError.WebRtcLocalOfferErrorReason.setLocalDescriptionFailed(error)
                                     ))
@@ -207,6 +205,7 @@ class Negotiator: NSObject {
                             .subscribe(
                                     onSuccess: { [weak self] (offer: RTCSessionDescription) in
                                         guard let self = self else {
+                                            observer(.error(RxError.disposed(object: Self.self)))
                                             return
                                         }
 
@@ -253,10 +252,9 @@ class Negotiator: NSObject {
                                         }
                                     },
                                     onError: { [weak self] error in
-                                        guard self != nil else {
-                                            return
-                                        }
-                                        if let error = error as? GBPeerJsError.WebRtcLocalOfferErrorReason {
+                                        if self == nil {
+                                            observer(.error(RxError.disposed(object: Self.self)))
+                                        } else if let error = error as? GBPeerJsError.WebRtcLocalOfferErrorReason {
                                             observer(.error(GBPeerJsError.webRtcLocalOfferError(reason: error)))
                                         } else {
                                             observer(.error(GBPeerJsError.webRtcLocalOfferError(
@@ -271,6 +269,7 @@ class Negotiator: NSObject {
         )
     }
 
+    // swiftlint:disable:next function_body_length
     func handleSDP(type: String, sdp: String) -> Completable {
         func setRemoteDescriptionAsync(offer: RTCSessionDescription) -> Completable {
             Completable.create(subscribe: { [weak self] observer in
@@ -283,10 +282,9 @@ class Negotiator: NSObject {
                     peerConnection.setRemoteDescription(
                             offer,
                             completionHandler: { [weak self] error in
-                                guard self != nil else {
-                                    return
-                                }
-                                if let error = error {
+                                if self == nil {
+                                    observer(.error(RxError.disposed(object: Self.self)))
+                                } else if let error = error {
                                     observer(.error(
                                             GBPeerJsError.WebRtcRemoteOfferErrorReason.setRemoteDescriptionFailed(error)
                                     ))
@@ -302,28 +300,60 @@ class Negotiator: NSObject {
             })
         }
 
-        let sdp = RTCSessionDescription(type: RTCSessionDescription.type(for: type), sdp: sdp)
+        return Completable.create(
+                subscribe: { [weak self] observer in
+                    guard let self = self else {
+                        observer(.error(RxError.disposed(object: Self.self)))
+                        return Disposables.create()
+                    }
 
-        logger.log("Setting remote description", sdp.sdp)
+                    let sdp = RTCSessionDescription(type: RTCSessionDescription.type(for: type), sdp: sdp)
+                    logger.log("Setting remote description", sdp.sdp)
 
-        return setRemoteDescriptionAsync(offer: sdp)
-                .do(
-                        onError: { [weak self] error in
-                            self?.logger.log("Failed to setRemoteDescription, ", error)
-                        },
-                        onCompleted: { [weak self] in
-                            let peer = self?.connection?.peer ?? "-"
-                            self?.logger.log("Set remoteDescription:\(type) for:\(peer)")
-                        }
-                )
-                .andThen(
-                        Completable.deferred {
-                            if type == "OFFER" {
-                                return self.makeAnswer()
-                            }
-                            return Completable.empty()
-                        }
-                )
+                    var bag = [Disposable]()
+                    let disposable = setRemoteDescriptionAsync(offer: sdp)
+                            .do(
+                                    onError: { [weak self] error in
+                                        self?.logger.log("Failed to setRemoteDescription, ", error)
+                                    },
+                                    onCompleted: { [weak self] in
+                                        let peer = self?.connection?.peer ?? "-"
+                                        self?.logger.log("Set remoteDescription:\(type) for:\(peer)")
+                                    }
+                            )
+                            .andThen(
+                                    Completable.deferred {
+                                        if type == "OFFER" {
+                                            return self.makeAnswer()
+                                        }
+                                        return Completable.empty()
+                                    }
+                            )
+                            .subscribe(
+                                    onCompleted: { [weak self] in
+                                        guard self != nil else {
+                                            observer(.error(RxError.disposed(object: Self.self)))
+                                            return
+                                        }
+
+                                        observer(.completed)
+                                    },
+                                    onError: { [weak self] error in
+                                        if self == nil {
+                                            observer(.error(RxError.disposed(object: Self.self)))
+                                        } else if let error = error as? GBPeerJsError.WebRtcRemoteOfferErrorReason {
+                                            observer(.error(GBPeerJsError.webRtcRemoteOfferError(reason: error)))
+                                        } else {
+                                            observer(.error(GBPeerJsError.webRtcRemoteOfferError(
+                                                    reason: .unknownError(error)
+                                            )))
+                                        }
+                                    }
+                            )
+                    bag.append(disposable)
+                    return Disposables.create(bag)
+                }
+        )
     }
 
     private func makeAnswer() -> Completable {
@@ -411,16 +441,18 @@ extension Negotiator {
                             let disposable = makeOffer(mediaConstraint: constraint)
                                     .subscribe(
                                             onCompleted: { [weak self] in
-                                                guard self != nil else {
-                                                    return
+                                                if self == nil {
+                                                    observer(.error(RxError.disposed(object: Self.self)))
+                                                } else {
+                                                    observer(.completed)
                                                 }
-                                                observer(.completed)
                                             },
                                             onError: { [weak self] error in
-                                                guard self != nil else {
-                                                    return
+                                                if self == nil {
+                                                    observer(.error(RxError.disposed(object: Self.self)))
+                                                } else {
+                                                    observer(.error(error))
                                                 }
-                                                observer(.error(error))
                                             }
                                     )
                             bag.append(disposable)
@@ -428,16 +460,18 @@ extension Negotiator {
                             let disposable = handleSDP(type: "OFFER", sdp: "")
                                     .subscribe(
                                             onCompleted: { [weak self] in
-                                                guard self != nil else {
-                                                    return
+                                                if self == nil {
+                                                    observer(.error(RxError.disposed(object: Self.self)))
+                                                } else {
+                                                    observer(.completed)
                                                 }
-                                                observer(.completed)
                                             },
                                             onError: { [weak self] error in
-                                                guard self != nil else {
-                                                    return
+                                                if self == nil {
+                                                    observer(.error(RxError.disposed(object: Self.self)))
+                                                } else {
+                                                    observer(.error(error))
                                                 }
-                                                observer(.error(error))
                                             }
                                     )
                             bag.append(disposable)

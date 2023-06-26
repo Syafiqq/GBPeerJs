@@ -7,6 +7,7 @@ import Foundation
 public enum GBPeerJsError: Error {
     case webRtcCommonError(reason: WebRtcCommonErrorReason)
     case webRtcLocalOfferError(reason: WebRtcLocalOfferErrorReason)
+    case webRtcRemoteOfferError(reason: WebRtcRemoteOfferErrorReason)
 }
 
 public extension GBPeerJsError {

@@ -69,9 +69,10 @@ protocol Connection: AnyObject {
     var type: ConnectionType { get }
     var provider: PeerProvider? { get }
     var originator: Bool { get }
-    var peerConnection: RTCPeerConnection { get }
+    var peerConnection: RTCPeerConnection? { get }
 
     func setPeerConnection(_ peer: RTCPeerConnection)
+    func unsetPeerConnection()
     func addStream(_ stream: RTCMediaStream)
 }
 
@@ -111,7 +112,7 @@ class Negotiator: NSObject {
     ) {
         logger.log("add stream \(stream.streamId) to media connection \(mediaConnection.connectionId)")
 
-        mediaConnection.addStream(stream);
+        mediaConnection.addStream(stream)
     }
 
     // swiftlint:disable:next function_body_length
@@ -836,6 +837,38 @@ extension Negotiator {
                 self._addStreamToMediaConnection(stream, mediaConnection)
             }
         }*/
+    }
+
+    func cleanup () {
+        logger.log("Cleaning up PeerConnection to \(connection?.peer ?? "-")")
+
+        let peerConnection = connection?.peerConnection
+
+        guard peerConnection != nil else {
+            return
+        }
+
+        connection?.unsetPeerConnection()
+
+        // unsubscribe from all PeerConnection's events
+        peerConnection?.delegate = nil
+
+        let peerConnectionNotClosed = peerConnection?.signalingState != .closed
+        let dataChannelNotClosed = false
+
+        /*if (self.connection.type === connectiontype.data) {
+            const dataconnection = <dataconnection>(<unknown>self.connection)
+            const datachannel = dataconnection.datachannel
+
+            if (datachannel) {
+                datachannelnotclosed =
+                        !!datachannel.readystate && datachannel.readystate !== "closed"
+            }
+        }*/
+
+        if peerConnectionNotClosed || dataChannelNotClosed {
+            peerConnection?.close()
+        }
     }
 }
 

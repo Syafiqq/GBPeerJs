@@ -9,6 +9,7 @@ public enum GBPeerJsError: Error {
     case webRtcLocalOfferError(reason: WebRtcLocalOfferErrorReason)
     case webRtcRemoteOfferError(reason: WebRtcRemoteOfferErrorReason)
     case webRtcLocalAnswerError(reason: WebRtcLocalAnswerErrorReason)
+    case webRtcRemoteCandidateError(reason: WebRtcRemoteIceCandidateErrorReason)
 }
 
 public extension GBPeerJsError {
@@ -33,6 +34,11 @@ public extension GBPeerJsError {
         case createLocalAnswerFailed(Error?)
         case setLocalDescriptionFailed(Error?)
         case submitLocalAnswerFailed(Error?)
+        case unknownError(Error?)
+    }
+
+    enum WebRtcRemoteIceCandidateErrorReason: Error {
+        case setCandidateFailed(Error?)
         case unknownError(Error?)
     }
 }

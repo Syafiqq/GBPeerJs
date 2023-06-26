@@ -6,6 +6,12 @@ import Foundation
 import WebRTC
 import RxSwift
 
+struct IceCandidate: Encodable {
+    let candidate: String
+    let sdpMLineIndex: Int32
+    let sdpMid: String?
+}
+
 enum ConnectionType: String {
     // swiftlint:disable explicit_enum_raw_value
     case media
@@ -516,6 +522,88 @@ class Negotiator: NSObject {
                                             observer(.error(GBPeerJsError.webRtcLocalAnswerError(reason: error)))
                                         } else {
                                             observer(.error(GBPeerJsError.webRtcLocalAnswerError(
+                                                    reason: .unknownError(error)
+                                            )))
+                                        }
+                                    }
+                            )
+                    bag.append(disposable)
+                    return Disposables.create(bag)
+                }
+        )
+    }
+
+    // swiftlint:disable:next function_body_length
+    func handleCandidate(_ ice: IceCandidate) -> Completable {
+        func addIceCandidateAsync(ice: IceCandidate) -> Completable {
+            Completable.create(subscribe: { [weak self] observer in
+                guard let self = self else {
+                    observer(.error(RxError.disposed(object: Self.self)))
+                    return Disposables.create()
+                }
+
+                if let peerConnection = self.connection?.peerConnection {
+                    peerConnection.add(
+                            RTCIceCandidate(
+                                    sdp: ice.candidate,
+                                    sdpMLineIndex: ice.sdpMLineIndex,
+                                    sdpMid: ice.sdpMid
+                            ),
+                            completionHandler: { [weak self] error in
+                                if self == nil {
+                                    observer(.error(RxError.disposed(object: Self.self)))
+                                } else if let error = error {
+                                    observer(.error(
+                                            GBPeerJsError.WebRtcRemoteIceCandidateErrorReason.setCandidateFailed(error)
+                                    ))
+                                } else {
+                                    observer(.completed)
+                                }
+                            }
+                    )
+                } else {
+                    observer(.error(GBPeerJsError.WebRtcCommonErrorReason.unknownPeerConnection))
+                }
+                return Disposables.create()
+            })
+        }
+
+        logger.log("handleCandidate: ", ice)
+
+        return Completable.create(
+                subscribe: { [weak self] observer in
+                    guard let self = self else {
+                        observer(.error(RxError.disposed(object: Self.self)))
+                        return Disposables.create()
+                    }
+
+                    var bag = [Disposable]()
+                    let disposable = addIceCandidateAsync(ice: ice)
+                            .do(
+                                    onError: { [weak self] error in
+                                        self?.logger.log("Failed to handleCandidate, ", error)
+                                    },
+                                    onCompleted: { [weak self] in
+                                        let peer = self?.connection?.peer ?? "-"
+                                        self?.logger.log("Added ICE candidate for:\(peer)")
+                                    }
+                            )
+                            .subscribe(
+                                    onCompleted: { [weak self] in
+                                        if self == nil {
+                                            observer(.error(RxError.disposed(object: Self.self)))
+                                        } else {
+                                            observer(.completed)
+                                        }
+                                    },
+                                    onError: { [weak self] error in
+                                        if self == nil {
+                                            observer(.error(RxError.disposed(object: Self.self)))
+                                        } else if let error = error
+                                                as? GBPeerJsError.WebRtcRemoteIceCandidateErrorReason {
+                                            observer(.error(GBPeerJsError.webRtcRemoteCandidateError(reason: error)))
+                                        } else {
+                                            observer(.error(GBPeerJsError.webRtcRemoteCandidateError(
                                                     reason: .unknownError(error)
                                             )))
                                         }

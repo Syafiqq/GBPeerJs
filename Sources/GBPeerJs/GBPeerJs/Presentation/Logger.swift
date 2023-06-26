@@ -4,9 +4,11 @@
 
 import Foundation
 
-class Logger {
-    static let shared = Logger()
+protocol ILogger {
+    func log(_  messages: Any...)
+}
 
+class Logger: ILogger {
     var debug: Bool = false
 
     init() {

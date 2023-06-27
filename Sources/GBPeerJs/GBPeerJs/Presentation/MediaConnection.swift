@@ -26,21 +26,24 @@ class MediaConnection: IConnection {
     private var classBag = DisposeBag()
 
     private var open = false
-    private let localStream: RTCMediaStream?
+    private var localStream: RTCMediaStream?
     private var remoteStream: RTCMediaStream?
     private let logger: ILogger
     private var negotiator: INegotiator?
+    private var remoteOfferPayload: [String: Any] = [:]
 
     init(
             peer: String,
             provider: PeerProvider?,
             connectionId: String?,
             stream: RTCMediaStream,
-            logger: ILogger
+            logger: ILogger,
+            remoteOfferPayload: [String: Any]
     ) {
         self.peer = peer
         self.provider = provider
         self.logger = logger
+        self.remoteOfferPayload = remoteOfferPayload
         originator = true
 
         localStream = stream
@@ -59,7 +62,8 @@ class MediaConnection: IConnection {
                                     mandatoryConstraints: nil,
                                     optionalConstraints: nil
                             )
-                    )
+                    ),
+                    remoteOfferSdp: (remoteOfferPayload["sdp"] as? String) ?? ""
             )
         }
     }
@@ -98,6 +102,7 @@ private extension MediaConnection {
         delegate?.mediaConnection(self, onRemoteStreamAdded: remoteStream) // Should we call this `open`?
     }
 
+    // swiftlint:disable:next function_body_length
     func doHandleMessage(message: [String: Any]) {
         let type = message["type"] as? String
 
@@ -160,7 +165,61 @@ private extension MediaConnection {
                 open = true
             }
         default:
-            logger.warn("Unrecognized message type:\(type ?? "-") from peer:\(peer)");
+            logger.warn("Unrecognized message type:\(type ?? "-") from peer:\(peer)")
         }
+    }
+
+    func doAnswer(stream: RTCMediaStream?) {
+        if localStream != nil {
+            logger.warn("Local stream already exists on this MediaConnection. Are you answering a call twice?")
+            return
+        }
+
+        localStream = stream
+
+        /*if options && options.sdpTransform {
+            this.options.sdpTransform = options.sdpTransform;
+        }*/
+
+        negotiator?.startConnection(
+                        stream: stream,
+                        originator: false,
+                        originatorConstraint: nil,
+                        data: NegotiatorEntity(
+                                peerFactory: RTCPeerConnectionFactory(),
+                                peerConfig: RTCConfiguration(),
+                                peerConstraint: RTCMediaConstraints(
+                                        mandatoryConstraints: nil,
+                                        optionalConstraints: nil
+                                )
+                        ),
+                        remoteOfferSdp: (remoteOfferPayload["sdp"] as? String) ?? ""
+                )
+                .andThen(
+                        Completable.deferred { [weak self] in
+                            // Retrieve lost messages stored because PeerConnection not set up.
+                            let connectionId = self?.connectionId ?? ""
+                            let messages = self?.provider?.getMessage(connectionId: connectionId) ?? []
+
+                            for message in messages {
+                                self?.doHandleMessage(message: message)
+                            }
+
+                            return Completable.empty()
+                        }
+                )
+                .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
+                .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
+                .subscribe(
+                        onCompleted: { [weak self] in
+                            self?.open = true
+                            self?.logger.log("Success answer")
+                        },
+                        onError: { [weak self] error in
+                            self?.logger.log("Failed to answer")
+                            self?.emitError(error)
+                        }
+                )
+                .disposed(by: classBag)
     }
 }

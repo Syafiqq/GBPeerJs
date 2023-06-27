@@ -74,6 +74,7 @@ protocol PeerProvider: AnyObject {
     var socket: SocketProvider? { get }
 
     func getConnection(peerId: String, connectionId: String) -> IConnection
+    func getMessage(connectionId: String) -> [[String: Any]]
 }
 
 protocol IConnection: AnyObject {
@@ -97,7 +98,8 @@ protocol INegotiator: AnyObject {
             stream: RTCMediaStream?,
             originator: Bool,
             originatorConstraint: RTCMediaConstraints?,
-            data: NegotiatorEntity
+            data: NegotiatorEntity,
+            remoteOfferSdp: String
     ) -> Completable
 
     func handleSDP(
@@ -126,13 +128,15 @@ class Negotiator: NSObject, INegotiator {
             stream: RTCMediaStream? = nil,
             originator: Bool = false,
             originatorConstraint: RTCMediaConstraints? = nil,
-            data: NegotiatorEntity
+            data: NegotiatorEntity,
+            remoteOfferSdp: String
     ) -> Completable {
         doStartConnection(
                 stream: stream,
                 originator: originator,
                 originatorConstraint: originatorConstraint,
-                data: data
+                data: data,
+                remoteOfferSdp: remoteOfferSdp
         )
                 /*.subscribeOn(SerialDispatchQueueScheduler(qos: .default))
                 .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
@@ -204,7 +208,8 @@ private extension Negotiator {
             stream: RTCMediaStream? = nil,
             originator: Bool = false,
             originatorConstraint: RTCMediaConstraints? = nil,
-            data: NegotiatorEntity
+            data: NegotiatorEntity,
+            remoteOfferSdp: String
     ) -> Completable {
         Completable.create(
                 subscribe: { [weak self] observer in
@@ -270,7 +275,7 @@ private extension Negotiator {
                             bag.append(disposable)
                         } else {
                             fatalError("not yet implemented")
-                            let disposable = doHandleSDP(type: "OFFER", sdp: "")
+                            let disposable = doHandleSDP(type: ServerMessageType.offer.rawValue, sdp: remoteOfferSdp)
                                     .subscribe(
                                             onCompleted: { [weak self] in
                                                 if self == nil {
@@ -746,7 +751,7 @@ private extension Negotiator {
                             )
                             .andThen(
                                     Completable.deferred {
-                                        if type == "OFFER" {
+                                        if type == ServerMessageType.offer.rawValue {
                                             let constraint: RTCMediaConstraints
                                             if let answerMediaConstraint = answerMediaConstraint {
                                                 constraint = answerMediaConstraint

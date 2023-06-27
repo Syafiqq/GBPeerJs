@@ -64,7 +64,7 @@ class Socket: ISocket {
 
         let wsUrl = "\(baseUrl)&id=\(id)&token=\(token)"
 
-        if (socket != nil || !disconnected) {
+        if socket != nil || !disconnected {
             return
         }
 
@@ -166,8 +166,8 @@ extension Socket: WebSocketDelegate {
 
 private extension Socket {
     func sendQueuedMessages() {
-        //Create copy of queue and clear it,
-        //because send method push the message back to queue if smth will go wrong
+        // Create copy of queue and clear it,
+        // because send method push the message back to queue if smth will go wrong
         let copiedQueue = Array(messagesQueue)
         messagesQueue.removeAll()
 

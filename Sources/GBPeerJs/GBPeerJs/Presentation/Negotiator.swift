@@ -95,6 +95,41 @@ class Negotiator: NSObject {
         self.connection = connection
         self.logger = logger
     }
+
+    func startConnection(
+            stream: RTCMediaStream? = nil,
+            originator: Bool = false,
+            originatorConstraint: RTCMediaConstraints? = nil,
+            data: NegotiatorEntity
+    ) {
+        doStartConnection(
+                stream: stream,
+                originator: originator,
+                originatorConstraint: originatorConstraint,
+                data: data
+        )
+    }
+
+    func handleSDP(
+            type: String,
+            sdp: String,
+            answerMediaConstraint: RTCMediaConstraints? = nil
+    ) {
+        doHandleSDP(
+                type: type,
+                sdp: sdp,
+                answerMediaConstraint: answerMediaConstraint
+        )
+    }
+
+    func handleCandidate(
+            _ ice: IceCandidate
+    ) {
+        doHandleCandidate(ice)
+    }
+
+    func cleanup() {
+    }
 }
 
 private extension Negotiator {

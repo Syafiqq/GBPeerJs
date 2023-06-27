@@ -307,8 +307,13 @@ private extension GBPeer {
         }
     }
 
+    /**
+     * Emits an error message and destroys the Peer.
+     * The Peer is not destroyed if it's in a disconnected state, in which case
+     * it retains its disconnected state and its existing connections.
+     */
     func abort(_ error: Error?) {
-        logger.log("Aborting!")
+        logger.error("Aborting!");
 
         if let error {
             emitError(error)

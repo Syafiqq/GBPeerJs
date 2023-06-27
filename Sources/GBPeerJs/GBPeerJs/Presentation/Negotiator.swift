@@ -67,6 +67,7 @@ protocol SocketProvider: AnyObject {
 
 protocol PeerProvider: AnyObject {
     var socket: SocketProvider? { get }
+
     func getConnection(peerId: String, connectionId: String) -> Connection
 }
 
@@ -916,7 +917,7 @@ extension Negotiator: RTCPeerConnectionDelegate {
     }
 
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceConnectionState) {
-        switch (peerConnection.iceConnectionState) {
+        switch peerConnection.iceConnectionState {
         case .failed:
             logger.log("iceConnectionState is failed, closing connections to \(connection?.peer ?? "-")")
             connection?.emitError(GBPeerJsError.webRtcLocalCandidateError(reason: .iceConnectionStateFailed))
@@ -942,7 +943,7 @@ extension Negotiator: RTCPeerConnectionDelegate {
             return
         }
 
-        logger.log("Received ICE candidates for \(connection?.peer ?? "-"):, \(candidate.sdp)");
+        logger.log("Received ICE candidates for \(connection?.peer ?? "-"):, \(candidate.sdp)")
 
         let candidateEntity = LocalCandidateRequestEntity(
                 type: ServerMessageType.candidate.rawValue,
@@ -964,7 +965,7 @@ extension Negotiator: RTCPeerConnectionDelegate {
                 connection?.provider?.socket?.send(result)
             }
         } catch {
-            logger.error("Submit local candidate failed");
+            logger.error("Submit local candidate failed")
         }
     }
 

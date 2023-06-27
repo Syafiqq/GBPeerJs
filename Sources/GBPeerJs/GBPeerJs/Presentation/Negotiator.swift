@@ -742,6 +742,10 @@ extension Negotiator {
     }
 
     private func setupListeners(peerConnection: RTCPeerConnection) {
+        // MEDIACONNECTION.
+        logger.log("Listening for remote stream");
+        // peerConnection.ontrack
+
         /*let peerId = webRtcCommonError?.peer
         let connectionId = webRtcCommonError?.connectionId
         let connectionType = webRtcCommonError?.type

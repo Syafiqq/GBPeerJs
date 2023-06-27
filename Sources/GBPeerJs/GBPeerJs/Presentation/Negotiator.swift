@@ -73,7 +73,7 @@ protocol ISocket: AnyObject {
     func cleanup()
 }
 
-protocol PeerProvider: AnyObject {
+protocol IPeer: AnyObject {
     var socket: ISocket? { get }
 
     func getConnection(peerId: String, connectionId: String) -> IConnection
@@ -85,7 +85,7 @@ protocol IConnection: AnyObject {
     var peer: String { get }
     var connectionId: String { get }
     var type: ConnectionType { get }
-    var provider: PeerProvider? { get }
+    var provider: IPeer? { get }
     var originator: Bool { get }
     var peerConnection: RTCPeerConnection? { get }
 

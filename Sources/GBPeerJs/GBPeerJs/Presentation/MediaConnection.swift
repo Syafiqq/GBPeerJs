@@ -21,7 +21,7 @@ class MediaConnection: IConnection {
 
     var originator: Bool
 
-    weak var provider: PeerProvider?
+    weak var provider: IPeer?
     weak var delegate: MediaConnectionDelegate?
     var peerConnection: RTCPeerConnection?
 
@@ -36,7 +36,7 @@ class MediaConnection: IConnection {
 
     init(
             peer: String,
-            provider: PeerProvider?,
+            provider: IPeer?,
             connectionId: String?,
             stream: RTCMediaStream,
             logger: ILogger,

@@ -672,7 +672,7 @@ private extension Negotiator {
             sdp: String,
             answerMediaConstraint: RTCMediaConstraints? = nil
     ) -> Completable {
-        func setRemoteDescriptionAsync(offer: RTCSessionDescription) -> Completable {
+        func setRemoteDescriptionAsync(session: RTCSessionDescription) -> Completable {
             Completable.create(subscribe: { [weak self] observer in
                 guard let self = self else {
                     observer(.error(RxError.disposed(object: Self.self)))
@@ -681,7 +681,7 @@ private extension Negotiator {
 
                 if let peerConnection = self.connection?.peerConnection {
                     peerConnection.setRemoteDescription(
-                            offer,
+                            session,
                             completionHandler: { [weak self] error in
                                 if self == nil {
                                     observer(.error(RxError.disposed(object: Self.self)))
@@ -712,7 +712,7 @@ private extension Negotiator {
                     logger.log("Setting remote description", sdp.sdp)
 
                     var bag = [Disposable]()
-                    let disposable = setRemoteDescriptionAsync(offer: sdp)
+                    let disposable = setRemoteDescriptionAsync(session: sdp)
                             .do(
                                     onError: { [weak self] error in
                                         self?.logger.log("Failed to setRemoteDescription, ", error)

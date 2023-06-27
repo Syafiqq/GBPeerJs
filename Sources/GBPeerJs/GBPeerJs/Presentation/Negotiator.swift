@@ -75,6 +75,7 @@ protocol PeerProvider: AnyObject {
 
     func getConnection(peerId: String, connectionId: String) -> IConnection
     func getMessage(connectionId: String) -> [[String: Any]]
+    func removeConnection(_ connection: IConnection)
 }
 
 protocol IConnection: AnyObject {

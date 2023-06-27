@@ -8,6 +8,7 @@ import RxSwift
 
 protocol MediaConnectionDelegate: AnyObject {
     func mediaConnection(_: MediaConnection, onRemoteStreamAdded: RTCMediaStream)
+    func mediaConnection(_: MediaConnection, onClose: ())
 }
 
 class MediaConnection: IConnection {
@@ -52,19 +53,19 @@ class MediaConnection: IConnection {
 
         if let stream = localStream {
             negotiator?.startConnection(
-                    stream: stream,
-                    originator: true,
-                    originatorConstraint: nil,
-                    data: NegotiatorEntity(
-                            peerFactory: RTCPeerConnectionFactory(),
-                            peerConfig: RTCConfiguration(),
-                            peerConstraint: RTCMediaConstraints(
-                                    mandatoryConstraints: nil,
-                                    optionalConstraints: nil
-                            )
-                    ),
-                    remoteOfferSdp: (remoteOfferPayload["sdp"] as? String) ?? ""
-            )
+                            stream: stream,
+                            originator: true,
+                            originatorConstraint: nil,
+                            data: NegotiatorEntity(
+                                    peerFactory: RTCPeerConnectionFactory(),
+                                    peerConfig: RTCConfiguration(),
+                                    peerConstraint: RTCMediaConstraints(
+                                            mandatoryConstraints: nil,
+                                            optionalConstraints: nil
+                                    )
+                            ),
+                            remoteOfferSdp: (remoteOfferPayload["sdp"] as? String) ?? ""
+                    )
                     .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
                     .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
                     .subscribe(
@@ -233,5 +234,32 @@ private extension MediaConnection {
                         }
                 )
                 .disposed(by: classBag)
+    }
+
+    func doClose() {
+        if negotiator != nil {
+            negotiator?.cleanup()
+            negotiator = nil
+        }
+
+        localStream = nil
+        remoteStream = nil
+
+        if provider != nil {
+            provider?.removeConnection(self)
+            provider = nil
+        }
+
+        /*if (this.options && this.options._stream) {
+            this.options._stream = null;
+        }*/
+
+        guard open else {
+            return
+        }
+
+        open = false
+
+        delegate?.mediaConnection(self, onClose: ())
     }
 }

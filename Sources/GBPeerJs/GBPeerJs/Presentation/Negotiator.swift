@@ -862,6 +862,10 @@ private extension Negotiator {
         stream.audioTracks.forEach {
             peerConnection.add($0, streamIds: [stream.streamId])
         }
+
+        stream.videoTracks.forEach {
+            peerConnection.add($0, streamIds: [stream.streamId])
+        }
     }
 
     func addStreamToMediaConnection(

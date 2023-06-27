@@ -96,7 +96,9 @@ class Negotiator: NSObject {
         self.connection = connection
         self.logger = logger
     }
+}
 
+extension Negotiator {
     func startConnection(data: NegotiatorEntity) -> Completable {
         doStartConnection(data: data)
     }
@@ -636,9 +638,7 @@ class Negotiator: NSObject {
                 }
         )
     }
-}
 
-extension Negotiator {
     // swiftlint:disable:next function_body_length
     private func doStartConnection(
             stream: RTCMediaStream? = nil,

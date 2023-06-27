@@ -67,7 +67,8 @@ struct NegotiatorEntity {
 }
 
 protocol ISocket: AnyObject {
-    var delegate: SocketDelegate? { set get }
+    var delegate: SocketDelegate? { get set }
+
     func start(id: String, token: String)
     func close()
     func send(_ message: String)

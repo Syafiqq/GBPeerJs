@@ -9,6 +9,7 @@ import RxSwift
 protocol MediaConnectionDelegate: AnyObject {
     func mediaConnection(_: MediaConnection, onRemoteStreamAdded: RTCMediaStream)
     func mediaConnection(_: MediaConnection, onClose: ())
+    func mediaConnection(_: MediaConnection, onError: Error)
 }
 
 class MediaConnection: IConnection {
@@ -93,10 +94,12 @@ class MediaConnection: IConnection {
         doAddStream(stream)
     }
 
-    func emitError(_ error: Error) {
+    func close() {
+        doClose()
     }
 
-    func close() {
+    func emitError(_ error: Error) {
+        delegate?.mediaConnection(self, onError: error)
     }
 
     func emitIceStateChanged(_ state: RTCIceConnectionState) {

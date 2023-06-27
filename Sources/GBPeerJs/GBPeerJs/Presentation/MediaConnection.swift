@@ -65,6 +65,18 @@ class MediaConnection: IConnection {
                     ),
                     remoteOfferSdp: (remoteOfferPayload["sdp"] as? String) ?? ""
             )
+                    .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
+                    .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
+                    .subscribe(
+                            onCompleted: { [weak self] in
+                                self?.logger.log("Success Start IConnection")
+                            },
+                            onError: { [weak self] error in
+                                self?.logger.log("Failed to start connection")
+                                self?.emitError(error)
+                            }
+                    )
+                    .disposed(by: classBag)
         }
     }
 

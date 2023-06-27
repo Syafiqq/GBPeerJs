@@ -75,6 +75,9 @@ protocol Connection: AnyObject {
     func setPeerConnection(_ peer: RTCPeerConnection)
     func unsetPeerConnection()
     func addStream(_ stream: RTCMediaStream)
+    func emitError(_ error: Error)
+    func close()
+    func emitIceStateChanged(_ state: RTCIceConnectionState)
 }
 
 // swiftlint:disable:next type_body_length
@@ -742,8 +745,14 @@ extension Negotiator {
     }
 
     private func setupListeners(peerConnection: RTCPeerConnection) {
+        // DATACONNECTION.
+        logger.log("Listening for data channel")
+        // Fired between offer and answer, so options should already be saved
+        // in the options hash.
+        // peerConnection.ondatachannel
+
         // MEDIACONNECTION.
-        logger.log("Listening for remote stream");
+        logger.log("Listening for remote stream")
         // peerConnection.ontrack
 
         /*let peerId = webRtcCommonError?.peer
@@ -879,11 +888,10 @@ extension Negotiator {
 
 extension Negotiator: RTCPeerConnectionDelegate {
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange stateChanged: RTCSignalingState) {
-        print("WebRTC - didChange stateChanged - \(stateChanged) | Called when the SignalingState changed.")
     }
 
     func peerConnection(_ peerConnection: RTCPeerConnection, didAdd stream: RTCMediaStream) {
-        logger.log("Received remote stream");
+        logger.log("Received remote stream")
 
         guard let peerId = connection?.peer,
               let connectionId = connection?.connectionId,
@@ -905,7 +913,22 @@ extension Negotiator: RTCPeerConnectionDelegate {
     }
 
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceConnectionState) {
-        print("WebRTC - didChange newState \(newState) | Called any time the IceConnectionState changes.")
+        switch (peerConnection.iceConnectionState) {
+        case .failed:
+            logger.log("iceConnectionState is failed, closing connections to \(connection?.peer ?? "-")")
+            connection?.emitError(GBPeerJsError.webRtcLocalCandidateError(reason: .iceConnectionStateFailed))
+            connection?.close()
+        case .closed:
+            logger.log("iceConnectionState is closed, closing connections to \(connection?.peer ?? "-")")
+            connection?.emitError(GBPeerJsError.webRtcLocalCandidateError(reason: .iceConnectionStateClosed))
+            connection?.close()
+        case .disconnected:
+            logger.log("iceConnectionState changed to disconnected on the connection with  \(connection?.peer ?? "-")")
+        default:
+            break
+        }
+
+        connection?.emitIceStateChanged(peerConnection.iceConnectionState)
     }
 
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceGatheringState) {
@@ -967,7 +990,14 @@ extension Negotiator: RTCPeerConnectionDelegate {
     }
 
     func peerConnection(_ peerConnection: RTCPeerConnection, didOpen dataChannel: RTCDataChannel) {
-        print("WebRTC - didOpen dataChannel | New data channel has been opened.")
+        logger.log("Received data channel")
+
+        /*const dataChannel = evt.channel
+        const connection = <DataConnection>(
+                provider.getConnection(peerId, connectionId)
+        )
+
+        connection.initialize(dataChannel)*/
     }
 }
 

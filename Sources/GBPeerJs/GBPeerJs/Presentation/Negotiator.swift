@@ -97,9 +97,9 @@ class Negotiator: NSObject {
     }
 }
 
-extension Negotiator {
+private extension Negotiator {
     // swiftlint:disable:next function_body_length
-    func startConnection(
+    func doStartConnection(
             stream: RTCMediaStream? = nil,
             originator: Bool = false,
             originatorConstraint: RTCMediaConstraints? = nil,
@@ -168,7 +168,7 @@ extension Negotiator {
                                     )
                             bag.append(disposable)
                         } else {
-                            let disposable = handleSDP(type: "OFFER", sdp: "")
+                            let disposable = doHandleSDP(type: "OFFER", sdp: "")
                                     .subscribe(
                                             onCompleted: { [weak self] in
                                                 if self == nil {
@@ -195,29 +195,160 @@ extension Negotiator {
         )
     }
 
-    func addTracksToConnection(
-            stream: RTCMediaStream,
-            peerConnection: RTCPeerConnection
-    ) {
-        logger.log("add tracks from stream \(stream.streamId) to peer initialization")
+    func startPeerConnection(
+            data: NegotiatorEntity
+    ) throws -> RTCPeerConnection {
+        logger.log("Creating RTCPeerConnection.")
 
-        /*guard (peerConnection.canAddTrack) else {
-            logger.error("Your browser does't support RTCPeerConnection#addTrack. Ignored.")
-            return
-        }*/
-
-        stream.audioTracks.forEach {
-            peerConnection.add($0, streamIds: [stream.streamId])
+        guard let peerConnection = data.peerFactory
+                .peerConnection(with: data.peerConfig, constraints: data.peerConstraint, delegate: nil) else {
+            throw GBPeerJsError.webRtcCommonError(reason: .createPeerConnectionFailed)
         }
+
+        setupListeners(peerConnection: peerConnection)
+
+        return peerConnection
     }
 
-    func addStreamToMediaConnection(
-            stream: RTCMediaStream,
-            mediaConnection: Connection
-    ) {
-        logger.log("add stream \(stream.streamId) to media connection \(mediaConnection.connectionId)")
+    func setupListeners(peerConnection: RTCPeerConnection) {
+        // DATACONNECTION.
+        logger.log("Listening for data channel")
+        // Fired between offer and answer, so options should already be saved
+        // in the options hash.
+        // peerConnection.ondatachannel
 
-        mediaConnection.addStream(stream)
+        // MEDIACONNECTION.
+        logger.log("Listening for remote stream")
+        // peerConnection.ontrack
+
+        /*let peerId = webRtcCommonError?.peer
+        let connectionId = webRtcCommonError?.connectionId
+        let connectionType = webRtcCommonError?.type
+        let provider = webRtcCommonError?.provider
+
+        // ICE CANDIDATES.
+        logger.log("Listening for ICE candidates.")
+
+        peerConnection.delegate = self
+        peerConnection.onicecandidate = (evt) => {
+            if (!evt.candidate || !evt.candidate.candidate) return
+
+                    logger.log(`Received ICE candidates for $ {
+                peerId
+            }:`, evt.candidate)
+
+            provider.socket.send({
+                type: ServerMessageType.Candidate,
+                payload: {
+                    candidate: evt.candidate,
+                    type: connectionType,
+                    connectionId: connectionId,
+                },
+                dst: peerId,
+            })
+        }
+
+        peerConnection.oniceconnectionstatechange = () => {
+            switch (peerConnection.iceConnectionState) {
+            case "failed":
+                logger.log(
+                        "iceConnectionState is failed, closing connections to " + peerId,
+                        )
+                self.webRtcCommonError.emit(
+                        "error",
+                        new Error("Negotiation of webRtcCommonError to " + peerId + " failed."),
+                )
+                self.webRtcCommonError.close()
+                break
+            case "closed":
+                logger.log(
+                        "iceConnectionState is closed, closing connections to " + peerId,
+                        )
+                self.webRtcCommonError.emit(
+                        "error",
+                        new Error("Connection to " + peerId + " closed."),
+                )
+                self.webRtcCommonError.close()
+                break
+            case "disconnected":
+                logger.log(
+                        "iceConnectionState changed to disconnected on the webRtcCommonError with " +
+                                peerId,
+                        )
+                break
+            case "completed":
+                peerConnection.onicecandidate = util.noop
+                break
+            }
+
+            self.webRtcCommonError.emit(
+                    "iceStateChanged",
+                    peerConnection.iceConnectionState,
+                    )
+        }
+
+        // DATACONNECTION.
+        logger.log("Listening for data channel")
+        // Fired between offer and answer, so options should already be saved
+        // in the options hash.
+        peerConnection.ondatachannel = (evt) => {
+            logger.log("Received data channel")
+
+            const dataChannel = evt.channel
+            const webRtcCommonError = <DataConnection > (
+                    provider.getConnection(peerId, connectionId)
+            )
+
+            webRtcCommonError.initialize(dataChannel)
+        }
+
+        // MEDIACONNECTION.
+        logger.log("Listening for remote stream")
+
+        peerConnection.ontrack = (evt) => {
+            logger.log("Received remote stream")
+
+            const stream = evt.streams[0]
+            const webRtcCommonError = provider.getConnection(peerId, connectionId)
+
+            if (webRtcCommonError.type === ConnectionType.Media) {
+                const mediaConnection = <MediaConnection > webRtcCommonError
+
+                self._addStreamToMediaConnection(stream, mediaConnection)
+            }
+        }*/
+    }
+
+    func doCleanup() {
+        logger.log("Cleaning up PeerConnection to \(connection?.peer ?? "-")")
+
+        let peerConnection = connection?.peerConnection
+
+        guard peerConnection != nil else {
+            return
+        }
+
+        connection?.unsetPeerConnection()
+
+        // unsubscribe from all PeerConnection's events
+        peerConnection?.delegate = nil
+
+        let peerConnectionNotClosed = peerConnection?.signalingState != .closed
+        let dataChannelNotClosed = false
+
+        /*if (self.connection.type === connectiontype.data) {
+            const dataconnection = <dataconnection>(<unknown>self.connection)
+            const datachannel = dataconnection.datachannel
+
+            if (datachannel) {
+                datachannelnotclosed =
+                        !!datachannel.readystate && datachannel.readystate !== "closed"
+            }
+        }*/
+
+        if peerConnectionNotClosed || dataChannelNotClosed {
+            peerConnection?.close()
+        }
     }
 
     // swiftlint:disable:next function_body_length
@@ -392,106 +523,6 @@ extension Negotiator {
     }
 
     // swiftlint:disable:next function_body_length
-    func handleSDP(
-            type: String,
-            sdp: String,
-            answerMediaConstraint: RTCMediaConstraints? = nil
-    ) -> Completable {
-        func setRemoteDescriptionAsync(offer: RTCSessionDescription) -> Completable {
-            Completable.create(subscribe: { [weak self] observer in
-                guard let self = self else {
-                    observer(.error(RxError.disposed(object: Self.self)))
-                    return Disposables.create()
-                }
-
-                if let peerConnection = self.connection?.peerConnection {
-                    peerConnection.setRemoteDescription(
-                            offer,
-                            completionHandler: { [weak self] error in
-                                if self == nil {
-                                    observer(.error(RxError.disposed(object: Self.self)))
-                                } else if let error = error {
-                                    observer(.error(
-                                            GBPeerJsError.WebRtcRemoteOfferErrorReason.setRemoteDescriptionFailed(error)
-                                    ))
-                                } else {
-                                    observer(.completed)
-                                }
-                            }
-                    )
-                } else {
-                    observer(.error(GBPeerJsError.WebRtcCommonErrorReason.unknownPeerConnection))
-                }
-                return Disposables.create()
-            })
-        }
-
-        return Completable.create(
-                subscribe: { [weak self] observer in
-                    guard let self = self else {
-                        observer(.error(RxError.disposed(object: Self.self)))
-                        return Disposables.create()
-                    }
-
-                    let sdp = RTCSessionDescription(type: RTCSessionDescription.type(for: type), sdp: sdp)
-                    logger.log("Setting remote description", sdp.sdp)
-
-                    var bag = [Disposable]()
-                    let disposable = setRemoteDescriptionAsync(offer: sdp)
-                            .do(
-                                    onError: { [weak self] error in
-                                        self?.logger.log("Failed to setRemoteDescription, ", error)
-                                    },
-                                    onCompleted: { [weak self] in
-                                        let peer = self?.connection?.peer ?? "-"
-                                        self?.logger.log("Set remoteDescription:\(type) for:\(peer)")
-                                    }
-                            )
-                            .andThen(
-                                    Completable.deferred {
-                                        if type == "OFFER" {
-                                            let constraint: RTCMediaConstraints
-                                            if let answerMediaConstraint = answerMediaConstraint {
-                                                constraint = answerMediaConstraint
-                                            } else {
-                                                constraint = RTCMediaConstraints(
-                                                        mandatoryConstraints: nil,
-                                                        optionalConstraints: nil
-                                                )
-                                            }
-                                            return self.makeAnswer(mediaConstraint: constraint)
-                                        }
-                                        return Completable.empty()
-                                    }
-                            )
-                            .subscribe(
-                                    onCompleted: { [weak self] in
-                                        guard self != nil else {
-                                            observer(.error(RxError.disposed(object: Self.self)))
-                                            return
-                                        }
-
-                                        observer(.completed)
-                                    },
-                                    onError: { [weak self] error in
-                                        if self == nil {
-                                            observer(.error(RxError.disposed(object: Self.self)))
-                                        } else if let error = error as? GBPeerJsError.WebRtcRemoteOfferErrorReason {
-                                            observer(.error(GBPeerJsError.webRtcRemoteOfferError(reason: error)))
-                                        } else {
-                                            observer(.error(GBPeerJsError.webRtcRemoteOfferError(
-                                                    reason: .unknownError(error)
-                                            )))
-                                        }
-                                    }
-                            )
-                    bag.append(disposable)
-                    return Disposables.create(bag)
-                }
-        )
-    }
-
-    // swiftlint:disable:next function_body_length
     func makeAnswer(mediaConstraint: RTCMediaConstraints) -> Completable {
         func createAnswerAsync(mediaConstraint: RTCMediaConstraints) -> Single<RTCSessionDescription> {
             Single.create { [weak self] observer in
@@ -650,7 +681,107 @@ extension Negotiator {
     }
 
     // swiftlint:disable:next function_body_length
-    func handleCandidate(_ ice: IceCandidate) -> Completable {
+    func doHandleSDP(
+            type: String,
+            sdp: String,
+            answerMediaConstraint: RTCMediaConstraints? = nil
+    ) -> Completable {
+        func setRemoteDescriptionAsync(offer: RTCSessionDescription) -> Completable {
+            Completable.create(subscribe: { [weak self] observer in
+                guard let self = self else {
+                    observer(.error(RxError.disposed(object: Self.self)))
+                    return Disposables.create()
+                }
+
+                if let peerConnection = self.connection?.peerConnection {
+                    peerConnection.setRemoteDescription(
+                            offer,
+                            completionHandler: { [weak self] error in
+                                if self == nil {
+                                    observer(.error(RxError.disposed(object: Self.self)))
+                                } else if let error = error {
+                                    observer(.error(
+                                            GBPeerJsError.WebRtcRemoteOfferErrorReason.setRemoteDescriptionFailed(error)
+                                    ))
+                                } else {
+                                    observer(.completed)
+                                }
+                            }
+                    )
+                } else {
+                    observer(.error(GBPeerJsError.WebRtcCommonErrorReason.unknownPeerConnection))
+                }
+                return Disposables.create()
+            })
+        }
+
+        return Completable.create(
+                subscribe: { [weak self] observer in
+                    guard let self = self else {
+                        observer(.error(RxError.disposed(object: Self.self)))
+                        return Disposables.create()
+                    }
+
+                    let sdp = RTCSessionDescription(type: RTCSessionDescription.type(for: type), sdp: sdp)
+                    logger.log("Setting remote description", sdp.sdp)
+
+                    var bag = [Disposable]()
+                    let disposable = setRemoteDescriptionAsync(offer: sdp)
+                            .do(
+                                    onError: { [weak self] error in
+                                        self?.logger.log("Failed to setRemoteDescription, ", error)
+                                    },
+                                    onCompleted: { [weak self] in
+                                        let peer = self?.connection?.peer ?? "-"
+                                        self?.logger.log("Set remoteDescription:\(type) for:\(peer)")
+                                    }
+                            )
+                            .andThen(
+                                    Completable.deferred {
+                                        if type == "OFFER" {
+                                            let constraint: RTCMediaConstraints
+                                            if let answerMediaConstraint = answerMediaConstraint {
+                                                constraint = answerMediaConstraint
+                                            } else {
+                                                constraint = RTCMediaConstraints(
+                                                        mandatoryConstraints: nil,
+                                                        optionalConstraints: nil
+                                                )
+                                            }
+                                            return self.makeAnswer(mediaConstraint: constraint)
+                                        }
+                                        return Completable.empty()
+                                    }
+                            )
+                            .subscribe(
+                                    onCompleted: { [weak self] in
+                                        guard self != nil else {
+                                            observer(.error(RxError.disposed(object: Self.self)))
+                                            return
+                                        }
+
+                                        observer(.completed)
+                                    },
+                                    onError: { [weak self] error in
+                                        if self == nil {
+                                            observer(.error(RxError.disposed(object: Self.self)))
+                                        } else if let error = error as? GBPeerJsError.WebRtcRemoteOfferErrorReason {
+                                            observer(.error(GBPeerJsError.webRtcRemoteOfferError(reason: error)))
+                                        } else {
+                                            observer(.error(GBPeerJsError.webRtcRemoteOfferError(
+                                                    reason: .unknownError(error)
+                                            )))
+                                        }
+                                    }
+                            )
+                    bag.append(disposable)
+                    return Disposables.create(bag)
+                }
+        )
+    }
+
+    // swiftlint:disable:next function_body_length
+    func doHandleCandidate(_ ice: IceCandidate) -> Completable {
         func addIceCandidateAsync(ice: IceCandidate) -> Completable {
             Completable.create(subscribe: { [weak self] observer in
                 guard let self = self else {
@@ -731,160 +862,29 @@ extension Negotiator {
         )
     }
 
-    private func startPeerConnection(
-            data: NegotiatorEntity
-    ) throws -> RTCPeerConnection {
-        logger.log("Creating RTCPeerConnection.")
+    func addTracksToConnection(
+            stream: RTCMediaStream,
+            peerConnection: RTCPeerConnection
+    ) {
+        logger.log("add tracks from stream \(stream.streamId) to peer initialization")
 
-        guard let peerConnection = data.peerFactory
-                .peerConnection(with: data.peerConfig, constraints: data.peerConstraint, delegate: nil) else {
-            throw GBPeerJsError.webRtcCommonError(reason: .createPeerConnectionFailed)
-        }
-
-        setupListeners(peerConnection: peerConnection)
-
-        return peerConnection
-    }
-
-    private func setupListeners(peerConnection: RTCPeerConnection) {
-        // DATACONNECTION.
-        logger.log("Listening for data channel")
-        // Fired between offer and answer, so options should already be saved
-        // in the options hash.
-        // peerConnection.ondatachannel
-
-        // MEDIACONNECTION.
-        logger.log("Listening for remote stream")
-        // peerConnection.ontrack
-
-        /*let peerId = webRtcCommonError?.peer
-        let connectionId = webRtcCommonError?.connectionId
-        let connectionType = webRtcCommonError?.type
-        let provider = webRtcCommonError?.provider
-
-        // ICE CANDIDATES.
-        logger.log("Listening for ICE candidates.")
-
-        peerConnection.delegate = self
-        peerConnection.onicecandidate = (evt) => {
-            if (!evt.candidate || !evt.candidate.candidate) return
-
-                    logger.log(`Received ICE candidates for $ {
-                peerId
-            }:`, evt.candidate)
-
-            provider.socket.send({
-                type: ServerMessageType.Candidate,
-                payload: {
-                    candidate: evt.candidate,
-                    type: connectionType,
-                    connectionId: connectionId,
-                },
-                dst: peerId,
-            })
-        }
-
-        peerConnection.oniceconnectionstatechange = () => {
-            switch (peerConnection.iceConnectionState) {
-            case "failed":
-                logger.log(
-                        "iceConnectionState is failed, closing connections to " + peerId,
-                        )
-                self.webRtcCommonError.emit(
-                        "error",
-                        new Error("Negotiation of webRtcCommonError to " + peerId + " failed."),
-                )
-                self.webRtcCommonError.close()
-                break
-            case "closed":
-                logger.log(
-                        "iceConnectionState is closed, closing connections to " + peerId,
-                        )
-                self.webRtcCommonError.emit(
-                        "error",
-                        new Error("Connection to " + peerId + " closed."),
-                )
-                self.webRtcCommonError.close()
-                break
-            case "disconnected":
-                logger.log(
-                        "iceConnectionState changed to disconnected on the webRtcCommonError with " +
-                                peerId,
-                        )
-                break
-            case "completed":
-                peerConnection.onicecandidate = util.noop
-                break
-            }
-
-            self.webRtcCommonError.emit(
-                    "iceStateChanged",
-                    peerConnection.iceConnectionState,
-                    )
-        }
-
-        // DATACONNECTION.
-        logger.log("Listening for data channel")
-        // Fired between offer and answer, so options should already be saved
-        // in the options hash.
-        peerConnection.ondatachannel = (evt) => {
-            logger.log("Received data channel")
-
-            const dataChannel = evt.channel
-            const webRtcCommonError = <DataConnection > (
-                    provider.getConnection(peerId, connectionId)
-            )
-
-            webRtcCommonError.initialize(dataChannel)
-        }
-
-        // MEDIACONNECTION.
-        logger.log("Listening for remote stream")
-
-        peerConnection.ontrack = (evt) => {
-            logger.log("Received remote stream")
-
-            const stream = evt.streams[0]
-            const webRtcCommonError = provider.getConnection(peerId, connectionId)
-
-            if (webRtcCommonError.type === ConnectionType.Media) {
-                const mediaConnection = <MediaConnection > webRtcCommonError
-
-                self._addStreamToMediaConnection(stream, mediaConnection)
-            }
-        }*/
-    }
-
-    func cleanup() {
-        logger.log("Cleaning up PeerConnection to \(connection?.peer ?? "-")")
-
-        let peerConnection = connection?.peerConnection
-
-        guard peerConnection != nil else {
+        /*guard (peerConnection.canAddTrack) else {
+            logger.error("Your browser does't support RTCPeerConnection#addTrack. Ignored.")
             return
-        }
-
-        connection?.unsetPeerConnection()
-
-        // unsubscribe from all PeerConnection's events
-        peerConnection?.delegate = nil
-
-        let peerConnectionNotClosed = peerConnection?.signalingState != .closed
-        let dataChannelNotClosed = false
-
-        /*if (self.connection.type === connectiontype.data) {
-            const dataconnection = <dataconnection>(<unknown>self.connection)
-            const datachannel = dataconnection.datachannel
-
-            if (datachannel) {
-                datachannelnotclosed =
-                        !!datachannel.readystate && datachannel.readystate !== "closed"
-            }
         }*/
 
-        if peerConnectionNotClosed || dataChannelNotClosed {
-            peerConnection?.close()
+        stream.audioTracks.forEach {
+            peerConnection.add($0, streamIds: [stream.streamId])
         }
+    }
+
+    func addStreamToMediaConnection(
+            stream: RTCMediaStream,
+            mediaConnection: Connection
+    ) {
+        logger.log("add stream \(stream.streamId) to media connection \(mediaConnection.connectionId)")
+
+        mediaConnection.addStream(stream)
     }
 }
 

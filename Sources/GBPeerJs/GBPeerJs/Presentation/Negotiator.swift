@@ -89,7 +89,9 @@ protocol Connection: AnyObject {
 
 class Negotiator: NSObject {
     weak var connection: Connection?
-    let logger: ILogger
+    private let logger: ILogger
+
+    private var classBag = DisposeBag()
 
     init(connection: Connection, logger: ILogger) {
         self.connection = connection
@@ -108,6 +110,18 @@ class Negotiator: NSObject {
                 originatorConstraint: originatorConstraint,
                 data: data
         )
+                .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
+                .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
+                .subscribe(
+                        onCompleted: { [weak self] in
+                            self?.logger.log("Success Start Connection")
+                        },
+                        onError: { [weak self] error in
+                            self?.logger.log("Failed to start connection")
+                            self?.connection?.emitError(error)
+                        }
+                )
+                .disposed(by: classBag)
     }
 
     func handleSDP(
@@ -120,15 +134,45 @@ class Negotiator: NSObject {
                 sdp: sdp,
                 answerMediaConstraint: answerMediaConstraint
         )
+                .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
+                .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
+                .subscribe(
+                        onCompleted: { [weak self] in
+                            self?.logger.log("Success handle SDP")
+                        },
+                        onError: { [weak self] error in
+                            self?.logger.log("Failed to handle SDP")
+                            self?.connection?.emitError(error)
+                        }
+                )
+                .disposed(by: classBag)
     }
 
     func handleCandidate(
             _ ice: IceCandidate
     ) {
         doHandleCandidate(ice)
+                .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
+                .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
+                .subscribe(
+                        onCompleted: { [weak self] in
+                            self?.logger.log("Success handle Candidate")
+                        },
+                        onError: { [weak self] error in
+                            self?.logger.log("Failed to handle candidate")
+                            self?.connection?.emitError(error)
+                        }
+                )
+                .disposed(by: classBag)
     }
 
     func cleanup() {
+        classBag = DisposeBag()
+        doCleanup()
+    }
+
+    deinit {
+        cleanup()
     }
 }
 

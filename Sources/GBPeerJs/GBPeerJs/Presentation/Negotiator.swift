@@ -247,6 +247,7 @@ private extension Negotiator {
                                     )
                             bag.append(disposable)
                         } else {
+                            fatalError("not yet implemented")
                             let disposable = doHandleSDP(type: "OFFER", sdp: "")
                                     .subscribe(
                                             onCompleted: { [weak self] in
@@ -290,6 +291,11 @@ private extension Negotiator {
     }
 
     func setupListeners(peerConnection: RTCPeerConnection) {
+        // ICE CANDIDATES.
+        logger.log("Listening for ICE candidates.")
+        // peerConnection.onicecandidate
+        // peerConnection.oniceconnectionstatechange
+
         // DATACONNECTION.
         logger.log("Listening for data channel")
         // Fired between offer and answer, so options should already be saved
@@ -299,103 +305,6 @@ private extension Negotiator {
         // MEDIACONNECTION.
         logger.log("Listening for remote stream")
         // peerConnection.ontrack
-
-        /*let peerId = webRtcCommonError?.peer
-        let connectionId = webRtcCommonError?.connectionId
-        let connectionType = webRtcCommonError?.type
-        let provider = webRtcCommonError?.provider
-
-        // ICE CANDIDATES.
-        logger.log("Listening for ICE candidates.")
-
-        peerConnection.delegate = self
-        peerConnection.onicecandidate = (evt) => {
-            if (!evt.candidate || !evt.candidate.candidate) return
-
-                    logger.log(`Received ICE candidates for $ {
-                peerId
-            }:`, evt.candidate)
-
-            provider.socket.send({
-                type: ServerMessageType.Candidate,
-                payload: {
-                    candidate: evt.candidate,
-                    type: connectionType,
-                    connectionId: connectionId,
-                },
-                dst: peerId,
-            })
-        }
-
-        peerConnection.oniceconnectionstatechange = () => {
-            switch (peerConnection.iceConnectionState) {
-            case "failed":
-                logger.log(
-                        "iceConnectionState is failed, closing connections to " + peerId,
-                        )
-                self.webRtcCommonError.emit(
-                        "error",
-                        new Error("Negotiation of webRtcCommonError to " + peerId + " failed."),
-                )
-                self.webRtcCommonError.close()
-                break
-            case "closed":
-                logger.log(
-                        "iceConnectionState is closed, closing connections to " + peerId,
-                        )
-                self.webRtcCommonError.emit(
-                        "error",
-                        new Error("Connection to " + peerId + " closed."),
-                )
-                self.webRtcCommonError.close()
-                break
-            case "disconnected":
-                logger.log(
-                        "iceConnectionState changed to disconnected on the webRtcCommonError with " +
-                                peerId,
-                        )
-                break
-            case "completed":
-                peerConnection.onicecandidate = util.noop
-                break
-            }
-
-            self.webRtcCommonError.emit(
-                    "iceStateChanged",
-                    peerConnection.iceConnectionState,
-                    )
-        }
-
-        // DATACONNECTION.
-        logger.log("Listening for data channel")
-        // Fired between offer and answer, so options should already be saved
-        // in the options hash.
-        peerConnection.ondatachannel = (evt) => {
-            logger.log("Received data channel")
-
-            const dataChannel = evt.channel
-            const webRtcCommonError = <DataConnection > (
-                    provider.getConnection(peerId, connectionId)
-            )
-
-            webRtcCommonError.initialize(dataChannel)
-        }
-
-        // MEDIACONNECTION.
-        logger.log("Listening for remote stream")
-
-        peerConnection.ontrack = (evt) => {
-            logger.log("Received remote stream")
-
-            const stream = evt.streams[0]
-            const webRtcCommonError = provider.getConnection(peerId, connectionId)
-
-            if (webRtcCommonError.type === ConnectionType.Media) {
-                const mediaConnection = <MediaConnection > webRtcCommonError
-
-                self._addStreamToMediaConnection(stream, mediaConnection)
-            }
-        }*/
     }
 
     func doCleanup() {

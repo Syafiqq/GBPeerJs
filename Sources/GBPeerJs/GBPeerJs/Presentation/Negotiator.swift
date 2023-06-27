@@ -87,7 +87,6 @@ protocol Connection: AnyObject {
     func emitIceStateChanged(_ state: RTCIceConnectionState)
 }
 
-// swiftlint:disable:next type_body_length
 class Negotiator: NSObject {
     weak var connection: Connection?
     let logger: ILogger

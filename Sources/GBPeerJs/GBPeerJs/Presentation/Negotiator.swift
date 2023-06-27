@@ -970,7 +970,6 @@ extension Negotiator: RTCPeerConnectionDelegate {
     }
 
     func peerConnection(_ peerConnection: RTCPeerConnection, didRemove candidates: [RTCIceCandidate]) {
-        print("WebRTC - didRemove candidates | Called when a group of local Ice candidates have been removed.")
     }
 
     func peerConnection(_ peerConnection: RTCPeerConnection, didOpen dataChannel: RTCDataChannel) {

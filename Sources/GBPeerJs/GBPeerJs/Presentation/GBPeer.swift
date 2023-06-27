@@ -36,7 +36,7 @@ public class GBPeer: NSObject {
     private let options: PeerOptions
 
     internal var socket: ISocket?
-    private var connections: [String: String] = [:]
+    private var connections: [String: [IConnection]] = [:]
 
     private var id: String?
     private var lastServerId: String?
@@ -90,8 +90,8 @@ public class GBPeer: NSObject {
         }
     }
 
-    func requestReconnect() {
-        reconnect()
+    func reconnect() throws {
+        try doReconnect()
     }
 }
 
@@ -219,8 +219,16 @@ private extension GBPeer {
         socket?.start(id: id, token: options.token ?? randomToken)
     }
 
-    func cleanupPeer(_ id: String) {
+    func cleanupPeer(_ peerId: String) {
+        let connections = connections[peerId] ?? []
 
+        guard !connections.isEmpty else {
+            return
+        }
+
+        for connection in connections {
+            connection.close()
+        }
     }
 }
 
@@ -262,7 +270,7 @@ private extension GBPeer {
         delegate?.peerJs(self, onClose: ())
     }
 
-    func reconnect() throws {
+    func doReconnect() throws {
         if disconnected && !destroyed {
             logger.log("Attempting reconnection to server with ID \(lastServerId ?? "-")")
             disconnected = false

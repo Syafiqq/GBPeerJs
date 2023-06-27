@@ -98,8 +98,101 @@ class Negotiator: NSObject {
 }
 
 extension Negotiator {
-    func startConnection(data: NegotiatorEntity) -> Completable {
-        doStartConnection(data: data)
+    // swiftlint:disable:next function_body_length
+    func startConnection(
+            stream: RTCMediaStream? = nil,
+            originator: Bool = false,
+            originatorConstraint: RTCMediaConstraints? = nil,
+            data: NegotiatorEntity
+    ) -> Completable {
+        Completable.create(
+                subscribe: { [weak self] observer in
+                    guard let self = self else {
+                        observer(.error(RxError.disposed(object: Self.self)))
+                        return Disposables.create()
+                    }
+
+                    var bag = [Disposable]()
+                    do {
+                        let peerConnection = try self.startPeerConnection(data: data)
+
+                        // Set the webRtcCommonError's PC.
+                        self.connection?.setPeerConnection(peerConnection)
+
+                        if self.connection?.type == .media,
+                           let stream = stream {
+                            self.addTracksToConnection(
+                                    stream: stream,
+                                    peerConnection: peerConnection
+                            )
+                        }
+
+                        // What do we need to do now?
+                        if originator {
+                            /*if connection?.type == .data {
+                                const dataConnection = <DataConnection > (<unknown > self.connection)
+
+                                const config: RTCDataChannelInit = {
+                                    ordered: !!options.reliable
+                                }
+
+                                const dataChannel = peerConnection.createDataChannel(
+                                        dataConnection.label,
+                                        config,
+                                        )
+                                dataConnection.initialize(dataChannel)
+                            }*/
+
+                            let constraint: RTCMediaConstraints
+                            if let originatorConstraint = originatorConstraint {
+                                constraint = originatorConstraint
+                            } else {
+                                constraint = RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
+                            }
+                            let disposable = makeOffer(mediaConstraint: constraint)
+                                    .subscribe(
+                                            onCompleted: { [weak self] in
+                                                if self == nil {
+                                                    observer(.error(RxError.disposed(object: Self.self)))
+                                                } else {
+                                                    observer(.completed)
+                                                }
+                                            },
+                                            onError: { [weak self] error in
+                                                if self == nil {
+                                                    observer(.error(RxError.disposed(object: Self.self)))
+                                                } else {
+                                                    observer(.error(error))
+                                                }
+                                            }
+                                    )
+                            bag.append(disposable)
+                        } else {
+                            let disposable = handleSDP(type: "OFFER", sdp: "")
+                                    .subscribe(
+                                            onCompleted: { [weak self] in
+                                                if self == nil {
+                                                    observer(.error(RxError.disposed(object: Self.self)))
+                                                } else {
+                                                    observer(.completed)
+                                                }
+                                            },
+                                            onError: { [weak self] error in
+                                                if self == nil {
+                                                    observer(.error(RxError.disposed(object: Self.self)))
+                                                } else {
+                                                    observer(.error(error))
+                                                }
+                                            }
+                                    )
+                            bag.append(disposable)
+                        }
+                    } catch {
+                        observer(.error(error))
+                    }
+                    return Disposables.create(bag)
+                }
+        )
     }
 
     func addTracksToConnection(
@@ -633,103 +726,6 @@ extension Negotiator {
                                     }
                             )
                     bag.append(disposable)
-                    return Disposables.create(bag)
-                }
-        )
-    }
-
-    // swiftlint:disable:next function_body_length
-    private func doStartConnection(
-            stream: RTCMediaStream? = nil,
-            originator: Bool = false,
-            originatorConstraint: RTCMediaConstraints? = nil,
-            data: NegotiatorEntity
-    ) -> Completable {
-        Completable.create(
-                subscribe: { [weak self] observer in
-                    guard let self = self else {
-                        observer(.error(RxError.disposed(object: Self.self)))
-                        return Disposables.create()
-                    }
-
-                    var bag = [Disposable]()
-                    do {
-                        let peerConnection = try self.startPeerConnection(data: data)
-
-                        // Set the webRtcCommonError's PC.
-                        self.connection?.setPeerConnection(peerConnection)
-
-                        if self.connection?.type == .media,
-                           let stream = stream {
-                            self.addTracksToConnection(
-                                    stream: stream,
-                                    peerConnection: peerConnection
-                            )
-                        }
-
-                        // What do we need to do now?
-                        if originator {
-                            /*if connection?.type == .data {
-                                const dataConnection = <DataConnection > (<unknown > self.connection)
-
-                                const config: RTCDataChannelInit = {
-                                    ordered: !!options.reliable
-                                }
-
-                                const dataChannel = peerConnection.createDataChannel(
-                                        dataConnection.label,
-                                        config,
-                                        )
-                                dataConnection.initialize(dataChannel)
-                            }*/
-
-                            let constraint: RTCMediaConstraints
-                            if let originatorConstraint = originatorConstraint {
-                                constraint = originatorConstraint
-                            } else {
-                                constraint = RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
-                            }
-                            let disposable = makeOffer(mediaConstraint: constraint)
-                                    .subscribe(
-                                            onCompleted: { [weak self] in
-                                                if self == nil {
-                                                    observer(.error(RxError.disposed(object: Self.self)))
-                                                } else {
-                                                    observer(.completed)
-                                                }
-                                            },
-                                            onError: { [weak self] error in
-                                                if self == nil {
-                                                    observer(.error(RxError.disposed(object: Self.self)))
-                                                } else {
-                                                    observer(.error(error))
-                                                }
-                                            }
-                                    )
-                            bag.append(disposable)
-                        } else {
-                            let disposable = handleSDP(type: "OFFER", sdp: "")
-                                    .subscribe(
-                                            onCompleted: { [weak self] in
-                                                if self == nil {
-                                                    observer(.error(RxError.disposed(object: Self.self)))
-                                                } else {
-                                                    observer(.completed)
-                                                }
-                                            },
-                                            onError: { [weak self] error in
-                                                if self == nil {
-                                                    observer(.error(RxError.disposed(object: Self.self)))
-                                                } else {
-                                                    observer(.error(error))
-                                                }
-                                            }
-                                    )
-                            bag.append(disposable)
-                        }
-                    } catch {
-                        observer(.error(error))
-                    }
                     return Disposables.create(bag)
                 }
         )

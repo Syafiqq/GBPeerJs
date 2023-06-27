@@ -262,19 +262,22 @@ private extension GBPeer {
         delegate?.peerJs(self, onClose: ())
     }
 
-    func reconnect() {
-        if disconnected && !destroyed,
-           let lastServerId = lastServerId {
-            logger.log("Attempting reconnection to server with ID \(lastServerId)")
+    func reconnect() throws {
+        if disconnected && !destroyed {
+            logger.log("Attempting reconnection to server with ID \(lastServerId ?? "-")")
             disconnected = false
-            initialize(lastServerId)
+            if let lastServerId {
+                initialize(lastServerId)
+            }
         } else if destroyed {
             logger.log("This peer cannot reconnect to the server. It has already been destroyed.")
+            throw GBPeerJsError.peerError(reason: .disconnectAlready)
         } else if !disconnected && !open {
             // Do nothing. We're still connecting the first time.
             logger.log("In a hurry? We're still trying to make the initial connection!")
         } else {
             logger.log("Peer \(id ?? "-") cannot reconnect because it is not disconnected from the server!")
+            throw GBPeerJsError.peerError(reason: .stillConnected)
         }
     }
 

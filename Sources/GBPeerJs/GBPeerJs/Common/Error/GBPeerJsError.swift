@@ -11,6 +11,7 @@ public enum GBPeerJsError: Error {
     case webRtcLocalAnswerError(reason: WebRtcLocalAnswerErrorReason)
     case webRtcRemoteCandidateError(reason: WebRtcRemoteIceCandidateErrorReason)
     case webRtcLocalCandidateError(reason: WebRtcLocalIceCandidateErrorReason)
+    case peerError(reason: PeerErrorReason)
 }
 
 public extension GBPeerJsError {
@@ -46,5 +47,10 @@ public extension GBPeerJsError {
     enum WebRtcLocalIceCandidateErrorReason: Error {
         case iceConnectionStateFailed
         case iceConnectionStateClosed
+    }
+
+    enum PeerErrorReason: Error {
+        case disconnectAlready
+        case stillConnected
     }
 }

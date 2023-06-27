@@ -83,11 +83,15 @@ public class GBPeer: NSObject {
         delegate?.peerJs(self, onError: error)
     }
 
+    /** Disconnects every connection on this peer. */
     func cleanup() {
-        destroyServerConnection()
-        if let id = id {
-            cleanupPeer(id)
+        for peerId in connections.keys {
+            cleanupPeer(peerId)
+            connections[peerId]?.removeAll()
         }
+        connections.removeAll()
+
+        destroyServerConnection()
     }
 
     func reconnect() throws {
@@ -219,6 +223,7 @@ private extension GBPeer {
         socket?.start(id: id, token: options.token ?? randomToken)
     }
 
+    /** Closes all connections to this peer. */
     func cleanupPeer(_ peerId: String) {
         let connections = connections[peerId] ?? []
 
@@ -235,6 +240,12 @@ private extension GBPeer {
 // MARK: - Connectivity
 
 private extension GBPeer {
+    /**
+     * Disconnects the Peer's connection to the PeerServer. Does not close any
+     *  active connections.
+     * Warning: The peer can no longer create or accept connections after being
+     *  disconnected. It also cannot reconnect to the server.
+     */
     func disconnect() {
         if disconnected {
             return
@@ -270,6 +281,7 @@ private extension GBPeer {
         delegate?.peerJs(self, onClose: ())
     }
 
+    /** Attempts to reconnect with the same ID. */
     func doReconnect() throws {
         if disconnected && !destroyed {
             logger.log("Attempting reconnection to server with ID \(lastServerId ?? "-")")

@@ -87,7 +87,26 @@ protocol Connection: AnyObject {
     func emitIceStateChanged(_ state: RTCIceConnectionState)
 }
 
-class Negotiator: NSObject {
+protocol INegotiator: AnyObject {
+    func startConnection(
+            stream: RTCMediaStream?,
+            originator: Bool,
+            originatorConstraint: RTCMediaConstraints?,
+            data: NegotiatorEntity
+    )
+
+    func handleSDP(
+            type: String,
+            sdp: String,
+            answerMediaConstraint: RTCMediaConstraints?
+    )
+
+    func handleCandidate(_ ice: IceCandidate)
+
+    func cleanup()
+}
+
+class Negotiator: NSObject, INegotiator {
     weak var connection: Connection?
     private let logger: ILogger
 
@@ -148,9 +167,7 @@ class Negotiator: NSObject {
                 .disposed(by: classBag)
     }
 
-    func handleCandidate(
-            _ ice: IceCandidate
-    ) {
+    func handleCandidate(_ ice: IceCandidate) {
         doHandleCandidate(ice)
                 .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
                 .subscribeOn(SerialDispatchQueueScheduler(qos: .default))

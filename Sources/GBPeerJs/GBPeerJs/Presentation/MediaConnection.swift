@@ -5,6 +5,10 @@
 import Foundation
 import WebRTC
 
+protocol MediaConnectionDelegate: AnyObject {
+    func mediaConnection(_: MediaConnection, onRemoteStreamAdded: RTCMediaStream)
+}
+
 class MediaConnection: IConnection {
     private static let idPrefix = "mc_"
 
@@ -15,6 +19,7 @@ class MediaConnection: IConnection {
     var originator: Bool
 
     weak var provider: PeerProvider?
+    weak var delegate: MediaConnectionDelegate?
     var peerConnection: RTCPeerConnection?
 
     private var open = false
@@ -65,6 +70,7 @@ class MediaConnection: IConnection {
     }
 
     func addStream(_ stream: RTCMediaStream) {
+        doAddStream(stream)
     }
 
     func emitError(_ error: Error) {
@@ -78,5 +84,10 @@ class MediaConnection: IConnection {
 }
 
 private extension MediaConnection {
+    func doAddStream(_ remoteStream: RTCMediaStream) {
+        logger.log("Receiving stream", remoteStream)
 
+        self.remoteStream = remoteStream
+        delegate?.mediaConnection(self, onRemoteStreamAdded: remoteStream) // Should we call this `open`?
+    }
 }

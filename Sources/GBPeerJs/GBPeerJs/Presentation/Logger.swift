@@ -5,6 +5,8 @@
 import Foundation
 
 protocol ILogger {
+    var debug: Bool { get set }
+
     func log(_  messages: Any...)
     func error(_  messages: Any...)
     func warn(_  messages: Any...)
@@ -17,6 +19,9 @@ class Logger: ILogger {
     }
 
     func log(_  messages: Any...) {
+        guard debug else {
+            return
+        }
         print("PeerJs ", messages)
     }
 

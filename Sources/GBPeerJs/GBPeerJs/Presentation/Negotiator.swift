@@ -138,18 +138,6 @@ class Negotiator: NSObject, INegotiator {
                 data: data,
                 remoteOfferSdp: remoteOfferSdp
         )
-                /*.subscribeOn(SerialDispatchQueueScheduler(qos: .default))
-                .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
-                .subscribe(
-                        onCompleted: { [weak self] in
-                            self?.logger.log("Success Start IConnection")
-                        },
-                        onError: { [weak self] error in
-                            self?.logger.log("Failed to start connection")
-                            self?.connection?.emitError(error)
-                        }
-                )
-                .disposed(by: classBag)*/
     }
 
     func handleSDP(
@@ -162,34 +150,10 @@ class Negotiator: NSObject, INegotiator {
                 sdp: sdp,
                 answerMediaConstraint: answerMediaConstraint
         )
-                /*.subscribeOn(SerialDispatchQueueScheduler(qos: .default))
-                .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
-                .subscribe(
-                        onCompleted: { [weak self] in
-                            self?.logger.log("Success handle SDP")
-                        },
-                        onError: { [weak self] error in
-                            self?.logger.log("Failed to handle SDP")
-                            self?.connection?.emitError(error)
-                        }
-                )
-                .disposed(by: classBag)*/
     }
 
     func handleCandidate(_ ice: RTCIceCandidate) -> Completable {
         doHandleCandidate(ice)
-                /*.subscribeOn(SerialDispatchQueueScheduler(qos: .default))
-                .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
-                .subscribe(
-                        onCompleted: { [weak self] in
-                            self?.logger.log("Success handle Candidate")
-                        },
-                        onError: { [weak self] error in
-                            self?.logger.log("Failed to handle candidate")
-                            self?.connection?.emitError(error)
-                        }
-                )
-                .disposed(by: classBag)*/
     }
 
     func cleanup() {

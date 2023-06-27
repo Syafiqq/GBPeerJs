@@ -327,6 +327,12 @@ private extension GBPeer {
             disconnect()
         }
     }
+
+    func delayedAbort(_ error: Error?) {
+        DispatchQueue.main.async { [weak self] in
+            self?.abort(error)
+        }
+    }
 }
 
 // MARK: - Data

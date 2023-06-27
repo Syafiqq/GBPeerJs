@@ -100,8 +100,13 @@ public class GBPeer: NSObject {
 }
 
 extension GBPeer: IPeer {
-    func getConnection(peerId: String, connectionId: String) -> IConnection {
-        fatalError("getConnection(peerId:connectionId:) has not been implemented")
+    func getConnection(peerId: String, connectionId: String) -> IConnection? {
+        let connections = connections[peerId]
+        if connections?.isEmpty == true {
+            return nil
+        }
+
+        return connections?.first(where: { $0.connectionId == connectionId })
     }
 
     func getMessage(connectionId: String) -> [[String: Any]] {

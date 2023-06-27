@@ -78,7 +78,7 @@ protocol ISocket: AnyObject {
 protocol IPeer: AnyObject {
     var socket: ISocket? { get }
 
-    func getConnection(peerId: String, connectionId: String) -> IConnection
+    func getConnection(peerId: String, connectionId: String) -> IConnection?
     func getMessage(connectionId: String) -> [[String: Any]]
     func removeConnection(_ connection: IConnection)
 }

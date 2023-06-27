@@ -419,7 +419,7 @@ private extension Negotiator {
                                         self?.logger.log("Created offer.")
                                     },
                                     onError: { [weak self] error in
-                                        self?.logger.log("Failed to create offer, ", error)
+                                        self?.logger.log("Failed to createOffer, ", error)
                                     }
                             )
                             /*.map {

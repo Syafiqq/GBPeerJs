@@ -26,6 +26,11 @@ enum Util {
                 ? "iPhone"
                 : "iPod"
     }
+
+    static func randomToken(_ length: Int) -> String {
+        let randomTokenSeed = "abcdefghijklmnopqrstuvwxyz0123456789"
+        return String((0..<length).compactMap({ _ in randomTokenSeed.randomElement() }))
+    }
 }
 
 enum ServerMessageType: String {
@@ -68,10 +73,10 @@ protocol SocketProvider: AnyObject {
 protocol PeerProvider: AnyObject {
     var socket: SocketProvider? { get }
 
-    func getConnection(peerId: String, connectionId: String) -> Connection
+    func getConnection(peerId: String, connectionId: String) -> IConnection
 }
 
-protocol Connection: AnyObject {
+protocol IConnection: AnyObject {
     var peer: String { get }
     var connectionId: String { get }
     var type: ConnectionType { get }
@@ -107,12 +112,12 @@ protocol INegotiator: AnyObject {
 }
 
 class Negotiator: NSObject, INegotiator {
-    weak var connection: Connection?
+    weak var connection: IConnection?
     private let logger: ILogger
 
     private var classBag = DisposeBag()
 
-    init(connection: Connection, logger: ILogger) {
+    init(connection: IConnection, logger: ILogger) {
         self.connection = connection
         self.logger = logger
     }
@@ -133,7 +138,7 @@ class Negotiator: NSObject, INegotiator {
                 .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
                 .subscribe(
                         onCompleted: { [weak self] in
-                            self?.logger.log("Success Start Connection")
+                            self?.logger.log("Success Start IConnection")
                         },
                         onError: { [weak self] error in
                             self?.logger.log("Failed to start connection")
@@ -887,7 +892,7 @@ private extension Negotiator {
 
     func addStreamToMediaConnection(
             stream: RTCMediaStream,
-            mediaConnection: Connection
+            mediaConnection: IConnection
     ) {
         logger.log("add stream \(stream.streamId) to media connection \(mediaConnection.connectionId)")
 

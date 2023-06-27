@@ -61,6 +61,7 @@ protocol SocketProvider: AnyObject {
 
 protocol PeerProvider: AnyObject {
     var socket: SocketProvider? { get }
+    func getConnection(peerId: String, connectionId: String) -> Connection
 }
 
 protocol Connection: AnyObject {
@@ -839,7 +840,7 @@ extension Negotiator {
         }*/
     }
 
-    func cleanup () {
+    func cleanup() {
         logger.log("Cleaning up PeerConnection to \(connection?.peer ?? "-")")
 
         let peerConnection = connection?.peerConnection
@@ -872,29 +873,22 @@ extension Negotiator {
     }
 }
 
-/*extension Negotiator: RTCPeerConnectionDelegate {
+extension Negotiator: RTCPeerConnectionDelegate {
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange stateChanged: RTCSignalingState) {
         print("WebRTC - didChange stateChanged - \(stateChanged) | Called when the SignalingState changed.")
     }
 
     func peerConnection(_ peerConnection: RTCPeerConnection, didAdd stream: RTCMediaStream) {
-        print("WebRTC - didAdd stream | Called when media is received on a new stream from remote peer.")
+        logger.log("Received remote stream");
 
-        logger.log("Received remote stream")
-
-        logger.log("add stream \(stream.streamId) to media webRtcCommonError \(connectionId ?? "-")")
-
-        if let track = stream.audioTracks.first {
-            track.isEnabled = true
-            track.source.volume = 10
-            self.stream = stream
-            self.track = track
-            reconfigureAudio()
-        } else {
-            logger.log("Weird looking stream")
+        guard let peerId = connection?.peer,
+              let connectionId = connection?.connectionId,
+              let connection = connection?.provider?.getConnection(peerId: peerId, connectionId: connectionId),
+              connection.type == .media else {
+            return
         }
 
-        logger.log("Receiving stream")
+        addStreamToMediaConnection(stream: stream, mediaConnection: connection)
     }
 
     func peerConnection(_ peerConnection: RTCPeerConnection, didRemove stream: RTCMediaStream) {
@@ -903,7 +897,7 @@ extension Negotiator {
 
     func peerConnectionShouldNegotiate(_ peerConnection: RTCPeerConnection) {
         print("WebRTC - peerConnectionShouldNegotiate |
- Called when negotiation is needed, for example ICE has restarted.")
+        Called when negotiation is needed, for example ICE has restarted.")
     }
 
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceConnectionState) {
@@ -971,7 +965,7 @@ extension Negotiator {
     func peerConnection(_ peerConnection: RTCPeerConnection, didOpen dataChannel: RTCDataChannel) {
         print("WebRTC - didOpen dataChannel | New data channel has been opened.")
     }
-}*/
+}
 
 extension OfferRequestEntity {
     struct Payload: Encodable {

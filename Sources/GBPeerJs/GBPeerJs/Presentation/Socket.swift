@@ -34,7 +34,7 @@ class Socket: ISocket {
     weak var delegate: SocketDelegate?
 
     private var wsOpen: Bool {
-        !disconnected
+        socket != nil && !disconnected
     }
     private let logger: ILogger
 
@@ -219,7 +219,7 @@ private extension Socket {
             return
         }
 
-        socket?.write(string: "{\"type\":\"HEARTBEAT\"}")
+        socket?.write(string: "{\"type\":\"\(ServerMessageType.heartbeat)\"}")
         scheduleHeartbeat()
     }
 }

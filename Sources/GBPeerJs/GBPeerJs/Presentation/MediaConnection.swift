@@ -98,7 +98,7 @@ private extension MediaConnection {
         delegate?.mediaConnection(self, onRemoteStreamAdded: remoteStream) // Should we call this `open`?
     }
 
-    func handleMessage(message: [String: Any]) {
+    func doHandleMessage(message: [String: Any]) {
         let type = message["type"] as? String
 
         switch type {

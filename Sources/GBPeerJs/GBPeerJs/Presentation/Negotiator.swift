@@ -49,6 +49,12 @@ struct OfferRequestEntity: Encodable {
     let dst: String
 }
 
+struct LocalCandidateRequestEntity: Encodable {
+    let type: String
+    let payload: Payload
+    let dst: String
+}
+
 struct NegotiatorEntity {
     var peerFactory: RTCPeerConnectionFactory
     var peerConfig: RTCConfiguration
@@ -904,12 +910,9 @@ extension Negotiator: RTCPeerConnectionDelegate {
     }
 
     func peerConnection(_ peerConnection: RTCPeerConnection, didRemove stream: RTCMediaStream) {
-        print("WebRTC - didRemove stream | Called when a remote peer closes a stream.")
     }
 
     func peerConnectionShouldNegotiate(_ peerConnection: RTCPeerConnection) {
-        print("WebRTC - peerConnectionShouldNegotiate |
-        Called when negotiation is needed, for example ICE has restarted.")
     }
 
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceConnectionState) {
@@ -932,57 +935,37 @@ extension Negotiator: RTCPeerConnectionDelegate {
     }
 
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceGatheringState) {
-        print("WebRTC - didChange newState \(newState) | Called any time the IceGatheringState changes")
-        iceGatheringStateRelay.accept(newState)
     }
 
     func peerConnection(_ peerConnection: RTCPeerConnection, didGenerate candidate: RTCIceCandidate) {
-        print("WebRTC - didGenerate candidate | New ice candidate has been found.")
-
-        let peerId = remotePeerId!
-        let connectionId = connectionId!
-        let connectionType = "media"
-
         guard !candidate.sdp.isEmpty else {
             return
         }
 
-        logger.log("Received ICE candidates for \(peerId):\(candidate.sdp)")
-
-        if sendOfferAlready {
-            sendOffer(candidate)
-        } else {
-            pendingCandidates.append(candidate)
-        }
-    }
-
-    private func sendOffer(_ candidate: RTCIceCandidate) {
-        let peerId = remotePeerId!
-        let connectionId = connectionId!
-        let connectionType = "media"
+        logger.log("Received ICE candidates for \(connection?.peer ?? "-"):, \(candidate.sdp)");
 
         let candidateEntity = LocalCandidateRequestEntity(
-                type: "CANDIDATE",
-                payload: .init(
-                        candidate: .init(
+                type: ServerMessageType.candidate.rawValue,
+                payload: LocalCandidateRequestEntity.Payload(
+                        candidate: LocalCandidateRequestEntity.Candidate(
                                 candidate: candidate.sdp,
                                 sdpMLineIndex: candidate.sdpMLineIndex,
                                 sdpMid: candidate.sdpMid
                         ),
-                        type: "media",
-                        connectionId: connectionId
+                        type: connection?.type.rawValue ?? "",
+                        connectionId: connection?.connectionId ?? ""
                 ),
-                dst: peerId
+                dst: connection?.peer ?? ""
         )
         let candidateEncoder = JSONEncoder()
-        let candidateJson: String
         do {
             let candidateData = try candidateEncoder.encode(candidateEntity)
-            candidateJson = String(data: candidateData, encoding: .utf8)!
+            if let result = String(data: candidateData, encoding: .utf8) {
+                connection?.provider?.socket?.send(result)
+            }
         } catch {
-            fatalError("Create Candidate json failed")
+            logger.error("Submit local candidate failed");
         }
-        socket?.send(candidateJson)
     }
 
     func peerConnection(_ peerConnection: RTCPeerConnection, didRemove candidates: [RTCIceCandidate]) {
@@ -1012,5 +995,19 @@ extension OfferRequestEntity {
     struct SDP: Encodable {
         let sdp: String
         let type: String
+    }
+}
+
+extension LocalCandidateRequestEntity {
+    struct Payload: Encodable {
+        let candidate: Candidate
+        let type: String
+        let connectionId: String
+    }
+
+    struct Candidate: Encodable {
+        let candidate: String
+        let sdpMLineIndex: Int32
+        let sdpMid: String?
     }
 }

@@ -340,9 +340,7 @@ private extension Negotiator {
     }
 
     // swiftlint:disable:next function_body_length
-    func makeOffer(
-            mediaConstraint: RTCMediaConstraints
-    ) -> Completable {
+    func makeOffer(mediaConstraint: RTCMediaConstraints) -> Completable {
         func createOfferAsync(mediaConstraint: RTCMediaConstraints) -> Single<RTCSessionDescription> {
             Single.create { [weak self] observer in
                 guard let self = self else {
@@ -376,7 +374,7 @@ private extension Negotiator {
             }
         }
 
-        func setLocalDescriptionAsync(offer: RTCSessionDescription) -> Completable {
+        func setLocalDescriptionAsync(session: RTCSessionDescription) -> Completable {
             Completable.create(subscribe: { [weak self] observer in
                 guard let self = self else {
                     observer(.error(RxError.disposed(object: Self.self)))
@@ -385,7 +383,7 @@ private extension Negotiator {
 
                 if let peerConnection = self.connection?.peerConnection {
                     peerConnection.setLocalDescription(
-                            offer,
+                            session,
                             completionHandler: { [weak self] error in
                                 if self == nil {
                                     observer(.error(RxError.disposed(object: Self.self)))
@@ -416,35 +414,35 @@ private extension Negotiator {
                     let disposable = createOfferAsync(mediaConstraint: mediaConstraint)
                             .do(
                                     onSuccess: { [weak self] _ in
-                                        self?.logger.log("Created offer.")
+                                        self?.logger.log("Created session.")
                                     },
                                     onError: { [weak self] error in
                                         self?.logger.log("Failed to createOffer, ", error)
                                     }
                             )
                             /*.map {
-                                // Modify offer
+                                // Modify session
                                 if self.connection.options.sdpTransform,
                                    typeof self.connection.options.sdpTransform === "function" {
-                                    offer.sdp =
-                                            self.connection.options.sdpTransform(offer.sdp) || offer.sdp
+                                    session.sdp =
+                                            self.connection.options.sdpTransform(session.sdp) || session.sdp
                                 }
                             }*/
-                            .flatMap({ offer in
-                                setLocalDescriptionAsync(offer: offer)
+                            .flatMap({ session in
+                                setLocalDescriptionAsync(session: session)
                                         .do(
                                                 onError: { [weak self] error in
                                                     self?.logger.log("Failed to setLocalDescription, ", error)
                                                 },
                                                 onCompleted: { [weak self] in
                                                     let peer = self?.connection?.peer ?? "-"
-                                                    self?.logger.log("Set localDescription:\(offer.sdp) for:\(peer)")
+                                                    self?.logger.log("Set localDescription:\(session.sdp) for:\(peer)")
                                                 }
                                         )
-                                        .andThen(Single.just(offer))
+                                        .andThen(Single.just(session))
                             })
                             .subscribe(
-                                    onSuccess: { [weak self] (offer: RTCSessionDescription) in
+                                    onSuccess: { [weak self] (session: RTCSessionDescription) in
                                         guard let self = self else {
                                             observer(.error(RxError.disposed(object: Self.self)))
                                             return
@@ -461,12 +459,12 @@ private extension Negotiator {
                                             }
                                         }*/
 
-                                        let offerEntity = OfferRequestEntity(
+                                        let request = OfferRequestEntity(
                                                 type: ServerMessageType.offer.rawValue,
                                                 payload: OfferRequestEntity.Payload(
                                                         sdp: OfferRequestEntity.SDP(
-                                                                sdp: offer.sdp,
-                                                                type: RTCSessionDescription.string(for: offer.type)
+                                                                sdp: session.sdp,
+                                                                type: RTCSessionDescription.string(for: session.type)
                                                         ),
                                                         type: self.connection?.type.rawValue ?? "",
                                                         connectionId: self.connection?.connectionId ?? "",
@@ -475,10 +473,10 @@ private extension Negotiator {
                                                 dst: self.connection?.peer ?? ""
                                         )
 
-                                        let offerEncoder = JSONEncoder()
+                                        let encoder = JSONEncoder()
                                         do {
-                                            let offerData = try offerEncoder.encode(offerEntity)
-                                            if let result = String(data: offerData, encoding: .utf8) {
+                                            let requestData = try encoder.encode(request)
+                                            if let result = String(data: requestData, encoding: .utf8) {
                                                 self.connection?.provider?.socket?.send(result)
                                                 observer(.completed)
                                             } else {
@@ -545,7 +543,7 @@ private extension Negotiator {
             }
         }
 
-        func setLocalDescriptionAsync(answer: RTCSessionDescription) -> Completable {
+        func setLocalDescriptionAsync(session: RTCSessionDescription) -> Completable {
             Completable.create(subscribe: { [weak self] observer in
                 guard let self = self else {
                     observer(.error(RxError.disposed(object: Self.self)))
@@ -554,7 +552,7 @@ private extension Negotiator {
 
                 if let peerConnection = self.connection?.peerConnection {
                     peerConnection.setLocalDescription(
-                            answer,
+                            session,
                             completionHandler: { [weak self] error in
                                 if self == nil {
                                     observer(.error(RxError.disposed(object: Self.self)))
@@ -585,46 +583,46 @@ private extension Negotiator {
                     let disposable = createAnswerAsync(mediaConstraint: mediaConstraint)
                             .do(
                                     onSuccess: { [weak self] _ in
-                                        self?.logger.log("Created answer.")
+                                        self?.logger.log("Created session.")
                                     },
                                     onError: { [weak self] error in
-                                        self?.logger.log("Failed to create answer, ", error)
+                                        self?.logger.log("Failed to create session, ", error)
                                     }
                             )
                             /*.map {
-                                // Modify answer
+                                // Modify session
                                 if self.connection.options.sdpTransform,
                                    typeof self.connection.options.sdpTransform === "function" {
-                                    answer.sdp =
-                                            self.connection.options.sdpTransform(answer.sdp) || answer.sdp
+                                    session.sdp =
+                                            self.connection.options.sdpTransform(session.sdp) || session.sdp
                                 }
                             }*/
-                            .flatMap({ answer in
-                                setLocalDescriptionAsync(answer: answer)
+                            .flatMap({ session in
+                                setLocalDescriptionAsync(session: session)
                                         .do(
                                                 onError: { [weak self] error in
                                                     self?.logger.log("Failed to setLocalDescription, ", error)
                                                 },
                                                 onCompleted: { [weak self] in
                                                     let peer = self?.connection?.peer ?? "-"
-                                                    self?.logger.log("Set localDescription:\(answer.sdp) for:\(peer)")
+                                                    self?.logger.log("Set localDescription:\(session.sdp) for:\(peer)")
                                                 }
                                         )
-                                        .andThen(Single.just(answer))
+                                        .andThen(Single.just(session))
                             })
                             .subscribe(
-                                    onSuccess: { [weak self] (answer: RTCSessionDescription) in
+                                    onSuccess: { [weak self] (session: RTCSessionDescription) in
                                         guard let self = self else {
                                             observer(.error(RxError.disposed(object: Self.self)))
                                             return
                                         }
 
-                                        let answerEntity = OfferRequestEntity(
+                                        let request = OfferRequestEntity(
                                                 type: ServerMessageType.answer.rawValue,
                                                 payload: OfferRequestEntity.Payload(
                                                         sdp: OfferRequestEntity.SDP(
-                                                                sdp: answer.sdp,
-                                                                type: RTCSessionDescription.string(for: answer.type)
+                                                                sdp: session.sdp,
+                                                                type: RTCSessionDescription.string(for: session.type)
                                                         ),
                                                         type: self.connection?.type.rawValue ?? "",
                                                         connectionId: self.connection?.connectionId ?? "",
@@ -633,10 +631,10 @@ private extension Negotiator {
                                                 dst: self.connection?.peer ?? ""
                                         )
 
-                                        let answerEncoder = JSONEncoder()
+                                        let encoder = JSONEncoder()
                                         do {
-                                            let answerData = try answerEncoder.encode(answerEntity)
-                                            if let result = String(data: answerData, encoding: .utf8) {
+                                            let requestData = try encoder.encode(request)
+                                            if let result = String(data: requestData, encoding: .utf8) {
                                                 self.connection?.provider?.socket?.send(result)
                                                 observer(.completed)
                                             } else {

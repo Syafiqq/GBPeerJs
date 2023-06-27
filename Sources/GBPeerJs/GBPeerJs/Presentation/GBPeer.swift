@@ -266,6 +266,12 @@ private extension GBPeer {
         delegate?.peerJs(self, onDisconnected: currentId)
     }
 
+    /**
+     * Destroys the Peer: closes all active connections as well as the connection
+     *  to the server.
+     * Warning: The peer can no longer create or accept connections after being
+     *  destroyed.
+     */
     func destroy() {
         if destroyed {
             return

@@ -7,6 +7,7 @@ import Foundation
 protocol ILogger {
     func log(_  messages: Any...)
     func error(_  messages: Any...)
+    func warn(_  messages: Any...)
 }
 
 class Logger: ILogger {
@@ -20,6 +21,10 @@ class Logger: ILogger {
     }
 
     func error(_  messages: Any...) {
+        log(messages)
+    }
+
+    func warn(_  messages: Any...) {
         log(messages)
     }
 }

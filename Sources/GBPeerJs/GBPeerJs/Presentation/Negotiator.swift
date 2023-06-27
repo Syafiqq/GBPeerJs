@@ -98,15 +98,15 @@ protocol INegotiator: AnyObject {
             originator: Bool,
             originatorConstraint: RTCMediaConstraints?,
             data: NegotiatorEntity
-    )
+    ) -> Completable
 
     func handleSDP(
             type: String,
             sdp: String,
             answerMediaConstraint: RTCMediaConstraints?
-    )
+    ) -> Completable
 
-    func handleCandidate(_ ice: IceCandidate)
+    func handleCandidate(_ ice: RTCIceCandidate) -> Completable
 
     func cleanup()
 }
@@ -127,14 +127,14 @@ class Negotiator: NSObject, INegotiator {
             originator: Bool = false,
             originatorConstraint: RTCMediaConstraints? = nil,
             data: NegotiatorEntity
-    ) {
+    ) -> Completable {
         doStartConnection(
                 stream: stream,
                 originator: originator,
                 originatorConstraint: originatorConstraint,
                 data: data
         )
-                .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
+                /*.subscribeOn(SerialDispatchQueueScheduler(qos: .default))
                 .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
                 .subscribe(
                         onCompleted: { [weak self] in
@@ -145,20 +145,20 @@ class Negotiator: NSObject, INegotiator {
                             self?.connection?.emitError(error)
                         }
                 )
-                .disposed(by: classBag)
+                .disposed(by: classBag)*/
     }
 
     func handleSDP(
             type: String,
             sdp: String,
             answerMediaConstraint: RTCMediaConstraints? = nil
-    ) {
+    ) -> Completable {
         doHandleSDP(
                 type: type,
                 sdp: sdp,
                 answerMediaConstraint: answerMediaConstraint
         )
-                .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
+                /*.subscribeOn(SerialDispatchQueueScheduler(qos: .default))
                 .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
                 .subscribe(
                         onCompleted: { [weak self] in
@@ -169,12 +169,12 @@ class Negotiator: NSObject, INegotiator {
                             self?.connection?.emitError(error)
                         }
                 )
-                .disposed(by: classBag)
+                .disposed(by: classBag)*/
     }
 
-    func handleCandidate(_ ice: IceCandidate) {
+    func handleCandidate(_ ice: RTCIceCandidate) -> Completable {
         doHandleCandidate(ice)
-                .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
+                /*.subscribeOn(SerialDispatchQueueScheduler(qos: .default))
                 .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
                 .subscribe(
                         onCompleted: { [weak self] in
@@ -185,7 +185,7 @@ class Negotiator: NSObject, INegotiator {
                             self?.connection?.emitError(error)
                         }
                 )
-                .disposed(by: classBag)
+                .disposed(by: classBag)*/
     }
 
     func cleanup() {
@@ -789,8 +789,8 @@ private extension Negotiator {
     }
 
     // swiftlint:disable:next function_body_length
-    func doHandleCandidate(_ ice: IceCandidate) -> Completable {
-        func addIceCandidateAsync(ice: IceCandidate) -> Completable {
+    func doHandleCandidate(_ ice: RTCIceCandidate) -> Completable {
+        func addIceCandidateAsync(ice: RTCIceCandidate) -> Completable {
             Completable.create(subscribe: { [weak self] observer in
                 guard let self = self else {
                     observer(.error(RxError.disposed(object: Self.self)))
@@ -799,11 +799,7 @@ private extension Negotiator {
 
                 if let peerConnection = self.connection?.peerConnection {
                     peerConnection.add(
-                            RTCIceCandidate(
-                                    sdp: ice.candidate,
-                                    sdpMLineIndex: ice.sdpMLineIndex,
-                                    sdpMid: ice.sdpMid
-                            ),
+                            ice,
                             completionHandler: { [weak self] error in
                                 if self == nil {
                                     observer(.error(RxError.disposed(object: Self.self)))

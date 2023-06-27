@@ -66,12 +66,15 @@ struct NegotiatorEntity {
     var peerConstraint: RTCMediaConstraints
 }
 
-protocol SocketProvider: AnyObject {
+protocol ISocket: AnyObject {
+    func start(id: String, token: String)
+    func close()
     func send(_ message: String)
+    func cleanup()
 }
 
 protocol PeerProvider: AnyObject {
-    var socket: SocketProvider? { get }
+    var socket: ISocket? { get }
 
     func getConnection(peerId: String, connectionId: String) -> IConnection
     func getMessage(connectionId: String) -> [[String: Any]]

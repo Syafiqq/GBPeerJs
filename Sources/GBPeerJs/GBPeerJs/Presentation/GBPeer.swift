@@ -621,6 +621,7 @@ private extension GBPeer {
                 pingInterval: options.pingInterval ?? kPingIntervalDefault,
                 logger: logger
         )
+        socket.delegate = self
 
         return socket
     }

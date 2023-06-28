@@ -179,17 +179,27 @@ extension GBPeer: IPeer {
         return mediaConnection
     }
 
+    // TODO Change it to private
     /** Retrieve messages from lost message store */
-    //TODO Change it to private
     func getMessages(connectionId: String) -> [[String: Any]] {
         let messages = lostMessages[connectionId] ?? []
 
         if !messages.isEmpty {
             lostMessages.removeValue(forKey: connectionId)
-            return messages;
+            return messages
         }
 
-        return [];
+        return []
+    }
+
+    func storeMessage(connectionId: String, message: [String: Any]) {
+        if lostMessages.keys.contains(connectionId) {
+            lostMessages[connectionId] = []
+        } else {
+            var peerConnections = lostMessages[connectionId] ?? []
+            peerConnections.append(message)
+            lostMessages[connectionId] = peerConnections
+        }
     }
 }
 

@@ -506,7 +506,27 @@ private extension GBPeer {
                 logger.warn("Received malformed connection type:\(type ?? "-")")
             }
         default:
-            break
+            let peerId = message["src"] as? String
+            let payload = message["payload"] as? [String: Any]
+            if payload == nil {
+                logger.warn("You received a malformed message from \(peerId ?? "-") of type \(type ?? "-")")
+                return;
+            }
+
+            if let peerId,
+               let payload{
+                if let connectionId = payload["connectionId"] as? String,
+                   let connection = getConnection(peerId: peerId, connectionId: connectionId),
+                   connection.peerConnection != nil {
+                    connection.handleMessage(message: message)
+                } else if let connectionId = payload["connectionId"] as? String {
+                    storeMessage(connectionId: connectionId, message: message)
+                } else {
+                    logger.warn("You received an unrecognized message:", message);
+                }
+            } else {
+                logger.warn("Received malformed connection type:\(type ?? "-")")
+            }
         }
     }
 }

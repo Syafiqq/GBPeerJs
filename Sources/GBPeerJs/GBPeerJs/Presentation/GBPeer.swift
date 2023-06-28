@@ -136,7 +136,7 @@ private extension GBPeer {
 
                 var connection: IConnection? = doGetConnection(peerId: peerId, connectionId: connectionId)
                 if connection != nil {
-                    connection?.close()
+                    connection?.requestClose()
                     logger.warn("Offer received for existing Connection ID:\(connectionId)")
                 }
 
@@ -380,7 +380,7 @@ private extension GBPeer {
         }
 
         for connection in connections {
-            connection.close()
+            connection.requestClose()
         }
     }
 

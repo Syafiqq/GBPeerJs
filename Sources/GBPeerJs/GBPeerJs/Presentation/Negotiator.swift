@@ -95,7 +95,7 @@ protocol IConnection: AnyObject {
     func unsetPeerConnection()
     func addStream(_ stream: RTCMediaStream)
     func emitError(_ error: Error)
-    func close()
+    func requestClose()
     func emitIceStateChanged(_ state: RTCIceConnectionState)
     func handleMessage(message: [String: Any])
 }
@@ -898,11 +898,11 @@ extension Negotiator: RTCPeerConnectionDelegate {
         case .failed:
             logger.log("iceConnectionState is failed, closing connections to \(connection?.peer ?? "-")")
             connection?.emitError(GBPeerJsError.webRtcLocalCandidateError(reason: .iceConnectionStateFailed))
-            connection?.close()
+            connection?.requestClose()
         case .closed:
             logger.log("iceConnectionState is closed, closing connections to \(connection?.peer ?? "-")")
             connection?.emitError(GBPeerJsError.webRtcLocalCandidateError(reason: .iceConnectionStateClosed))
-            connection?.close()
+            connection?.requestClose()
         case .disconnected:
             logger.log("iceConnectionState changed to disconnected on the connection with  \(connection?.peer ?? "-")")
         default:

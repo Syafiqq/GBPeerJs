@@ -12,7 +12,7 @@ protocol MediaConnectionDelegate: AnyObject {
     func mediaConnection(_: GBMediaConnection, onError: Error)
 }
 
-public class GBMediaConnection: IConnection {
+public class GBMediaConnection {
     private static let idPrefix = "mc_"
 
     private var open = false
@@ -82,31 +82,12 @@ public class GBMediaConnection: IConnection {
         }
     }
 
-    func setPeerConnection(_ peer: RTCPeerConnection) {
-        peerConnection = peer
+    public func answer(stream: RTCMediaStream?) {
+        doAnswer(stream: stream)
     }
 
-    func unsetPeerConnection() {
-        peerConnection = nil
-    }
-
-    func addStream(_ stream: RTCMediaStream) {
-        doAddStream(stream)
-    }
-
-    func close() {
+    public func close() {
         doClose()
-    }
-
-    func emitError(_ error: Error) {
-        delegate?.mediaConnection(self, onError: error)
-    }
-
-    func emitIceStateChanged(_ state: RTCIceConnectionState) {
-    }
-
-    func handleMessage(message: [String: Any]) {
-        doHandleMessage(message: message)
     }
 
     deinit {
@@ -268,5 +249,34 @@ private extension GBMediaConnection {
         open = false
 
         delegate?.mediaConnection(self, onClose: ())
+    }
+}
+
+extension GBMediaConnection: IConnection {
+    func setPeerConnection(_ peer: RTCPeerConnection) {
+        peerConnection = peer
+    }
+
+    func unsetPeerConnection() {
+        peerConnection = nil
+    }
+
+    func addStream(_ stream: RTCMediaStream) {
+        doAddStream(stream)
+    }
+
+    func requestClose() {
+        doClose()
+    }
+
+    func emitError(_ error: Error) {
+        delegate?.mediaConnection(self, onError: error)
+    }
+
+    func emitIceStateChanged(_ state: RTCIceConnectionState) {
+    }
+
+    func handleMessage(message: [String: Any]) {
+        doHandleMessage(message: message)
     }
 }

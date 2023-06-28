@@ -10,6 +10,7 @@ protocol MediaConnectionDelegate: AnyObject {
     func mediaConnection(_: GBMediaConnection, onRemoteStreamAdded: RTCMediaStream)
     func mediaConnection(_: GBMediaConnection, onClose: ())
     func mediaConnection(_: GBMediaConnection, onError: Error)
+    func mediaConnection(_: GBMediaConnection, onIceStateChanged: RTCIceConnectionState)
 }
 
 public class GBMediaConnection {
@@ -274,6 +275,7 @@ extension GBMediaConnection: IConnection {
     }
 
     func emitIceStateChanged(_ state: RTCIceConnectionState) {
+        delegate?.mediaConnection(self, onIceStateChanged: state)
     }
 
     func handleMessage(message: [String: Any]) {

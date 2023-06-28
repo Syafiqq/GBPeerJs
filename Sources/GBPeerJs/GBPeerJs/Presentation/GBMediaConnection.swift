@@ -7,32 +7,34 @@ import WebRTC
 import RxSwift
 
 protocol MediaConnectionDelegate: AnyObject {
-    func mediaConnection(_: MediaConnection, onRemoteStreamAdded: RTCMediaStream)
-    func mediaConnection(_: MediaConnection, onClose: ())
-    func mediaConnection(_: MediaConnection, onError: Error)
+    func mediaConnection(_: GBMediaConnection, onRemoteStreamAdded: RTCMediaStream)
+    func mediaConnection(_: GBMediaConnection, onClose: ())
+    func mediaConnection(_: GBMediaConnection, onError: Error)
 }
 
-class MediaConnection: IConnection {
+class GBMediaConnection: IConnection {
     private static let idPrefix = "mc_"
+
+    private var open = false
+    private let logger: ILogger = Logger.shared
+
+    private var negotiator: INegotiator?
+    private var localStream: RTCMediaStream?
+    private var remoteStream: RTCMediaStream?
+
+    private var remoteOfferPayload: [String: Any] = [:]
+
+    private var classBag = DisposeBag()
 
     var peer: String
     var connectionId: String
     var type: ConnectionType = .media
 
     var originator: Bool
+    var peerConnection: RTCPeerConnection?
 
     weak var provider: IPeer?
     weak var delegate: MediaConnectionDelegate?
-    var peerConnection: RTCPeerConnection?
-
-    private var classBag = DisposeBag()
-
-    private var open = false
-    private var localStream: RTCMediaStream?
-    private var remoteStream: RTCMediaStream?
-    private let logger: ILogger = Logger.shared
-    private var negotiator: INegotiator?
-    private var remoteOfferPayload: [String: Any] = [:]
 
     init(
             peer: String,
@@ -112,7 +114,7 @@ class MediaConnection: IConnection {
     }
 }
 
-private extension MediaConnection {
+private extension GBMediaConnection {
     func doAddStream(_ remoteStream: RTCMediaStream) {
         logger.log("Receiving stream", remoteStream)
 
@@ -189,7 +191,7 @@ private extension MediaConnection {
 
     func doAnswer(stream: RTCMediaStream?) {
         if localStream != nil {
-            logger.warn("Local stream already exists on this MediaConnection. Are you answering a call twice?")
+            logger.warn("Local stream already exists on this GBMediaConnection. Are you answering a call twice?")
             return
         }
 

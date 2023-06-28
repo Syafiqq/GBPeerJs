@@ -61,7 +61,7 @@ public class GBPeer: IPeer {
     public func call(
             peerId peer: String,
             stream: RTCMediaStream?
-    ) throws -> MediaConnection {
+    ) throws -> GBMediaConnection {
         try doCall(peerId: peer, stream: stream)
     }
 
@@ -143,7 +143,7 @@ extension GBPeer {
                 let payloadType = payload["type"] as? String
                 // Create a new connection.
                 if payloadType == ConnectionType.media.rawValue {
-                    let mediaConnection = MediaConnection(
+                    let mediaConnection = GBMediaConnection(
                             peer: peerId,
                             provider: self,
                             connectionId: connectionId,
@@ -238,7 +238,7 @@ extension GBPeer {
     func doCall(
             peerId peer: String,
             stream: RTCMediaStream?
-    ) throws -> MediaConnection {
+    ) throws -> GBMediaConnection {
         if disconnected {
             logger.warn(
                     "You cannot connect to a new Peer because you called " +
@@ -253,7 +253,7 @@ extension GBPeer {
             throw GBPeerJsError.peerError(reason: .connectPeerWithoutMedia)
         }
 
-        let mediaConnection = MediaConnection(
+        let mediaConnection = GBMediaConnection(
                 peer: peer,
                 provider: self,
                 connectionId: nil,

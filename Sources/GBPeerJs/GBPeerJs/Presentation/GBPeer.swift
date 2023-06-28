@@ -64,8 +64,7 @@ public class GBPeer: NSObject {
         let userId = id
         self.options = options
 
-        let randomTokenSeed = "abcdefghijklmnopqrstuvwxyz0123456789"
-        randomToken = String((0..<11).compactMap({ _ in randomTokenSeed.randomElement() }))
+        randomToken = Util.randomToken(11)
         super.init()
 
         socket = createServerConnection()

@@ -421,85 +421,81 @@ private extension GBPeer {
 
 private extension GBPeer {
     // swiftlint:disable:next function_body_length cyclomatic_complexity
-    func handleMessage(_ message: Socket.StringMessageResponse) {
-        let type = message.decodedResponse["type"] as? String
+    func handleMessage(_ message: [String: Any]) {
+        let type = message["type"] as? String
 
         switch type {
-        case "OPEN": // The connection to the server is open.
+        case ServerMessageType.open.rawValue: // The connection to the server is open.
             lastServerId = id
             open = true
             delegate?.peerJs(self, onOpen: id)
-        case "ERROR": // Server error.
+        case ServerMessageType.error.rawValue: // Server error.
             var error = "Error"
-            if let payloadError = message.decodedPayload["type"] as? String {
-                error = payloadError ?? error
+            if let payload = message["payload"] as? [String: Any],
+               let payloadMessage = payload["msg"] as? String {
+                error = payloadMessage
             }
-            abort(GBPeerError(message: error))
-        case "ID-TAKEN": // The selected ID is taken.
-            abort(GBPeerError(message: "ID \(id ?? "-") is taken"))
-        case "INVALID-KEY": // The given API key cannot be found.
-            abort(GBPeerError(message: "API KEY \(options.key ?? "-") is invalid"))
-        case "LEAVE": // Another peer has closed its connection to this peer.
-            let peerId = message.decodedResponse["src"] as? String
-            if let peerId = peerId {
-                logger.log("Received leave message from \(peerId ?? "-")")
+            abort(GBPeerJsError.peerError(reason: .unknownError(error)))
+        case ServerMessageType.idTaken.rawValue: // The selected ID is taken.
+            abort(GBPeerJsError.peerError(reason: .unknownError("ID \(id ?? "-") is taken")))
+        case ServerMessageType.invalidKey.rawValue: // The given API key cannot be found.
+            abort(GBPeerJsError.peerError(reason: .unknownError("API KEY \(options.key ?? "-") is invalid")))
+        case ServerMessageType.leave.rawValue: // Another peer has closed its connection to this peer.
+            let peerId = message["src"] as? String
+            logger.log("Received leave message from \(peerId ?? "-")")
+            if let peerId {
                 cleanupPeer(peerId)
                 connections.removeValue(forKey: peerId)
             }
-        case "EXPIRE": // The offer sent to a peer has expired without response.
-            let peerId = message.decodedResponse["src"] as? String
+        case ServerMessageType.expire.rawValue: // The offer sent to a peer has expired without response.
+            let peerId = (message["src"] as? String) ?? "-"
             emitError("Could not connect to peer \(peerId ?? "-")")
-        case "OFFER":
-            break
-                // // we should consider switching this to CALL/CONNECT, but this is the least breaking option.
-                // const connectionId = payload.connectionId
-                // let connection = this.getConnection(peerId, connectionId)
-                //
-                // if (connection) {
-                //     connection.close()
-                //     logger.warn(
-                //             `Offer received for existing Connection ID:$ {
-                //         connectionId
-                //     }`,
-                //     )
-                // }
-                //
-                // // Create a new connection.
-                // if (payload.type === ConnectionType.Media) {
-                //     const mediaConnection = new MediaConnection(peerId, this, {
-                //         connectionId: connectionId,
-                //         _payload: payload,
-                //         metadata: payload.metadata,
-                //     })
-                //     connection = mediaConnection
-                //     this._addConnection(peerId, connection)
-                //     this.emit("call", mediaConnection)
-                // } else if (payload.type === ConnectionType.Data) {
-                //     const dataConnection = new DataConnection(peerId, this, {
-                //         connectionId: connectionId,
-                //         _payload: payload,
-                //         metadata: payload.metadata,
-                //         label: payload.label,
-                //         serialization: payload.serialization,
-                //         reliable: payload.reliable,
-                //     })
-                //     connection = dataConnection
-                //     this._addConnection(peerId, connection)
-                //     this.emit("connection", dataConnection)
-                // } else {
-                //     logger.warn(`Received malformed connection type:$ {
-                //         payload.type
-                //     }`)
-                //     return
-                // }
-                //
-                // // Find messages.
-                // const messages = this._getMessages(connectionId)
-                // for (let message of messages) {
-                //     connection.handleMessage(message)
-                // }
-                //
-                // break
+        case ServerMessageType.offer.rawValue:
+            // we should consider switching this to CALL/CONNECT, but this is the least breaking option.
+            if let peerId = message["src"] as? String,
+               let payload = message["payload"] as? [String: Any],
+               let connectionId = payload["connectionId"] as? String {
+                if let connection = getConnection(peerId: peerId, connectionId: connectionId) {
+                    connection.close()
+                    logger.warn("Offer received for existing Connection ID:\(connectionId)")
+                }
+
+
+            }
+
+            // Create a new connection.
+            if (payload.type === ConnectionType.Media) {
+                const mediaConnection = new MediaConnection(peerId, this, {
+                    connectionId: connectionId,
+                    _payload: payload,
+                    metadata: payload.metadata,
+                });
+                connection = mediaConnection;
+                this._addConnection(peerId, connection);
+                this.emit("call", mediaConnection);
+            } else if (payload.type === ConnectionType.Data) {
+                const dataConnection = new DataConnection(peerId, this, {
+                    connectionId: connectionId,
+                    _payload: payload,
+                    metadata: payload.metadata,
+                    label: payload.label,
+                    serialization: payload.serialization,
+                    reliable: payload.reliable,
+                });
+                connection = dataConnection;
+                this._addConnection(peerId, connection);
+                this.emit("connection", dataConnection);
+            } else {
+                logger.warn(`Received malformed connection type:${payload.type}`);
+                return;
+            }
+
+            // Find messages.
+            const messages = this._getMessages(connectionId);
+            for (let message of messages) {
+            connection.handleMessage(message);
+
+            break;
         default:
             let peerId = message.decodedResponse["src"] as? String
             if message.decodedPayload["type"] == nil {

@@ -37,6 +37,7 @@ public class GBPeer: NSObject {
 
     internal var socket: ISocket?
     private var connections: [String: [IConnection]] = [:]
+    private var lostMessages: [String: [[String: Any]]] = [:]
 
     private var id: String?
     private var lastServerId: String?
@@ -100,6 +101,7 @@ public class GBPeer: NSObject {
 }
 
 extension GBPeer: IPeer {
+    /** Retrieve a data/media connection for this peer. */
     func getConnection(peerId: String, connectionId: String) -> IConnection? {
         let connections = connections[peerId]
         if connections?.isEmpty == true {
@@ -114,6 +116,18 @@ extension GBPeer: IPeer {
     }
 
     func removeConnection(_ connection: IConnection) {
+        var connections = connections[connection.peer]
+
+        if connections?.isEmpty == false {
+            if let index = connections?.firstIndex(where: { $0 === connection }) {
+                connections?.remove(at: index)
+            }
+
+            self.connections[connection.peer] = connections
+        }
+
+        // remove from lost messages
+        lostMessages.removeValue(forKey: connection.peer)
     }
 }
 
@@ -318,7 +332,7 @@ private extension GBPeer {
      * it retains its disconnected state and its existing connections.
      */
     func abort(_ error: Error?) {
-        logger.error("Aborting!");
+        logger.error("Aborting!")
 
         if let error {
             emitError(error)

@@ -450,7 +450,7 @@ private extension GBPeer {
             }
         case ServerMessageType.expire.rawValue: // The offer sent to a peer has expired without response.
             let peerId = (message["src"] as? String) ?? "-"
-            emitError("Could not connect to peer \(peerId ?? "-")")
+            emitError("Could not connect to peer \(peerId)")
         case ServerMessageType.offer.rawValue:
             // we should consider switching this to CALL/CONNECT, but this is the least breaking option.
             if let peerId = message["src"] as? String,

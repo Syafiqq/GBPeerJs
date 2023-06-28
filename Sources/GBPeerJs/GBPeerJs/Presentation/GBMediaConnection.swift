@@ -6,7 +6,7 @@ import Foundation
 import WebRTC
 import RxSwift
 
-protocol MediaConnectionDelegate: AnyObject {
+public protocol MediaConnectionDelegate: AnyObject {
     func mediaConnection(_: GBMediaConnection, onRemoteStreamAdded: RTCMediaStream)
     func mediaConnection(_: GBMediaConnection, onClose: ())
     func mediaConnection(_: GBMediaConnection, onError: Error)
@@ -35,7 +35,7 @@ public class GBMediaConnection {
     var peerConnection: RTCPeerConnection?
 
     weak var provider: IPeer?
-    weak var delegate: MediaConnectionDelegate?
+    public weak var delegate: MediaConnectionDelegate?
 
     init(
             peer: String,

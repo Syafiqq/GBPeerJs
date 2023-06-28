@@ -66,60 +66,6 @@ struct NegotiatorEntity {
     var peerConstraint: RTCMediaConstraints
 }
 
-protocol ISocket: AnyObject {
-    var delegate: SocketDelegate? { get set }
-
-    func start(id: String, token: String)
-    func close()
-    func send(_ message: String)
-    func cleanup()
-}
-
-protocol IPeer: AnyObject {
-    var socket: ISocket? { get }
-
-    func getConnection(peerId: String, connectionId: String) -> IConnection?
-    func getMessages(connectionId: String) -> [[String: Any]]
-    func removeConnection(_ connection: IConnection)
-}
-
-protocol IConnection: AnyObject {
-    var peer: String { get }
-    var connectionId: String { get }
-    var type: ConnectionType { get }
-    var provider: IPeer? { get }
-    var originator: Bool { get }
-    var peerConnection: RTCPeerConnection? { get }
-
-    func setPeerConnection(_ peer: RTCPeerConnection)
-    func unsetPeerConnection()
-    func addStream(_ stream: RTCMediaStream)
-    func emitError(_ error: Error)
-    func requestClose()
-    func emitIceStateChanged(_ state: RTCIceConnectionState)
-    func handleMessage(message: [String: Any])
-}
-
-protocol INegotiator: AnyObject {
-    func startConnection(
-            stream: RTCMediaStream?,
-            originator: Bool,
-            originatorConstraint: RTCMediaConstraints?,
-            data: NegotiatorEntity,
-            remoteOfferSdp: String
-    ) -> Completable
-
-    func handleSDP(
-            type: String,
-            sdp: String,
-            answerMediaConstraint: RTCMediaConstraints?
-    ) -> Completable
-
-    func handleCandidate(_ ice: RTCIceCandidate) -> Completable
-
-    func cleanup()
-}
-
 class Negotiator: NSObject, INegotiator {
     weak var connection: IConnection?
     private let logger: ILogger = Logger.shared

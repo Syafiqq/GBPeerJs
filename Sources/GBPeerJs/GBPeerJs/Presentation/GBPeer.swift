@@ -24,7 +24,7 @@ protocol GBPeerDelegate: AnyObject {
 
 public class GBPeer {
     private let options: PeerOptions
-    internal var socket: ISocket?
+    internal weak var socket: ISocket?
 
     private var id: String?
     private var lastServerId: String?

@@ -22,7 +22,7 @@ protocol GBPeerDelegate: AnyObject {
     func peerJs(_ sender: GBPeer, onCall withConnection: IConnection)
 }
 
-public class GBPeer: IPeer {
+public class GBPeer {
     private let options: PeerOptions
     internal var socket: ISocket?
 
@@ -78,7 +78,7 @@ public class GBPeer: IPeer {
     }
 }
 
-extension GBPeer {
+private extension GBPeer {
     func createServerConnection() -> Socket {
         let socket = Socket(
                 secure: options.secure,
@@ -134,7 +134,7 @@ extension GBPeer {
                let payload = message["payload"] as? [String: Any],
                let connectionId = payload["connectionId"] as? String {
 
-                var connection: IConnection? = getConnection(peerId: peerId, connectionId: connectionId)
+                var connection: IConnection? = doGetConnection(peerId: peerId, connectionId: connectionId)
                 if connection != nil {
                     connection?.close()
                     logger.warn("Offer received for existing Connection ID:\(connectionId)")
@@ -174,7 +174,7 @@ extension GBPeer {
                     return
                 }
 
-                let messages = getMessages(connectionId: connectionId)
+                let messages = doGetMessages(connectionId: connectionId)
                 for message in messages {
                     connection?.handleMessage(message: message)
                 }
@@ -192,7 +192,7 @@ extension GBPeer {
             if let peerId,
                let payload {
                 if let connectionId = payload["connectionId"] as? String,
-                   let connection = getConnection(peerId: peerId, connectionId: connectionId),
+                   let connection = doGetConnection(peerId: peerId, connectionId: connectionId),
                    connection.peerConnection != nil {
                     connection.handleMessage(message: message)
                 } else if let connectionId = payload["connectionId"] as? String {
@@ -218,7 +218,7 @@ extension GBPeer {
 
     // TODO Change it to private
     /** Retrieve messages from lost message store */
-    func getMessages(connectionId: String) -> [[String: Any]] {
+    func doGetMessages(connectionId: String) -> [[String: Any]] {
         let messages = lostMessages[connectionId] ?? []
 
         if !messages.isEmpty {
@@ -277,7 +277,7 @@ extension GBPeer {
         }
     }
 
-    func removeConnection(_ connection: IConnection) {
+    func doRemoveConnection(_ connection: IConnection) {
         var connections = connections[connection.peer]
 
         if connections?.isEmpty == false {
@@ -293,7 +293,7 @@ extension GBPeer {
     }
 
     /** Retrieve a data/media connection for this peer. */
-    func getConnection(peerId: String, connectionId: String) -> IConnection? {
+    func doGetConnection(peerId: String, connectionId: String) -> IConnection? {
         let connections = connections[peerId]
         if connections?.isEmpty == true {
             return nil
@@ -428,6 +428,20 @@ extension GBPeer {
             logger.log("Peer \(id ?? "-") cannot reconnect because it is not disconnected from the server!")
             throw GBPeerJsError.peerError(reason: .stillConnected)
         }
+    }
+}
+
+extension GBPeer: IPeer {
+    func getMessages(connectionId: String) -> [[String: Any]] {
+        doGetMessages(connectionId: connectionId)
+    }
+
+    func removeConnection(_ connection: IConnection) {
+        doRemoveConnection(connection)
+    }
+
+    func getConnection(peerId: String, connectionId: String) -> IConnection? {
+        doGetConnection(peerId: peerId, connectionId: connectionId)
     }
 }
 

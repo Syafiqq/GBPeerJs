@@ -12,7 +12,7 @@ protocol MediaConnectionDelegate: AnyObject {
     func mediaConnection(_: GBMediaConnection, onError: Error)
 }
 
-class GBMediaConnection: IConnection {
+public class GBMediaConnection: IConnection {
     private static let idPrefix = "mc_"
 
     private var open = false

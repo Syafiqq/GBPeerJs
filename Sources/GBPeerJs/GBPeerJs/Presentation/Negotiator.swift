@@ -17,14 +17,12 @@ class Negotiator: NSObject, INegotiator {
     }
 
     func startConnection(
-            peerBuilder: GBPeerConnectionBuilder,
-            stream: RTCMediaStream? = nil,
+            stream: GBPeerMediaStream? = nil,
             originator: Bool = false,
             originatorConstraint: RTCMediaConstraints? = nil,
             remoteOfferSdp: String
     ) -> Completable {
         doStartConnection(
-                peerBuilder: peerBuilder,
                 stream: stream,
                 originator: originator,
                 originatorConstraint: originatorConstraint,
@@ -61,8 +59,7 @@ class Negotiator: NSObject, INegotiator {
 private extension Negotiator {
     // swiftlint:disable:next function_body_length
     func doStartConnection(
-            peerBuilder: GBPeerConnectionBuilder,
-            stream: RTCMediaStream? = nil,
+            stream: GBPeerMediaStream? = nil,
             originator: Bool = false,
             originatorConstraint: RTCMediaConstraints? = nil,
             remoteOfferSdp: String
@@ -76,15 +73,15 @@ private extension Negotiator {
 
                     var bag = [Disposable]()
                     do {
-                        let peerConnection = try self.startPeerConnection(peerBuilder: peerBuilder)
-
-                        // Set the webRtcCommonError's PC.
-                        self.connection?.setPeerConnection(peerConnection)
-
                         if self.connection?.type == .media,
                            let stream = stream {
+                            let peerConnection = try self.startPeerConnection(peerBuilder: stream.peerBuilder)
+
+                            // Set the webRtcCommonError's PC.
+                            self.connection?.setPeerConnection(peerConnection)
+
                             self.addTracksToConnection(
-                                    stream: stream,
+                                    stream: stream.stream,
                                     peerConnection: peerConnection
                             )
                         }

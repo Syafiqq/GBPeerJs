@@ -6,6 +6,6 @@ import Foundation
 import WebRTC
 
 public protocol GBPeerConnection: AnyObject {
-    func answer(stream: RTCMediaStream?)
+    func answer(stream: GBPeerMediaStream)
     func close()
 }

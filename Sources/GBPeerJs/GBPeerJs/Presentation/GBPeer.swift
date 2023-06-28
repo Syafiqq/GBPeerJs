@@ -60,10 +60,9 @@ public class GBPeer {
 
     public func call(
             peerId peer: String,
-            peerConnectionBuilder: GBPeerConnectionBuilder,
-            stream: RTCMediaStream
+            stream: GBPeerMediaStream
     ) throws -> GBPeerMediaConnection {
-        try doCall(peerId: peer, peerConnectionBuilder: peerConnectionBuilder, stream: stream)
+        try doCall(peerId: peer, stream: stream)
     }
 
     public func destroy() {
@@ -238,8 +237,7 @@ private extension GBPeer {
      */
     func doCall(
             peerId peer: String,
-            peerConnectionBuilder: GBPeerConnectionBuilder,
-            stream: RTCMediaStream
+            stream: GBPeerMediaStream
     ) throws -> GBPeerMediaConnection {
         if disconnected {
             logger.warn(
@@ -257,7 +255,6 @@ private extension GBPeer {
 
         let mediaConnection = GBPeerMediaConnection(
                 peer: peer,
-                peerConnectionBuilder: peerConnectionBuilder,
                 provider: self,
                 connectionId: nil,
                 stream: stream,

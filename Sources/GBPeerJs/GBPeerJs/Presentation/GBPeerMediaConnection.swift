@@ -24,7 +24,6 @@ public class GBPeerMediaConnection: GBPeerConnection {
     private var remoteStream: RTCMediaStream?
 
     private let remoteOfferPayload: [String: Any]
-    private let peerConnectionBuilder: GBPeerConnectionBuilder
 
     private var classBag = DisposeBag()
 
@@ -40,25 +39,22 @@ public class GBPeerMediaConnection: GBPeerConnection {
 
     init(
             peer: String,
-            peerConnectionBuilder: GBPeerConnectionBuilder,
             provider: IPeer?,
             connectionId: String?,
-            stream: RTCMediaStream?,
+            stream: GBPeerMediaStream?,
             remoteOfferPayload: [String: Any]
     ) {
         self.peer = peer
         self.provider = provider
         self.remoteOfferPayload = remoteOfferPayload
-        self.peerConnectionBuilder = peerConnectionBuilder
         originator = true
 
-        localStream = stream
+        localStream = stream?.stream
         self.connectionId = connectionId ?? "\(Self.idPrefix)\(Util.randomToken(11))"
         negotiator = Negotiator(connection: self, logger: logger)
 
-        if let stream = localStream {
+        if let stream = stream {
             negotiator?.startConnection(
-                            peerBuilder: peerConnectionBuilder,
                             stream: stream,
                             originator: true,
                             originatorConstraint: nil,
@@ -79,7 +75,7 @@ public class GBPeerMediaConnection: GBPeerConnection {
         }
     }
 
-    public func answer(stream: RTCMediaStream?) {
+    public func answer(stream: GBPeerMediaStream) {
         doAnswer(stream: stream)
     }
 
@@ -167,20 +163,19 @@ private extension GBPeerMediaConnection {
         }
     }
 
-    func doAnswer(stream: RTCMediaStream?) {
+    func doAnswer(stream: GBPeerMediaStream) {
         if localStream != nil {
             logger.warn("Local stream already exists on this GBPeerMediaConnection. Are you answering a call twice?")
             return
         }
 
-        localStream = stream
+        localStream = stream.stream
 
         /*if options && options.sdpTransform {
             this.options.sdpTransform = options.sdpTransform;
         }*/
 
         negotiator?.startConnection(
-                        peerBuilder: peerConnectionBuilder,
                         stream: stream,
                         originator: false,
                         originatorConstraint: nil,

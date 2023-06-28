@@ -8,8 +8,7 @@ import RxSwift
 
 protocol INegotiator: AnyObject {
     func startConnection(
-            peerBuilder: GBPeerConnectionBuilder,
-            stream: RTCMediaStream?,
+            stream: GBPeerMediaStream?,
             originator: Bool,
             originatorConstraint: RTCMediaConstraints?,
             remoteOfferSdp: String

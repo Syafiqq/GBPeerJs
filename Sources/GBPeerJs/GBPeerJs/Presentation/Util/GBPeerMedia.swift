@@ -15,6 +15,11 @@ public struct GBPeerConnectionBuilder {
     let peerConfigBuilder: (RTCConfiguration) -> Void
 }
 
+public struct GBPeerMediaStream {
+    let stream: RTCMediaStream
+    let peerBuilder: GBPeerConnectionBuilder
+}
+
 public enum GBPeerMedia {
     func getMediaBuilder(
             peerFactoryBuilder: () -> RTCPeerConnectionFactory

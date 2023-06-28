@@ -3,6 +3,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum Util {
     static func browser() -> String {

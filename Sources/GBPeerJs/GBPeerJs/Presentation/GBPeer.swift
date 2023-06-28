@@ -360,7 +360,9 @@ extension GBPeer {
         }
         connections.removeAll()
 
-        destroyServerConnection()
+        socket?.cleanup()
+        socket?.delegate = nil
+        socket = nil
     }
 
     /** Closes all connections to this peer. */
@@ -426,109 +428,6 @@ extension GBPeer {
 extension GBPeer: IPeer {
 }
 
-extension GBPeer: RTCPeerConnectionDelegate {
-    public func peerConnection(_ peerConnection: RTCPeerConnection, didChange stateChanged: RTCSignalingState) {
-        print("WebRTC - didChange stateChanged - \(stateChanged) | Called when the SignalingState changed.")
-    }
-
-    public func peerConnection(_ peerConnection: RTCPeerConnection, didAdd stream: RTCMediaStream) {
-        print("WebRTC - didAdd stream | Called when media is received on a new stream from remote peer.")
-
-        logger.log("Received remote stream")
-
-        logger.log("add stream \(stream.streamId) to media connection \(connectionId ?? "-")")
-
-        if let track = stream.audioTracks.first {
-            track.isEnabled = true
-            track.source.volume = 10
-            // self.stream = stream
-            // self.track = track
-            // reconfigureAudio()
-        } else {
-            logger.log("Weird looking stream")
-        }
-
-        logger.log("Receiving stream")
-    }
-
-    public func peerConnection(_ peerConnection: RTCPeerConnection, didRemove stream: RTCMediaStream) {
-        print("WebRTC - didRemove stream | Called when a remote peer closes a stream.")
-    }
-
-    public func peerConnectionShouldNegotiate(_ peerConnection: RTCPeerConnection) {
-        print("""
-              WebRTC - peerConnectionShouldNegotiate | Called when negotiation is needed,
-              for example ICE has restarted.
-              """)
-    }
-
-    public func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceConnectionState) {
-        print("WebRTC - didChange newState \(newState) | Called any time the IceConnectionState changes.")
-    }
-
-    public func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceGatheringState) {
-        print("WebRTC - didChange newState \(newState) | Called any time the IceGatheringState changes")
-        // iceGatheringStateRelay.accept(newState)
-    }
-
-    public func peerConnection(_ peerConnection: RTCPeerConnection, didGenerate candidate: RTCIceCandidate) {
-        print("WebRTC - didGenerate candidate | New ice candidate has been found.")
-
-        let peerId = remotePeerId ?? ""
-        let connectionId = connectionId ?? ""
-        let connectionType = "media"
-
-        guard !candidate.sdp.isEmpty else {
-            return
-        }
-
-        logger.log("Received ICE candidates for \(peerId):\(candidate.sdp)")
-
-        // if sendOfferAlready {
-        //     sendOffer(candidate)
-        // } else {
-        //     pendingCandidates.append(candidate)
-        // }
-    }
-
-    private func sendOffer(_ candidate: RTCIceCandidate) {
-        let peerId = remotePeerId ?? ""
-        let connectionId = connectionId ?? ""
-        let connectionType = "media"
-
-        let candidateEntity = LocalCandidateRequestEntity(
-                type: "CANDIDATE",
-                payload: .init(
-                        candidate: .init(
-                                candidate: candidate.sdp,
-                                sdpMLineIndex: candidate.sdpMLineIndex,
-                                sdpMid: candidate.sdpMid
-                        ),
-                        type: "media",
-                        connectionId: connectionId
-                ),
-                dst: peerId
-        )
-        let candidateEncoder = JSONEncoder()
-        let candidateJson: String
-        do {
-            let candidateData = try candidateEncoder.encode(candidateEntity)
-            candidateJson = String(data: candidateData, encoding: .utf8) ?? ""
-        } catch {
-            fatalError("Create Candidate json failed")
-        }
-        socket?.send(candidateJson)
-    }
-
-    public func peerConnection(_ peerConnection: RTCPeerConnection, didRemove candidates: [RTCIceCandidate]) {
-        print("WebRTC - didRemove candidates | Called when a group of local Ice candidates have been removed.")
-    }
-
-    public func peerConnection(_ peerConnection: RTCPeerConnection, didOpen dataChannel: RTCDataChannel) {
-        print("WebRTC - didOpen dataChannel | New data channel has been opened.")
-    }
-}
-
 // MARK: - Private
 
 private extension GBPeer {
@@ -537,7 +436,6 @@ private extension GBPeer {
 // MARK: - Connectivity
 
 private extension GBPeer {
-
 }
 
 // MARK: - Data
@@ -548,12 +446,6 @@ private extension GBPeer {
 // MARK: - Socket
 
 private extension GBPeer {
-
-    func destroyServerConnection() {
-        socket?.cleanup()
-        socket?.delegate = nil
-        socket = nil
-    }
 }
 
 extension GBPeer: SocketDelegate {

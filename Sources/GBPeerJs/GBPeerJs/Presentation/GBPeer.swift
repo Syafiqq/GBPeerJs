@@ -14,14 +14,6 @@ private let kPathDefault = "/"
 
 // MARK: - Config
 
-struct GBPeerError: Error {
-    let message: String
-
-    init(message: String) {
-        self.message = message
-    }
-}
-
 struct UnknownError: Error {
 }
 
@@ -76,7 +68,7 @@ public class GBPeer: NSObject {
     }
 
     private func emitError(_ message: String) {
-        delegate?.peerJs(self, onError: GBPeerError(message: message))
+        delegate?.peerJs(self, onError: GBPeerJsError.peerError(reason: .unknownError(message)))
     }
 
     private func emitError(_ error: Error) {
@@ -408,7 +400,7 @@ private extension GBPeer {
         if let error {
             emitError(error)
         } else {
-            emitError("Aborted!")
+            emitError(GBPeerJsError.peerError(reason: .peerAborted))
         }
 
         if lastServerId == nil {

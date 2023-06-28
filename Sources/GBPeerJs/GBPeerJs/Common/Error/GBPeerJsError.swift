@@ -54,5 +54,7 @@ public extension GBPeerJsError {
         case stillConnected
         case connectPeerOnDisconnectServer
         case connectPeerWithoutMedia
+        case peerAborted
+        case unknownError(string)
     }
 }

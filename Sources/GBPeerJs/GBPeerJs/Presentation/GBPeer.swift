@@ -634,7 +634,7 @@ extension GBPeer: SocketDelegate {
         disconnect()
     }
 
-    func socketJs(onNewMessage data: Socket.StringMessageResponse) {
+    func socketJs(onNewMessage data: [String: Any]) {
         handleMessage(data)
     }
 

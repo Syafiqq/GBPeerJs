@@ -9,7 +9,7 @@ private let kVersion = "1.4.7"
 
 protocol SocketDelegate: AnyObject {
     func socketJs(onDisconnected: ())
-    func socketJs(onNewMessage: Socket.StringMessageResponse)
+    func socketJs(onNewMessage: [String: Any])
     func socketJs(onNewMessage: Data)
     func socketJs(onError: Error?)
 }
@@ -137,17 +137,25 @@ extension Socket: WebSocketDelegate {
     }
 
     func websocketDidReceiveMessage(socket: Starscream.WebSocketClient, text: String) {
-        let data: String
-
         do {
-            data = text
             logger.log("Server message received:", text)
         } catch {
             logger.log("Invalid server message", text)
             return
         }
 
-        delegate?.socketJs(onNewMessage: StringMessageResponse(response: data))
+        let data: [String: Any]
+        if let source = text.data(using: .utf8) {
+            do {
+                data = (try JSONSerialization.jsonObject(with: source, options: []) as? [String: Any]) ?? [:]
+            } catch {
+                logger.error("Decode Error", error)
+                data = [:]
+            }
+        } else {
+            data = [:]
+        }
+        delegate?.socketJs(onNewMessage: data)
     }
 
     func websocketDidReceiveData(socket: Starscream.WebSocketClient, data: Data) {
@@ -221,44 +229,5 @@ private extension Socket {
 
         socket?.write(string: "{\"type\":\"\(ServerMessageType.heartbeat)\"}")
         scheduleHeartbeat()
-    }
-}
-
-extension Socket {
-    class StringMessageResponse {
-        let response: String
-
-        private var _decodedResponse: [String: Any] = [:]
-        private var _decodedPayload: [String: Any] = [:]
-
-        var decodedResponse: [String: Any] {
-            if _decodedResponse.isEmpty {
-                _decodedResponse = StringMessageResponse.parseData(source: response)
-            }
-            return _decodedResponse
-        }
-
-        var decodedPayload: [String: Any] {
-            if let payload = decodedResponse["payload"] as? String {
-                if _decodedPayload.isEmpty {
-                    _decodedPayload = StringMessageResponse.parseData(source: payload)
-                }
-                return _decodedPayload
-            } else if let payload = decodedResponse["payload"] as? [String: Any] {
-                return payload
-            }
-            return [:]
-        }
-
-        init(response: String) {
-            self.response = response
-        }
-
-        static func parseData(source: String) -> [String: Any] {
-            guard let source = source.data(using: .utf8) else {
-                return [:]
-            }
-            return (try? JSONSerialization.jsonObject(with: source, options: []) as? [String: Any]) ?? [:]
-        }
     }
 }

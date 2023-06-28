@@ -130,6 +130,7 @@ extension GBPeer: IPeer {
         lostMessages.removeValue(forKey: connection.peer)
     }
 
+    /** Add a data/media connection to this peer. */
     func addConnection(peerId: String, connection: IConnection) {
         logger.log("add connection \(connection.type):\(connection.connectionId) to peerId:\(peerId)")
 

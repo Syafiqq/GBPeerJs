@@ -14,19 +14,15 @@ private let kPathDefault = "/"
 
 // MARK: - Config
 
-struct UnknownError: Error {
-}
-
 protocol GBPeerDelegate: AnyObject {
     func peerJs(_ sender: GBPeer, onOpen withId: String?)
     func peerJs(_ sender: GBPeer, onClose: ())
-    func peerJs(_ sender: GBPeer, onError: Error)
     func peerJs(_ sender: GBPeer, onDisconnected withId: String?)
+    func peerJs(_ sender: GBPeer, onError: Error)
     func peerJs(_ sender: GBPeer, onCall withConnection: IConnection)
 }
 
-public class GBPeer: NSObject {
-
+public class GBPeer: IPeer {
     private let options: PeerOptions
     internal var socket: ISocket?
 
@@ -41,8 +37,9 @@ public class GBPeer: NSObject {
     private var connections: [String: [IConnection]] = [:]
     private var lostMessages: [String: [[String: Any]]] = [:]
 
-    weak var delegate: GBPeerDelegate?
     private var logger: ILogger = Logger.shared
+
+    weak var delegate: GBPeerDelegate?
 
     init(
             id: String,
@@ -52,7 +49,6 @@ public class GBPeer: NSObject {
         self.options = options
 
         randomToken = Util.randomToken(11)
-        super.init()
 
         socket = createServerConnection()
         socket?.delegate = self
@@ -414,29 +410,6 @@ extension GBPeer {
             throw GBPeerJsError.peerError(reason: .stillConnected)
         }
     }
-}
-
-extension GBPeer: IPeer {
-}
-
-// MARK: - Private
-
-private extension GBPeer {
-}
-
-// MARK: - Connectivity
-
-private extension GBPeer {
-}
-
-// MARK: - Data
-
-private extension GBPeer {
-}
-
-// MARK: - Socket
-
-private extension GBPeer {
 }
 
 extension GBPeer: SocketDelegate {

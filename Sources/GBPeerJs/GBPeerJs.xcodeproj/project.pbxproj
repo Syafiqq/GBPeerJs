@@ -23,6 +23,7 @@
 		65B8C879C286C38BE4193217 /* PeerJsOfferRequestEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CE0B12E39A965217D4CE /* PeerJsOfferRequestEntity.swift */; };
 		65B8C9D04E2758437BEA6C1A /* GBPeerJsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CB74B3AB7152A0D2AEDB /* GBPeerJsError.swift */; };
 		65B8CA54E0667237ABC9F657 /* ConnectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C8BB06BE9D7959772E57 /* ConnectionType.swift */; };
+		65B8CB3745A2E0AC94A1FFA7 /* GBPeerMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CD6123D2323BA3F8B6AA /* GBPeerMedia.swift */; };
 		65B8CB4C5DBA6103913DF02C /* GBPeerJs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CCF436BFA68301C842E8 /* GBPeerJs.swift */; };
 		65B8CC0E495F0BE0F7A21E39 /* ServerMessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C78E1A77CC11F648D3E4 /* ServerMessageType.swift */; };
 		65B8CD603D86443DE9DBA9AC /* GBPeerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C3F30936348782C252BF /* GBPeerConnection.swift */; };
@@ -77,6 +78,7 @@
 		65B8CAAF6C13FF81538C9532 /* IPeer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPeer.swift; sourceTree = "<group>"; };
 		65B8CB74B3AB7152A0D2AEDB /* GBPeerJsError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeerJsError.swift; sourceTree = "<group>"; };
 		65B8CCF436BFA68301C842E8 /* GBPeerJs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeerJs.swift; sourceTree = "<group>"; };
+		65B8CD6123D2323BA3F8B6AA /* GBPeerMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeerMedia.swift; sourceTree = "<group>"; };
 		65B8CE0B12E39A965217D4CE /* PeerJsOfferRequestEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerJsOfferRequestEntity.swift; sourceTree = "<group>"; };
 		AE8E82687F68207AB6A57066 /* Pods_GBPeerJsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GBPeerJsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -211,6 +213,7 @@
 				65B8C7675C918B5B96241B51 /* Util.swift */,
 				65B8C78E1A77CC11F648D3E4 /* ServerMessageType.swift */,
 				65B8C8BB06BE9D7959772E57 /* ConnectionType.swift */,
+				65B8CD6123D2323BA3F8B6AA /* GBPeerMedia.swift */,
 			);
 			path = Util;
 			sourceTree = "<group>";
@@ -491,6 +494,7 @@
 				65B8CA54E0667237ABC9F657 /* ConnectionType.swift in Sources */,
 				65B8C879C286C38BE4193217 /* PeerJsOfferRequestEntity.swift in Sources */,
 				65B8C6E7B8F030458291B4DD /* PeerJsCandidateRequestEntity.swift in Sources */,
+				65B8CB3745A2E0AC94A1FFA7 /* GBPeerMedia.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

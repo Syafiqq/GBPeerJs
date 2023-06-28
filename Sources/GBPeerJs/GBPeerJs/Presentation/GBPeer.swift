@@ -60,9 +60,10 @@ public class GBPeer {
 
     public func call(
             peerId peer: String,
-            stream: RTCMediaStream?
+            peerConnectionBuilder: GBPeerConnectionBuilder,
+            stream: RTCMediaStream
     ) throws -> GBPeerMediaConnection {
-        try doCall(peerId: peer, stream: stream)
+        try doCall(peerId: peer, peerConnectionBuilder: peerConnectionBuilder, stream: stream)
     }
 
     public func destroy() {
@@ -237,7 +238,8 @@ private extension GBPeer {
      */
     func doCall(
             peerId peer: String,
-            stream: RTCMediaStream?
+            peerConnectionBuilder: GBPeerConnectionBuilder,
+            stream: RTCMediaStream
     ) throws -> GBPeerMediaConnection {
         if disconnected {
             logger.warn(
@@ -248,13 +250,14 @@ private extension GBPeer {
             throw GBPeerJsError.peerError(reason: .connectPeerOnDisconnectServer)
         }
 
-        guard let stream = stream else {
+        /*guard let stream = stream else {
             logger.error("To call a peer, you must provide a stream from your browser's `getUserMedia`.")
             throw GBPeerJsError.peerError(reason: .connectPeerWithoutMedia)
-        }
+        }*/
 
         let mediaConnection = GBPeerMediaConnection(
                 peer: peer,
+                peerConnectionBuilder: peerConnectionBuilder,
                 provider: self,
                 connectionId: nil,
                 stream: stream,

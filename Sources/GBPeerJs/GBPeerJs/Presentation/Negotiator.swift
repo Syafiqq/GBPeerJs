@@ -6,12 +6,6 @@ import Foundation
 import WebRTC
 import RxSwift
 
-struct NegotiatorEntity {
-    var peerFactory: RTCPeerConnectionFactory
-    var peerConfig: RTCConfiguration
-    var peerConstraint: RTCMediaConstraints
-}
-
 class Negotiator: NSObject, INegotiator {
     weak var connection: IConnection?
     private let logger: ILogger = Logger.shared
@@ -23,17 +17,17 @@ class Negotiator: NSObject, INegotiator {
     }
 
     func startConnection(
+            peerBuilder: GBPeerConnectionBuilder,
             stream: RTCMediaStream? = nil,
             originator: Bool = false,
             originatorConstraint: RTCMediaConstraints? = nil,
-            data: NegotiatorEntity,
             remoteOfferSdp: String
     ) -> Completable {
         doStartConnection(
+                peerBuilder: peerBuilder,
                 stream: stream,
                 originator: originator,
                 originatorConstraint: originatorConstraint,
-                data: data,
                 remoteOfferSdp: remoteOfferSdp
         )
     }
@@ -67,10 +61,10 @@ class Negotiator: NSObject, INegotiator {
 private extension Negotiator {
     // swiftlint:disable:next function_body_length
     func doStartConnection(
+            peerBuilder: GBPeerConnectionBuilder,
             stream: RTCMediaStream? = nil,
             originator: Bool = false,
             originatorConstraint: RTCMediaConstraints? = nil,
-            data: NegotiatorEntity,
             remoteOfferSdp: String
     ) -> Completable {
         Completable.create(
@@ -82,7 +76,7 @@ private extension Negotiator {
 
                     var bag = [Disposable]()
                     do {
-                        let peerConnection = try self.startPeerConnection(data: data)
+                        let peerConnection = try self.startPeerConnection(peerBuilder: peerBuilder)
 
                         // Set the webRtcCommonError's PC.
                         self.connection?.setPeerConnection(peerConnection)
@@ -164,12 +158,14 @@ private extension Negotiator {
     }
 
     func startPeerConnection(
-            data: NegotiatorEntity
+            peerBuilder: GBPeerConnectionBuilder
     ) throws -> RTCPeerConnection {
         logger.log("Creating RTCPeerConnection.")
 
-        guard let peerConnection = data.peerFactory
-                .peerConnection(with: data.peerConfig, constraints: data.peerConstraint, delegate: nil) else {
+        var config = RTCConfiguration()
+        peerBuilder.peerConfigBuilder(config)
+        guard let peerConnection = peerBuilder.peerBuilder.peerFactory
+                .peerConnection(with: config, constraints: peerBuilder.peerConstraint, delegate: nil) else {
             throw GBPeerJsError.webRtcCommonError(reason: .createPeerConnectionFailed)
         }
 

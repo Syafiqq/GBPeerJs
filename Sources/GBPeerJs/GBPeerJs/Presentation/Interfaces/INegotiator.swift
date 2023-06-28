@@ -8,10 +8,10 @@ import RxSwift
 
 protocol INegotiator: AnyObject {
     func startConnection(
+            peerBuilder: GBPeerConnectionBuilder,
             stream: RTCMediaStream?,
             originator: Bool,
             originatorConstraint: RTCMediaConstraints?,
-            data: NegotiatorEntity,
             remoteOfferSdp: String
     ) -> Completable
 

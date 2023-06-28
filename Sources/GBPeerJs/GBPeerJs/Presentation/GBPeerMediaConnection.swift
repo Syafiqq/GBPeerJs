@@ -23,7 +23,8 @@ public class GBPeerMediaConnection: GBPeerConnection {
     private var localStream: RTCMediaStream?
     private var remoteStream: RTCMediaStream?
 
-    private var remoteOfferPayload: [String: Any] = [:]
+    private let remoteOfferPayload: [String: Any]
+    private let peerConnectionBuilder: GBPeerConnectionBuilder
 
     private var classBag = DisposeBag()
 
@@ -39,6 +40,7 @@ public class GBPeerMediaConnection: GBPeerConnection {
 
     init(
             peer: String,
+            peerConnectionBuilder: GBPeerConnectionBuilder,
             provider: IPeer?,
             connectionId: String?,
             stream: RTCMediaStream?,
@@ -47,6 +49,7 @@ public class GBPeerMediaConnection: GBPeerConnection {
         self.peer = peer
         self.provider = provider
         self.remoteOfferPayload = remoteOfferPayload
+        self.peerConnectionBuilder = peerConnectionBuilder
         originator = true
 
         localStream = stream
@@ -55,17 +58,10 @@ public class GBPeerMediaConnection: GBPeerConnection {
 
         if let stream = localStream {
             negotiator?.startConnection(
+                            peerBuilder: peerConnectionBuilder,
                             stream: stream,
                             originator: true,
                             originatorConstraint: nil,
-                            data: NegotiatorEntity(
-                                    peerFactory: RTCPeerConnectionFactory(),
-                                    peerConfig: RTCConfiguration(),
-                                    peerConstraint: RTCMediaConstraints(
-                                            mandatoryConstraints: nil,
-                                            optionalConstraints: nil
-                                    )
-                            ),
                             remoteOfferSdp: (remoteOfferPayload["sdp"] as? String) ?? ""
                     )
                     .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
@@ -184,17 +180,10 @@ private extension GBPeerMediaConnection {
         }*/
 
         negotiator?.startConnection(
+                        peerBuilder: peerConnectionBuilder,
                         stream: stream,
                         originator: false,
                         originatorConstraint: nil,
-                        data: NegotiatorEntity(
-                                peerFactory: RTCPeerConnectionFactory(),
-                                peerConfig: RTCConfiguration(),
-                                peerConstraint: RTCMediaConstraints(
-                                        mandatoryConstraints: nil,
-                                        optionalConstraints: nil
-                                )
-                        ),
                         remoteOfferSdp: (remoteOfferPayload["sdp"] as? String) ?? ""
                 )
                 .andThen(

@@ -26,11 +26,9 @@ protocol GBPeerDelegate: AnyObject {
 }
 
 public class GBPeer: NSObject {
-    private let options: PeerOptions
 
+    private let options: PeerOptions
     internal var socket: ISocket?
-    private var connections: [String: [IConnection]] = [:]
-    private var lostMessages: [String: [[String: Any]]] = [:]
 
     private var id: String?
     private var lastServerId: String?
@@ -40,14 +38,10 @@ public class GBPeer: NSObject {
     private var disconnected = false
     private var open = false
 
+    private var connections: [String: [IConnection]] = [:]
+    private var lostMessages: [String: [[String: Any]]] = [:]
+
     weak var delegate: GBPeerDelegate?
-
-    private var rtcPeer: RTCPeerConnection?
-    private var rtcPeerFactory: RTCPeerConnectionFactory?
-
-    private var remotePeerId: String?
-    private var connectionId: String?
-
     private var logger: ILogger = Logger()
 
     init(

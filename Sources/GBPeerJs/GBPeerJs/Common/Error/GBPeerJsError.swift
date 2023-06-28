@@ -52,5 +52,7 @@ public extension GBPeerJsError {
     enum PeerErrorReason: Error {
         case disconnectAlready
         case stillConnected
+        case connectPeerOnDisconnectServer
+        case connectPeerWithoutMedia
     }
 }

@@ -141,6 +141,36 @@ extension GBPeer: IPeer {
             connections[peerId] = peerConnections
         }
     }
+
+    func call(
+            peerId peer: String,
+            stream: RTCMediaStream?
+    ) throws -> IConnection {
+        if disconnected {
+            logger.warn(
+                    "You cannot connect to a new Peer because you called " +
+                            ".disconnect() on this Peer and ended your connection with the " +
+                            "server. You can create a new Peer to reconnect."
+            )
+            throw GBPeerJsError.peerError(reason: .connectPeerOnDisconnectServer)
+        }
+
+        guard let stream = stream else {
+            logger.error("To call a peer, you must provide a stream from your browser's `getUserMedia`.")
+            throw GBPeerJsError.peerError(reason: .connectPeerWithoutMedia)
+        }
+
+        let mediaConnection: IConnection = MediaConnection(
+                peer: peer,
+                provider: self,
+                connectionId: nil,
+                stream: stream,
+                logger: logger,
+                remoteOfferPayload: [:]
+        )
+        addConnection(peerId: peer, connection: mediaConnection)
+        return mediaConnection
+    }
 }
 
 extension GBPeer: RTCPeerConnectionDelegate {

@@ -510,11 +510,11 @@ private extension GBPeer {
             let payload = message["payload"] as? [String: Any]
             if payload == nil {
                 logger.warn("You received a malformed message from \(peerId ?? "-") of type \(type ?? "-")")
-                return;
+                return
             }
 
             if let peerId,
-               let payload{
+               let payload {
                 if let connectionId = payload["connectionId"] as? String,
                    let connection = getConnection(peerId: peerId, connectionId: connectionId),
                    connection.peerConnection != nil {
@@ -522,7 +522,7 @@ private extension GBPeer {
                 } else if let connectionId = payload["connectionId"] as? String {
                     storeMessage(connectionId: connectionId, message: message)
                 } else {
-                    logger.warn("You received an unrecognized message:", message);
+                    logger.warn("You received an unrecognized message:", message)
                 }
             } else {
                 logger.warn("Received malformed connection type:\(type ?? "-")")

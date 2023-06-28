@@ -15,11 +15,16 @@
 		65B8C07A7E5F2D499A53012D /* Negotiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C7A922CA9BCBC289AF9A /* Negotiator.swift */; };
 		65B8C11D6F8836BDE06CE181 /* IPeer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CAAF6C13FF81538C9532 /* IPeer.swift */; };
 		65B8C13FF437305D3DD2317E /* GBPeer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C9A59E9800B4446CE3ED /* GBPeer.swift */; };
+		65B8C271A82463557BCC8644 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C7675C918B5B96241B51 /* Util.swift */; };
 		65B8C47EFB65B8067613D0FB /* INegotiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C7F8E7B258F63D17DEFE /* INegotiator.swift */; };
 		65B8C4F14E3B8D0406485DAB /* IConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C8C730A99C0C950DCCD5 /* IConnection.swift */; };
 		65B8C5F72C04DC7F69AAFD2A /* ISocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C6E871AFE1F5DFD0273F /* ISocket.swift */; };
+		65B8C6E7B8F030458291B4DD /* PeerJsCandidateRequestEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CA5B5A3638D9EF2CC8AD /* PeerJsCandidateRequestEntity.swift */; };
+		65B8C879C286C38BE4193217 /* PeerJsOfferRequestEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CE0B12E39A965217D4CE /* PeerJsOfferRequestEntity.swift */; };
 		65B8C9D04E2758437BEA6C1A /* GBPeerJsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CB74B3AB7152A0D2AEDB /* GBPeerJsError.swift */; };
+		65B8CA54E0667237ABC9F657 /* ConnectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C8BB06BE9D7959772E57 /* ConnectionType.swift */; };
 		65B8CB4C5DBA6103913DF02C /* GBPeerJs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CCF436BFA68301C842E8 /* GBPeerJs.swift */; };
+		65B8CC0E495F0BE0F7A21E39 /* ServerMessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C78E1A77CC11F648D3E4 /* ServerMessageType.swift */; };
 		65B8CD603D86443DE9DBA9AC /* GBConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C3F30936348782C252BF /* GBConnection.swift */; };
 		65B8CE64901B59CF2EBB404E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C4ED422C9E51D1D6E1A7 /* Logger.swift */; };
 		65B8CF34006E596BDEFBB0C0 /* GBMediaConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C4F5458A503EE6BB08BC /* GBMediaConnection.swift */; };
@@ -60,14 +65,19 @@
 		65B8C4ED422C9E51D1D6E1A7 /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		65B8C4F5458A503EE6BB08BC /* GBMediaConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBMediaConnection.swift; sourceTree = "<group>"; };
 		65B8C6E871AFE1F5DFD0273F /* ISocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISocket.swift; sourceTree = "<group>"; };
+		65B8C7675C918B5B96241B51 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		65B8C78E1A77CC11F648D3E4 /* ServerMessageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerMessageType.swift; sourceTree = "<group>"; };
 		65B8C7A922CA9BCBC289AF9A /* Negotiator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Negotiator.swift; sourceTree = "<group>"; };
 		65B8C7F8E7B258F63D17DEFE /* INegotiator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = INegotiator.swift; sourceTree = "<group>"; };
+		65B8C8BB06BE9D7959772E57 /* ConnectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionType.swift; sourceTree = "<group>"; };
 		65B8C8C730A99C0C950DCCD5 /* IConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IConnection.swift; sourceTree = "<group>"; };
 		65B8C9A59E9800B4446CE3ED /* GBPeer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeer.swift; sourceTree = "<group>"; };
 		65B8C9BCF0B6E79791F620A1 /* Socket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Socket.swift; sourceTree = "<group>"; };
+		65B8CA5B5A3638D9EF2CC8AD /* PeerJsCandidateRequestEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerJsCandidateRequestEntity.swift; sourceTree = "<group>"; };
 		65B8CAAF6C13FF81538C9532 /* IPeer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPeer.swift; sourceTree = "<group>"; };
 		65B8CB74B3AB7152A0D2AEDB /* GBPeerJsError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeerJsError.swift; sourceTree = "<group>"; };
 		65B8CCF436BFA68301C842E8 /* GBPeerJs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeerJs.swift; sourceTree = "<group>"; };
+		65B8CE0B12E39A965217D4CE /* PeerJsOfferRequestEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerJsOfferRequestEntity.swift; sourceTree = "<group>"; };
 		AE8E82687F68207AB6A57066 /* Pods_GBPeerJsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GBPeerJsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -186,6 +196,25 @@
 			path = Interfaces;
 			sourceTree = "<group>";
 		};
+		65B8C63FEDB4D9D94BA4869D /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				65B8CE0B12E39A965217D4CE /* PeerJsOfferRequestEntity.swift */,
+				65B8CA5B5A3638D9EF2CC8AD /* PeerJsCandidateRequestEntity.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		65B8C7C2D411A41BBBB1713B /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				65B8C7675C918B5B96241B51 /* Util.swift */,
+				65B8C78E1A77CC11F648D3E4 /* ServerMessageType.swift */,
+				65B8C8BB06BE9D7959772E57 /* ConnectionType.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
 		65B8C996FF9ADD8BF38B5188 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -209,6 +238,8 @@
 				65B8C9BCF0B6E79791F620A1 /* Socket.swift */,
 				65B8C9A59E9800B4446CE3ED /* GBPeer.swift */,
 				65B8C32FE050DD2F5C6A62F4 /* Interfaces */,
+				65B8C63FEDB4D9D94BA4869D /* Entity */,
+				65B8C7C2D411A41BBBB1713B /* Util */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -455,6 +486,11 @@
 				65B8C4F14E3B8D0406485DAB /* IConnection.swift in Sources */,
 				65B8C47EFB65B8067613D0FB /* INegotiator.swift in Sources */,
 				65B8CD603D86443DE9DBA9AC /* GBConnection.swift in Sources */,
+				65B8C271A82463557BCC8644 /* Util.swift in Sources */,
+				65B8CC0E495F0BE0F7A21E39 /* ServerMessageType.swift in Sources */,
+				65B8CA54E0667237ABC9F657 /* ConnectionType.swift in Sources */,
+				65B8C879C286C38BE4193217 /* PeerJsOfferRequestEntity.swift in Sources */,
+				65B8C6E7B8F030458291B4DD /* PeerJsCandidateRequestEntity.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

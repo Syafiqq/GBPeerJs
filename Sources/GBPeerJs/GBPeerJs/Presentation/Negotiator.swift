@@ -6,60 +6,6 @@ import Foundation
 import WebRTC
 import RxSwift
 
-struct IceCandidate: Encodable {
-    let candidate: String
-    let sdpMLineIndex: Int32
-    let sdpMid: String?
-}
-
-enum ConnectionType: String {
-    // swiftlint:disable explicit_enum_raw_value
-    case media
-    // swiftlint:enable explicit_enum_raw_value
-}
-
-enum Util {
-    static func browser() -> String {
-        UIDevice.current.userInterfaceIdiom == .pad
-                ? "iPad"
-                : UIDevice.current.userInterfaceIdiom == .phone
-                ? "iPhone"
-                : "iPod"
-    }
-
-    static func randomToken(_ length: Int) -> String {
-        let randomTokenSeed = "abcdefghijklmnopqrstuvwxyz0123456789"
-        return String((0..<length).compactMap({ _ in randomTokenSeed.randomElement() }))
-    }
-}
-
-enum ServerMessageType: String {
-    // @formatter:off
-    case heartbeat  = "HEARTBEAT"
-    case candidate  = "CANDIDATE"
-    case offer      = "OFFER"
-    case answer     = "ANSWER"
-    case open       = "OPEN" // The connection to the server is open.
-    case error      = "ERROR" // Server error.
-    case idTaken    = "ID-TAKEN" // The selected ID is taken.
-    case invalidKey = "INVALID-KEY" // The given API key cannot be found.
-    case leave      = "LEAVE" // Another peer has closed its connection to this peer.
-    case expire     = "EXPIRE" // The offer sent to a peer has expired without response.
-    // @formatter:on
-}
-
-struct OfferRequestEntity: Encodable {
-    let type: String
-    let payload: Payload
-    let dst: String
-}
-
-struct LocalCandidateRequestEntity: Encodable {
-    let type: String
-    let payload: Payload
-    let dst: String
-}
-
 struct NegotiatorEntity {
     var peerFactory: RTCPeerConnectionFactory
     var peerConfig: RTCConfiguration
@@ -401,10 +347,10 @@ private extension Negotiator {
                                             }
                                         }*/
 
-                                        let request = OfferRequestEntity(
+                                        let request = PeerJsOfferRequestEntity(
                                                 type: ServerMessageType.offer.rawValue,
-                                                payload: OfferRequestEntity.Payload(
-                                                        sdp: OfferRequestEntity.SDP(
+                                                payload: PeerJsOfferRequestEntity.Payload(
+                                                        sdp: PeerJsOfferRequestEntity.SDP(
                                                                 sdp: session.sdp,
                                                                 type: RTCSessionDescription.string(for: session.type)
                                                         ),
@@ -559,10 +505,10 @@ private extension Negotiator {
                                             return
                                         }
 
-                                        let request = OfferRequestEntity(
+                                        let request = PeerJsOfferRequestEntity(
                                                 type: ServerMessageType.answer.rawValue,
-                                                payload: OfferRequestEntity.Payload(
-                                                        sdp: OfferRequestEntity.SDP(
+                                                payload: PeerJsOfferRequestEntity.Payload(
+                                                        sdp: PeerJsOfferRequestEntity.SDP(
                                                                 sdp: session.sdp,
                                                                 type: RTCSessionDescription.string(for: session.type)
                                                         ),
@@ -868,10 +814,10 @@ extension Negotiator: RTCPeerConnectionDelegate {
 
         logger.log("Received ICE candidates for \(connection?.peer ?? "-"):, \(candidate.sdp)")
 
-        let candidateEntity = LocalCandidateRequestEntity(
+        let candidateEntity = PeerJsCandidateRequestEntity(
                 type: ServerMessageType.candidate.rawValue,
-                payload: LocalCandidateRequestEntity.Payload(
-                        candidate: LocalCandidateRequestEntity.Candidate(
+                payload: PeerJsCandidateRequestEntity.Payload(
+                        candidate: PeerJsCandidateRequestEntity.Candidate(
                                 candidate: candidate.sdp,
                                 sdpMLineIndex: candidate.sdpMLineIndex,
                                 sdpMid: candidate.sdpMid
@@ -904,33 +850,5 @@ extension Negotiator: RTCPeerConnectionDelegate {
         )
 
         connection.initialize(dataChannel)*/
-    }
-}
-
-extension OfferRequestEntity {
-    struct Payload: Encodable {
-        let sdp: SDP
-        let type: String
-        let connectionId: String
-        let browser: String
-    }
-
-    struct SDP: Encodable {
-        let sdp: String
-        let type: String
-    }
-}
-
-extension LocalCandidateRequestEntity {
-    struct Payload: Encodable {
-        let candidate: Candidate
-        let type: String
-        let connectionId: String
-    }
-
-    struct Candidate: Encodable {
-        let candidate: String
-        let sdpMLineIndex: Int32
-        let sdpMid: String?
     }
 }

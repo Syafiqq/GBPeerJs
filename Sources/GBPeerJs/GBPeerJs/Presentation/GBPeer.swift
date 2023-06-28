@@ -143,6 +143,12 @@ extension GBPeer: IPeer {
         }
     }
 
+    /**
+     * Calls the remote peer specified by id and returns a media connection.
+     * @param peer The brokering ID of the remote peer (their peer.id).
+     * @param stream The caller's media stream
+     * @param options Metadata associated with the connection, passed in by whoever initiated the connection.
+     */
     func call(
             peerId peer: String,
             stream: RTCMediaStream?

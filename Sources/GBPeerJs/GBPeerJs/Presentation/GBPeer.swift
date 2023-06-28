@@ -14,12 +14,12 @@ private let kPathDefault = "/"
 
 // MARK: - Config
 
-protocol GBPeerDelegate: AnyObject {
+public protocol GBPeerDelegate: AnyObject {
     func peerJs(_ sender: GBPeer, onOpen withId: String?)
     func peerJs(_ sender: GBPeer, onClose: ())
     func peerJs(_ sender: GBPeer, onDisconnected withId: String?)
     func peerJs(_ sender: GBPeer, onError: Error)
-    func peerJs(_ sender: GBPeer, onCall withConnection: IConnection)
+    func peerJs(_ sender: GBPeer, onCall withConnection: GBConnection)
 }
 
 public class GBPeer {

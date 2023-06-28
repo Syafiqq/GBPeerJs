@@ -58,11 +58,22 @@ public class GBPeer: IPeer {
         initialize(userId)
     }
 
-    func disconnect() {
+    public func call(
+            peerId peer: String,
+            stream: RTCMediaStream?
+    ) throws -> MediaConnection {
+        try doCall(peerId: peer, stream: stream)
+    }
+
+    public func destroy() {
+        doDestroy()
+    }
+
+    public func disconnect() {
         doDisconnect()
     }
 
-    func reconnect() throws {
+    public func reconnect() throws {
         try doReconnect()
     }
 }
@@ -224,7 +235,7 @@ extension GBPeer {
      * @param stream The caller's media stream
      * @param options Metadata associated with the connection, passed in by whoever initiated the connection.
      */
-    func call(
+    func doCall(
             peerId peer: String,
             stream: RTCMediaStream?
     ) throws -> MediaConnection {
@@ -312,7 +323,7 @@ extension GBPeer {
         }
 
         if lastServerId == nil {
-            destroy()
+            doDestroy()
         } else {
             doDisconnect()
         }
@@ -332,7 +343,7 @@ extension GBPeer {
      * Warning: The peer can no longer create or accept connections after being
      *  destroyed.
      */
-    func destroy() {
+    func doDestroy() {
         if destroyed {
             return
         }

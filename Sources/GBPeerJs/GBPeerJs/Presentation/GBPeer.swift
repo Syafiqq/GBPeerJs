@@ -57,6 +57,14 @@ public class GBPeer: IPeer {
 
         initialize(userId)
     }
+
+    func disconnect() {
+        doDisconnect()
+    }
+
+    func reconnect() throws {
+        try doReconnect()
+    }
 }
 
 extension GBPeer {
@@ -306,7 +314,7 @@ extension GBPeer {
         if lastServerId == nil {
             destroy()
         } else {
-            disconnect()
+            doDisconnect()
         }
     }
 
@@ -331,7 +339,7 @@ extension GBPeer {
 
         logger.log("Destroy peer with ID:\(id ?? "-")")
 
-        disconnect()
+        doDisconnect()
         cleanup()
 
         destroyed = true
@@ -371,7 +379,7 @@ extension GBPeer {
      * Warning: The peer can no longer create or accept connections after being
      *  disconnected. It also cannot reconnect to the server.
      */
-    func disconnect() {
+    func doDisconnect() {
         if disconnected {
             return
         }
@@ -392,7 +400,7 @@ extension GBPeer {
     }
 
     /** Attempts to reconnect with the same ID. */
-    func reconnect() throws {
+    func doReconnect() throws {
         if disconnected && !destroyed {
             logger.log("Attempting reconnection to server with ID \(lastServerId ?? "-")")
             disconnected = false
@@ -419,7 +427,7 @@ extension GBPeer: SocketDelegate {
         }
 
         emitError("Lost connection to server.")
-        disconnect()
+        doDisconnect()
     }
 
     func socketJs(onNewMessage data: [String: Any]) {

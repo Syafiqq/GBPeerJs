@@ -42,7 +42,7 @@ public class GBPeer: NSObject {
     private var lostMessages: [String: [[String: Any]]] = [:]
 
     weak var delegate: GBPeerDelegate?
-    private var logger: ILogger = Logger()
+    private var logger: ILogger = Logger.shared
 
     init(
             id: String,
@@ -57,7 +57,7 @@ public class GBPeer: NSObject {
         socket = createServerConnection()
         socket?.delegate = self
 
-        logger.debug = options.debug
+        logger.debug = true
 
         initialize(userId)
     }
@@ -71,8 +71,7 @@ extension GBPeer {
                 port: options.port ?? kPortDefault,
                 path: options.path ?? kPathDefault,
                 key: options.key ?? kKeyDefault,
-                pingInterval: options.pingInterval ?? kPingIntervalDefault,
-                logger: logger
+                pingInterval: options.pingInterval ?? kPingIntervalDefault
         )
         socket.delegate = self
 
@@ -134,7 +133,6 @@ extension GBPeer {
                             provider: self,
                             connectionId: connectionId,
                             stream: nil,
-                            logger: logger,
                             remoteOfferPayload: payload
                     )
                     connection = mediaConnection
@@ -245,7 +243,6 @@ extension GBPeer {
                 provider: self,
                 connectionId: nil,
                 stream: stream,
-                logger: logger,
                 remoteOfferPayload: [:]
         )
         addConnection(peerId: peer, connection: mediaConnection)

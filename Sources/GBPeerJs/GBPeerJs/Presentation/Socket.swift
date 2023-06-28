@@ -36,7 +36,7 @@ class Socket: ISocket {
     private var wsOpen: Bool {
         socket != nil && !disconnected
     }
-    private let logger: ILogger
+    private let logger: ILogger = Logger.shared
 
     init(
             secure: Bool,
@@ -44,8 +44,7 @@ class Socket: ISocket {
             port: Int,
             path: String,
             key: String,
-            pingInterval: TimeInterval,
-            logger: ILogger
+            pingInterval: TimeInterval
     ) {
         self.secure = secure
         self.host = host
@@ -53,7 +52,6 @@ class Socket: ISocket {
         self.path = path
         self.key = key
         self.pingInterval = pingInterval
-        self.logger = logger
 
         let wsProtocol = secure ? "wss://" : "ws://"
         baseUrl = "\(wsProtocol)\(host):\(port)\(path)peerjs?key=\(key)"

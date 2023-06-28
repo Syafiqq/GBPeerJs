@@ -122,13 +122,12 @@ protocol INegotiator: AnyObject {
 
 class Negotiator: NSObject, INegotiator {
     weak var connection: IConnection?
-    private let logger: ILogger
+    private let logger: ILogger = Logger.shared
 
     private var classBag = DisposeBag()
 
     init(connection: IConnection, logger: ILogger) {
         self.connection = connection
-        self.logger = logger
     }
 
     func startConnection(

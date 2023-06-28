@@ -30,7 +30,7 @@ class MediaConnection: IConnection {
     private var open = false
     private var localStream: RTCMediaStream?
     private var remoteStream: RTCMediaStream?
-    private let logger: ILogger
+    private let logger: ILogger = Logger.shared
     private var negotiator: INegotiator?
     private var remoteOfferPayload: [String: Any] = [:]
 
@@ -39,12 +39,10 @@ class MediaConnection: IConnection {
             provider: IPeer?,
             connectionId: String?,
             stream: RTCMediaStream?,
-            logger: ILogger,
             remoteOfferPayload: [String: Any]
     ) {
         self.peer = peer
         self.provider = provider
-        self.logger = logger
         self.remoteOfferPayload = remoteOfferPayload
         originator = true
 

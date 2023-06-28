@@ -13,6 +13,8 @@ protocol ILogger {
 }
 
 class Logger: ILogger {
+    static let shared = Logger()
+
     var debug: Bool = false
 
     init() {

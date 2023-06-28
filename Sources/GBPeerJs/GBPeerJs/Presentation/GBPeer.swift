@@ -129,6 +129,18 @@ extension GBPeer: IPeer {
         // remove from lost messages
         lostMessages.removeValue(forKey: connection.peer)
     }
+
+    func addConnection(peerId: String, connection: IConnection) {
+        logger.log("add connection \(connection.type):\(connection.connectionId) to peerId:\(peerId)")
+
+        if connections.keys.contains(peerId) {
+            connections[peerId] = []
+        } else {
+            var peerConnections = connections[peerId] ?? []
+            peerConnections.append(connection)
+            connections[peerId] = peerConnections
+        }
+    }
 }
 
 extension GBPeer: RTCPeerConnectionDelegate {

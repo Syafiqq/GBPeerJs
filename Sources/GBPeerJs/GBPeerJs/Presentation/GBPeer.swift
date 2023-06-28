@@ -457,13 +457,13 @@ private extension GBPeer {
                let payload = message["payload"] as? [String: Any],
                let connectionId = payload["connectionId"] as? String {
 
-                if let connection = getConnection(peerId: peerId, connectionId: connectionId) {
-                    connection.close()
+                var connection: IConnection? = getConnection(peerId: peerId, connectionId: connectionId)
+                if connection != nil {
+                    connection?.close()
                     logger.warn("Offer received for existing Connection ID:\(connectionId)")
                 }
 
                 let payloadType = payload["type"] as? String
-                var connection: IConnection?
                 // Create a new connection.
                 if payloadType == ConnectionType.media.rawValue {
                     let mediaConnection = MediaConnection(

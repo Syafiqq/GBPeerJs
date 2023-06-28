@@ -219,7 +219,7 @@ private extension MediaConnection {
                         Completable.deferred { [weak self] in
                             // Retrieve lost messages stored because PeerConnection not set up.
                             let connectionId = self?.connectionId ?? ""
-                            let messages = self?.provider?.getMessage(connectionId: connectionId) ?? []
+                            let messages = self?.provider?.getMessages(connectionId: connectionId) ?? []
 
                             for message in messages {
                                 self?.doHandleMessage(message: message)

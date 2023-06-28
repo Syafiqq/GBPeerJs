@@ -178,6 +178,19 @@ extension GBPeer: IPeer {
         addConnection(peerId: peer, connection: mediaConnection)
         return mediaConnection
     }
+
+    /** Retrieve messages from lost message store */
+    //TODO Change it to private
+    func getMessages(connectionId: String) -> [[String: Any]] {
+        let messages = lostMessages[connectionId] ?? []
+
+        if !messages.isEmpty {
+            lostMessages.removeValue(forKey: connectionId)
+            return messages;
+        }
+
+        return [];
+    }
 }
 
 extension GBPeer: RTCPeerConnectionDelegate {

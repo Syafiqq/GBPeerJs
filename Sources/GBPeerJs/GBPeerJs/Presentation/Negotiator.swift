@@ -97,6 +97,7 @@ protocol IConnection: AnyObject {
     func emitError(_ error: Error)
     func close()
     func emitIceStateChanged(_ state: RTCIceConnectionState)
+    func handleMessage(message: [String: Any])
 }
 
 protocol INegotiator: AnyObject {
@@ -244,7 +245,6 @@ private extension Negotiator {
                                     )
                             bag.append(disposable)
                         } else {
-                            fatalError("not yet implemented")
                             let disposable = doHandleSDP(type: ServerMessageType.offer.rawValue, sdp: remoteOfferSdp)
                                     .subscribe(
                                             onCompleted: { [weak self] in

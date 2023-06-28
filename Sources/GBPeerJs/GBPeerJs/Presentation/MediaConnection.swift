@@ -38,7 +38,7 @@ class MediaConnection: IConnection {
             peer: String,
             provider: IPeer?,
             connectionId: String?,
-            stream: RTCMediaStream,
+            stream: RTCMediaStream?,
             logger: ILogger,
             remoteOfferPayload: [String: Any]
     ) {
@@ -103,6 +103,10 @@ class MediaConnection: IConnection {
     }
 
     func emitIceStateChanged(_ state: RTCIceConnectionState) {
+    }
+
+    func handleMessage(message: [String: Any]) {
+        doHandleMessage(message: message)
     }
 
     deinit {

@@ -22,6 +22,7 @@ protocol GBPeerDelegate: AnyObject {
     func peerJs(_ sender: GBPeer, onClose: ())
     func peerJs(_ sender: GBPeer, onError: Error)
     func peerJs(_ sender: GBPeer, onDisconnected withId: String?)
+    func peerJs(_ sender: GBPeer, onCall withConnection: IConnection)
 }
 
 public class GBPeer: NSObject {
@@ -455,141 +456,57 @@ private extension GBPeer {
             if let peerId = message["src"] as? String,
                let payload = message["payload"] as? [String: Any],
                let connectionId = payload["connectionId"] as? String {
+
                 if let connection = getConnection(peerId: peerId, connectionId: connectionId) {
                     connection.close()
                     logger.warn("Offer received for existing Connection ID:\(connectionId)")
                 }
 
+                let payloadType = payload["type"] as? String
+                var connection: IConnection?
+                // Create a new connection.
+                if payloadType == ConnectionType.media.rawValue {
+                    let mediaConnection = MediaConnection(
+                            peer: peerId,
+                            provider: self,
+                            connectionId: connectionId,
+                            stream: nil,
+                            logger: logger,
+                            remoteOfferPayload: payload
+                    )
+                    connection = mediaConnection
+                    addConnection(peerId: peerId, connection: mediaConnection)
+                    delegate?.peerJs(self, onCall: mediaConnection)
+                }
 
-            }
+                /*else if (payload.type === ConnectionType.Data) {
+                    const dataConnection = new DataConnection(peerId, this, {
+                        connectionId: connectionId,
+                        _payload: payload,
+                        metadata: payload.metadata,
+                        label: payload.label,
+                        serialization: payload.serialization,
+                        reliable: payload.reliable,
+                    });
+                    connection = dataConnection;
+                    this._addConnection(peerId, connection);
+                    this.emit("connection", dataConnection);
+                }*/
 
-            // Create a new connection.
-            if (payload.type === ConnectionType.Media) {
-                const mediaConnection = new MediaConnection(peerId, this, {
-                    connectionId: connectionId,
-                    _payload: payload,
-                    metadata: payload.metadata,
-                });
-                connection = mediaConnection;
-                this._addConnection(peerId, connection);
-                this.emit("call", mediaConnection);
-            } else if (payload.type === ConnectionType.Data) {
-                const dataConnection = new DataConnection(peerId, this, {
-                    connectionId: connectionId,
-                    _payload: payload,
-                    metadata: payload.metadata,
-                    label: payload.label,
-                    serialization: payload.serialization,
-                    reliable: payload.reliable,
-                });
-                connection = dataConnection;
-                this._addConnection(peerId, connection);
-                this.emit("connection", dataConnection);
+                else {
+                    logger.warn("Received malformed connection type:\(payloadType ?? "-")")
+                    return
+                }
+
+                let messages = getMessages(connectionId: connectionId)
+                for message in messages {
+                    connection?.handleMessage(message: message)
+                }
             } else {
-                logger.warn(`Received malformed connection type:${payload.type}`);
-                return;
+                logger.warn("Received malformed connection type:\(type ?? "-")")
             }
-
-            // Find messages.
-            const messages = this._getMessages(connectionId);
-            for (let message of messages) {
-            connection.handleMessage(message);
-
-            break;
         default:
-            let peerId = message.decodedResponse["src"] as? String
-            if message.decodedPayload["type"] == nil {
-                logger.log("You received a malformed message from \(peerId ?? "-") of type \(type ?? "-")")
-            }
-            if type == "ANSWER" {
-                guard let payload = message.decodedResponse["payload"] as? [String: Any],
-                      let sdp = payload["sdp"] as? [String: Any],
-                      let sdpString = sdp["sdp"] as? String,
-                      let sdpType = sdp["type"] as? String else {
-                    fatalError("ANSWER call should have payload and sdp")
-                }
-                let remoteSdp = RTCSessionDescription(type: sdpType == "answer" ? .answer : .prAnswer, sdp: sdpString)
-
-                logger.log("Setting remote description \(sdpString)")
-
-                let setRemoteDescriptionRx: Completable = Completable.create { observer in
-                    self.rtcPeer?.setRemoteDescription(remoteSdp, completionHandler: { (error) in
-                        if let error = error {
-                            observer(.error(error))
-                        } else {
-                            observer(.completed)
-                        }
-                    })
-                    return Disposables.create()
-                }
-                do {
-                    // try setRemoteDescriptionRx.andThen(Single.just(true)).toBlocking().first()
-                } catch {
-                    fatalError("Error Set remote description \(error)")
-                }
-
-                logger.log("Set remoteDescription:\(type ?? "-") for:\(remotePeerId ?? "-")")
-
-                // sendOfferAlready = true
-                // let pending = Array(pendingCandidates)
-                // pendingCandidates.removeAll()
-                // for p in pending {
-                //     sendOffer(p)
-                // }
-            } else if type == "CANDIDATE" {
-                if rtcPeer?.remoteDescription == nil {
-                    fatalError("Remote description must be set")
-                }
-                guard let payload = message.decodedResponse["payload"] as? [String: Any],
-                      let candidate = payload["candidate"] as? [String: Any],
-                      let candidateString = candidate["candidate"] as? String else {
-                    fatalError("CANDIDATE call should have payload and candidate")
-                }
-                logger.log("handleCandidate: \(candidateString)")
-
-                let sdpMLineIndex = candidate["sdpMLineIndex"] as? Int
-                let sdpMLineIndex32: Int32
-                if let sdpMLineIndex {
-                    sdpMLineIndex32 = Int32(sdpMLineIndex)
-                } else {
-                    sdpMLineIndex32 = 0
-                }
-                let sdpMid = candidate["sdpMid"] as? String
-                let provider = self
-
-                let ice = RTCIceCandidate(sdp: candidateString, sdpMLineIndex: sdpMLineIndex32, sdpMid: sdpMid)
-
-                let setIceCandidateRx: Completable = Completable.create { observer in
-                    self.rtcPeer?.add(ice, completionHandler: { (error) in
-                        if let error = error {
-                            observer(.error(error))
-                        } else {
-                            observer(.completed)
-                        }
-                    })
-                    return Disposables.create()
-                }
-                do {
-                    // try setIceCandidateRx.andThen(Single.just(true)).toBlocking().first()
-                } catch {
-                    fatalError("Error Set ice candidate \(error)")
-                }
-                logger.log("Added ICE candidate for:\(remotePeerId ?? "-")")
-            }
-
-                // const connectionId = payload.connectionId
-                // const connection = this.getConnection(peerId, connectionId)
-                //
-                // if (connection && connection.peerConnection) {
-                //     // Pass it on.
-                //     connection.handleMessage(message)
-                // } else if (connectionId) {
-                //     // Store for possible later use
-                //     this._storeMessage(connectionId, message)
-                // } else {
-                //     logger.warn("You received an unrecognized message:", message)
-                // }
-                // break
+            break
         }
     }
 }

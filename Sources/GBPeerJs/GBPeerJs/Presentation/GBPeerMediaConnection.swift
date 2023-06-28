@@ -6,14 +6,14 @@ import Foundation
 import WebRTC
 import RxSwift
 
-public protocol GBMediaConnectionDelegate: AnyObject {
-    func mediaConnection(_: GBMediaConnection, onRemoteStreamAdded: RTCMediaStream)
-    func mediaConnection(_: GBMediaConnection, onClose: ())
-    func mediaConnection(_: GBMediaConnection, onError: Error)
-    func mediaConnection(_: GBMediaConnection, onIceStateChanged: RTCIceConnectionState)
+public protocol GBPeerMediaConnectionDelegate: AnyObject {
+    func mediaConnection(_: GBPeerMediaConnection, onRemoteStreamAdded: RTCMediaStream)
+    func mediaConnection(_: GBPeerMediaConnection, onClose: ())
+    func mediaConnection(_: GBPeerMediaConnection, onError: Error)
+    func mediaConnection(_: GBPeerMediaConnection, onIceStateChanged: RTCIceConnectionState)
 }
 
-public class GBMediaConnection: GBConnection {
+public class GBPeerMediaConnection: GBPeerConnection {
     private static let idPrefix = "mc_"
 
     private var open = false
@@ -35,7 +35,7 @@ public class GBMediaConnection: GBConnection {
     var peerConnection: RTCPeerConnection?
 
     weak var provider: IPeer?
-    public weak var delegate: GBMediaConnectionDelegate?
+    public weak var delegate: GBPeerMediaConnectionDelegate?
 
     init(
             peer: String,
@@ -96,7 +96,7 @@ public class GBMediaConnection: GBConnection {
     }
 }
 
-private extension GBMediaConnection {
+private extension GBPeerMediaConnection {
     func doAddStream(_ remoteStream: RTCMediaStream) {
         logger.log("Receiving stream", remoteStream)
 
@@ -173,7 +173,7 @@ private extension GBMediaConnection {
 
     func doAnswer(stream: RTCMediaStream?) {
         if localStream != nil {
-            logger.warn("Local stream already exists on this GBMediaConnection. Are you answering a call twice?")
+            logger.warn("Local stream already exists on this GBPeerMediaConnection. Are you answering a call twice?")
             return
         }
 
@@ -253,7 +253,7 @@ private extension GBMediaConnection {
     }
 }
 
-extension GBMediaConnection: IConnection {
+extension GBPeerMediaConnection: IConnection {
     func setPeerConnection(_ peer: RTCPeerConnection) {
         peerConnection = peer
     }

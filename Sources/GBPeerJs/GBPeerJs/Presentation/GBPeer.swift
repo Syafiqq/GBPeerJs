@@ -19,7 +19,7 @@ public protocol GBPeerDelegate: AnyObject {
     func peerJs(_ sender: GBPeer, onClose: ())
     func peerJs(_ sender: GBPeer, onDisconnected withId: String?)
     func peerJs(_ sender: GBPeer, onError: Error)
-    func peerJs(_ sender: GBPeer, onCall withConnection: GBConnection)
+    func peerJs(_ sender: GBPeer, onCall withConnection: GBPeerConnection)
 }
 
 public class GBPeer {
@@ -61,7 +61,7 @@ public class GBPeer {
     public func call(
             peerId peer: String,
             stream: RTCMediaStream?
-    ) throws -> GBMediaConnection {
+    ) throws -> GBPeerMediaConnection {
         try doCall(peerId: peer, stream: stream)
     }
 
@@ -143,7 +143,7 @@ private extension GBPeer {
                 let payloadType = payload["type"] as? String
                 // Create a new connection.
                 if payloadType == ConnectionType.media.rawValue {
-                    let mediaConnection = GBMediaConnection(
+                    let mediaConnection = GBPeerMediaConnection(
                             peer: peerId,
                             provider: self,
                             connectionId: connectionId,
@@ -238,7 +238,7 @@ private extension GBPeer {
     func doCall(
             peerId peer: String,
             stream: RTCMediaStream?
-    ) throws -> GBMediaConnection {
+    ) throws -> GBPeerMediaConnection {
         if disconnected {
             logger.warn(
                     "You cannot connect to a new Peer because you called " +
@@ -253,7 +253,7 @@ private extension GBPeer {
             throw GBPeerJsError.peerError(reason: .connectPeerWithoutMedia)
         }
 
-        let mediaConnection = GBMediaConnection(
+        let mediaConnection = GBPeerMediaConnection(
                 peer: peer,
                 provider: self,
                 connectionId: nil,

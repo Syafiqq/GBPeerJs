@@ -156,11 +156,19 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		65B8C1267B6849C669FA576D /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
 		65B8C3C01777C617B2870414 /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
 				65B8C833FEFD346E26F50DD6 /* Entity */,
 				65B8CB69DA6793F9C9B2D73D /* Util */,
+				65B8C1267B6849C669FA576D /* Interface */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";

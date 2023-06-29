@@ -69,7 +69,7 @@ public class GBPeerMediaConnection: GBPeerConnection {
                             },
                             onError: { [weak self] error in
                                 self?.logger.log("Failed to start connection")
-                                self?.emitError(error)
+                                self?.provider?.emitError(error)
                             }
                     )
                     .disposed(by: classBag)
@@ -131,7 +131,7 @@ private extension GBPeerMediaConnection {
                                 },
                                 onError: { [weak self] error in
                                     self?.logger.log("Failed to handle SDP")
-                                    self?.emitError(error)
+                                    self?.provider?.emitError(error)
                                 }
                         )
                         .disposed(by: classBag)
@@ -164,7 +164,7 @@ private extension GBPeerMediaConnection {
                                 },
                                 onError: { [weak self] error in
                                     self?.logger.log("Failed to handle candidate")
-                                    self?.emitError(error)
+                                    self?.provider?.emitError(error)
                                 }
                         )
                         .disposed(by: classBag)

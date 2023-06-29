@@ -149,6 +149,7 @@
 		65B8C0DCB8618F6F42D835FC /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				65B8C95227567148E1580F32 /* Error */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -169,6 +170,13 @@
 				65B8C5A7117260530071C134 /* PeerJsOfferRequestEntity.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		65B8C95227567148E1580F32 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Error;
 			sourceTree = "<group>";
 		};
 		65B8CB69DA6793F9C9B2D73D /* Util */ = {

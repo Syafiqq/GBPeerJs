@@ -317,9 +317,9 @@ private extension GBPeer {
         logger.error("Aborting!")
 
         if let error {
-            emitError(error)
+            doEmitError(error)
         } else {
-            emitError(GBPeerJsError.peerError(reason: .peerAborted))
+            doEmitError(GBPeerJsError.peerError(reason: .peerAborted))
         }
 
         if lastServerId == nil {
@@ -333,7 +333,7 @@ private extension GBPeer {
         delegate?.peerJs(self, onError: GBPeerJsError.peerError(reason: .unknownError(message)))
     }
 
-    func emitError(_ error: Error) {
+    func doEmitError(_ error: Error) {
         delegate?.peerJs(self, onError: error)
     }
 
@@ -442,6 +442,10 @@ extension GBPeer: IPeer {
 
     func getConnection(peerId: String, connectionId: String) -> IConnection? {
         doGetConnection(peerId: peerId, connectionId: connectionId)
+    }
+
+    func emitError(_ error: Error) {
+        doEmitError(error)
     }
 }
 

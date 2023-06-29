@@ -215,7 +215,7 @@ private extension GBPeerMediaConnection {
                         },
                         onError: { [weak self] error in
                             self?.logger.log("Failed to answer")
-                            self?.emitError(error)
+                            self?.provider?.emitError(error)
                         }
                 )
                 .disposed(by: classBag)

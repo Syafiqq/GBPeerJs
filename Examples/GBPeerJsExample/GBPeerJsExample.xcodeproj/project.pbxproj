@@ -17,6 +17,7 @@
 		5962A4D42935DFA200183658 /* GBPeerJsExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5962A4D32935DFA200183658 /* GBPeerJsExampleUITests.swift */; };
 		5962A4D62935DFA200183658 /* GBPeerJsExampleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5962A4D52935DFA200183658 /* GBPeerJsExampleUITestsLaunchTests.swift */; };
 		65B8CA2DE320081858B034AE /* IceServerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C100C7EEA5B961662278 /* IceServerHelper.swift */; };
+		65B8CFF19171573CAAB0FC5C /* ViewControllerCallAsStudent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CA0115DD857EFE75DD0E /* ViewControllerCallAsStudent.swift */; };
 		8AE6DF00C2621EBAF89816B8 /* Pods_GBPeerJsExample_GBPeerJsExampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B918DDD2951E369B2EAC3AA8 /* Pods_GBPeerJsExample_GBPeerJsExampleUITests.framework */; };
 		A3F62B095EBD54CB58E525AF /* Pods_GBPeerJsExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B7F02D18FDAAAFE64A644C9 /* Pods_GBPeerJsExample.framework */; };
 /* End PBXBuildFile section */
@@ -55,6 +56,7 @@
 		5962A4D32935DFA200183658 /* GBPeerJsExampleUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBPeerJsExampleUITests.swift; sourceTree = "<group>"; };
 		5962A4D52935DFA200183658 /* GBPeerJsExampleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBPeerJsExampleUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		65B8C100C7EEA5B961662278 /* IceServerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IceServerHelper.swift; sourceTree = "<group>"; };
+		65B8CA0115DD857EFE75DD0E /* ViewControllerCallAsStudent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerCallAsStudent.swift; sourceTree = "<group>"; };
 		716D753FD77C149DDE6A5FE1 /* Pods-GBPeerJsExample-GBPeerJsExampleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GBPeerJsExample-GBPeerJsExampleUITests.debug.xcconfig"; path = "Target Support Files/Pods-GBPeerJsExample-GBPeerJsExampleUITests/Pods-GBPeerJsExample-GBPeerJsExampleUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		A26519B706EE68860F1FFA54 /* Pods-GBPeerJsExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GBPeerJsExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-GBPeerJsExampleTests/Pods-GBPeerJsExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B918DDD2951E369B2EAC3AA8 /* Pods_GBPeerJsExample_GBPeerJsExampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GBPeerJsExample_GBPeerJsExampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -123,6 +125,7 @@
 				5962A4BD2935DFA200183658 /* LaunchScreen.storyboard */,
 				5962A4C02935DFA200183658 /* Info.plist */,
 				65B8C100C7EEA5B961662278 /* IceServerHelper.swift */,
+				65B8CA0115DD857EFE75DD0E /* ViewControllerCallAsStudent.swift */,
 			);
 			path = GBPeerJsExample;
 			sourceTree = "<group>";
@@ -488,6 +491,7 @@
 				5962A4B72935DFA100183658 /* ViewController.swift in Sources */,
 				5962A4B32935DFA100183658 /* AppDelegate.swift in Sources */,
 				65B8CA2DE320081858B034AE /* IceServerHelper.swift in Sources */,
+				65B8CFF19171573CAAB0FC5C /* ViewControllerCallAsStudent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

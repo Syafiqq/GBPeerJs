@@ -12,6 +12,7 @@
 		593ED2572935CFA9007BC45A /* GBPeerJsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593ED2562935CFA9007BC45A /* GBPeerJsTests.swift */; };
 		593ED2582935CFA9007BC45A /* GBPeerJs.h in Headers */ = {isa = PBXBuildFile; fileRef = 593ED24A2935CFA9007BC45A /* GBPeerJs.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		59D1458D2936F74000339673 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 59D1458F2936F74000339673 /* Localizable.strings */; };
+		65B8C0204542A2801106BA47 /* GBPeerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CF62DF40564AD6CDA643 /* GBPeerConnection.swift */; };
 		65B8C052466638CD0BC35EF4 /* ConnectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CB1F6574536DBFB8EA36 /* ConnectionType.swift */; };
 		65B8C093AA83EF3EF7335BA9 /* PeerJsOfferRequestEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C5A7117260530071C134 /* PeerJsOfferRequestEntity.swift */; };
 		65B8C47ABAB76D2614132C8A /* INegotiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CDCBF1B44F6472F40D42 /* INegotiator.swift */; };
@@ -68,6 +69,7 @@
 		65B8CCF436BFA68301C842E8 /* GBPeerJs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeerJs.swift; sourceTree = "<group>"; };
 		65B8CDCBF1B44F6472F40D42 /* INegotiator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = INegotiator.swift; sourceTree = "<group>"; };
 		65B8CF08D9E0ECA33AC699D5 /* ServerMessageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerMessageType.swift; sourceTree = "<group>"; };
+		65B8CF62DF40564AD6CDA643 /* GBPeerConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeerConnection.swift; sourceTree = "<group>"; };
 		AE8E82687F68207AB6A57066 /* Pods_GBPeerJsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GBPeerJsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -171,6 +173,7 @@
 				65B8C0261BA46635AB51D3DD /* IConnection.swift */,
 				65B8C1D4E3595F93BE5A7A98 /* ISocket.swift */,
 				65B8C7AEA53C90F75A44569E /* IPeer.swift */,
+				65B8CF62DF40564AD6CDA643 /* GBPeerConnection.swift */,
 			);
 			path = Interface;
 			sourceTree = "<group>";
@@ -455,6 +458,7 @@
 				65B8C77C3A00C25BB46A1F18 /* IConnection.swift in Sources */,
 				65B8CB3074C34C26BF94A81C /* ISocket.swift in Sources */,
 				65B8C66F5298215B6D14DBA8 /* IPeer.swift in Sources */,
+				65B8C0204542A2801106BA47 /* GBPeerConnection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

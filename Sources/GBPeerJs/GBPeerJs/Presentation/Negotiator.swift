@@ -63,12 +63,13 @@ class Negotiator: NSObject, INegotiator {
 
 private extension Negotiator {
     /** Returns a PeerConnection object set up correctly (for data, media). */
-    func doStartConnection(// swiftlint:disable:this function_body_length
-                           stream: GBPeerMediaStream? = nil,
-                           originator: Bool = false,
-                           mediaOfferConstraint: RTCMediaConstraints,
-                           remoteOfferSdp: String,
-                           remoteOfferSdpType: String
+    func doStartConnection(
+            // swiftlint:disable:previous function_body_length
+            stream: GBPeerMediaStream? = nil,
+            originator: Bool = false,
+            mediaOfferConstraint: RTCMediaConstraints,
+            remoteOfferSdp: String,
+            remoteOfferSdpType: String
     ) -> Completable {
         Completable.create(
                 subscribe: { [weak self] observer in
@@ -557,11 +558,12 @@ private extension Negotiator {
     }
 
     /** Handle an SDP. */
-    func doHandleSDP(// swiftlint:disable:this function_body_length
-                     type: String,
-                     sdp: String,
-                     sdpType: String,
-                     mediaOfferConstraint: RTCMediaConstraints
+    func doHandleSDP(
+            // swiftlint:disable:previous function_body_length
+            type: String,
+            sdp: String,
+            sdpType: String,
+            mediaOfferConstraint: RTCMediaConstraints
     ) -> Completable {
         func setRemoteDescriptionAsync(session: RTCSessionDescription) -> Completable {
             Completable.create(subscribe: { [weak self] observer in

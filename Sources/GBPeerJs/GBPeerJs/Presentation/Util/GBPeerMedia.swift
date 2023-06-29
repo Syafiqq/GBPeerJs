@@ -7,6 +7,10 @@ import WebRTC
 
 public struct GBPeerBuilder {
     let peerFactory: RTCPeerConnectionFactory
+
+    internal init(peerFactory: RTCPeerConnectionFactory) {
+        self.peerFactory = peerFactory
+    }
 }
 
 public struct GBPeerConnectionBuilder {
@@ -18,6 +22,7 @@ public struct GBPeerConnectionBuilder {
 public struct GBPeerMediaStream {
     let stream: RTCMediaStream
     let peerBuilder: GBPeerConnectionBuilder
+    let offerConstraint: RTCMediaConstraints
 }
 
 public enum GBPeerMedia {

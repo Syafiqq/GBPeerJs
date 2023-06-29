@@ -10,14 +10,14 @@ protocol INegotiator: AnyObject {
     func startConnection(
             stream: GBPeerMediaStream?,
             originator: Bool,
-            originatorConstraint: RTCMediaConstraints?,
+            mediaOfferConstraint: RTCMediaConstraints,
             remoteOfferSdp: String
     ) -> Completable
 
     func handleSDP(
             type: String,
             sdp: String,
-            answerMediaConstraint: RTCMediaConstraints?
+            mediaOfferConstraint: RTCMediaConstraints
     ) -> Completable
 
     func handleCandidate(_ ice: RTCIceCandidate) -> Completable

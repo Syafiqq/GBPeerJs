@@ -36,6 +36,7 @@ public class GBPeerMediaConnection: GBPeerConnection {
 
     weak var provider: IPeer?
     public weak var delegate: GBPeerMediaConnectionDelegate?
+    private var mediaOfferConstraint: RTCMediaConstraints?
 
     init(
             peer: String,
@@ -57,7 +58,7 @@ public class GBPeerMediaConnection: GBPeerConnection {
             negotiator?.startConnection(
                             stream: stream,
                             originator: true,
-                            originatorConstraint: nil,
+                            mediaOfferConstraint: stream.offerConstraint,
                             remoteOfferSdp: (remoteOfferPayload["sdp"] as? String) ?? ""
                     )
                     .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
@@ -106,10 +107,21 @@ private extension GBPeerMediaConnection {
             if let type = type,
                let payload = message["payload"] as? [String: Any],
                let sdp = payload["sdp"] as? String {
+
+                let constraint: RTCMediaConstraints
+                if let mediaOfferConstraint = mediaOfferConstraint {
+                    constraint = mediaOfferConstraint
+                } else {
+                    constraint = RTCMediaConstraints(
+                            mandatoryConstraints: nil,
+                            optionalConstraints: nil
+                    )
+                }
+
                 negotiator?.handleSDP(
                                 type: type,
                                 sdp: sdp,
-                                answerMediaConstraint: nil
+                                mediaOfferConstraint: constraint
                         )
                         .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
                         .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
@@ -178,7 +190,7 @@ private extension GBPeerMediaConnection {
         negotiator?.startConnection(
                         stream: stream,
                         originator: false,
-                        originatorConstraint: nil,
+                        mediaOfferConstraint: stream.offerConstraint,
                         remoteOfferSdp: (remoteOfferPayload["sdp"] as? String) ?? ""
                 )
                 .andThen(

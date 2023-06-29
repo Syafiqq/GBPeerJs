@@ -19,13 +19,13 @@ class Negotiator: NSObject, INegotiator {
     func startConnection(
             stream: GBPeerMediaStream? = nil,
             originator: Bool = false,
-            originatorConstraint: RTCMediaConstraints? = nil,
+            mediaOfferConstraint: RTCMediaConstraints,
             remoteOfferSdp: String
     ) -> Completable {
         doStartConnection(
                 stream: stream,
                 originator: originator,
-                originatorConstraint: originatorConstraint,
+                mediaOfferConstraint: mediaOfferConstraint,
                 remoteOfferSdp: remoteOfferSdp
         )
     }
@@ -33,12 +33,12 @@ class Negotiator: NSObject, INegotiator {
     func handleSDP(
             type: String,
             sdp: String,
-            answerMediaConstraint: RTCMediaConstraints? = nil
+            mediaOfferConstraint: RTCMediaConstraints
     ) -> Completable {
         doHandleSDP(
                 type: type,
                 sdp: sdp,
-                answerMediaConstraint: answerMediaConstraint
+                mediaOfferConstraint: mediaOfferConstraint
         )
     }
 
@@ -61,7 +61,7 @@ private extension Negotiator {
     func doStartConnection(
             stream: GBPeerMediaStream? = nil,
             originator: Bool = false,
-            originatorConstraint: RTCMediaConstraints? = nil,
+            mediaOfferConstraint: RTCMediaConstraints,
             remoteOfferSdp: String
     ) -> Completable {
         Completable.create(
@@ -102,13 +102,7 @@ private extension Negotiator {
                                 dataConnection.initialize(dataChannel)
                             }*/
 
-                            let constraint: RTCMediaConstraints
-                            if let originatorConstraint = originatorConstraint {
-                                constraint = originatorConstraint
-                            } else {
-                                constraint = RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
-                            }
-                            let disposable = makeOffer(mediaConstraint: constraint)
+                            let disposable = makeOffer(mediaConstraint: mediaOfferConstraint)
                                     .subscribe(
                                             onCompleted: { [weak self] in
                                                 if self == nil {
@@ -127,7 +121,11 @@ private extension Negotiator {
                                     )
                             bag.append(disposable)
                         } else {
-                            let disposable = doHandleSDP(type: ServerMessageType.offer.rawValue, sdp: remoteOfferSdp)
+                            let disposable = doHandleSDP(
+                                    type: ServerMessageType.offer.rawValue,
+                                    sdp: remoteOfferSdp,
+                                    mediaOfferConstraint: mediaOfferConstraint
+                            )
                                     .subscribe(
                                             onCompleted: { [weak self] in
                                                 if self == nil {
@@ -551,7 +549,7 @@ private extension Negotiator {
     func doHandleSDP(
             type: String,
             sdp: String,
-            answerMediaConstraint: RTCMediaConstraints? = nil
+            mediaOfferConstraint: RTCMediaConstraints
     ) -> Completable {
         func setRemoteDescriptionAsync(session: RTCSessionDescription) -> Completable {
             Completable.create(subscribe: { [weak self] observer in
@@ -606,16 +604,7 @@ private extension Negotiator {
                             .andThen(
                                     Completable.deferred {
                                         if type == ServerMessageType.offer.rawValue {
-                                            let constraint: RTCMediaConstraints
-                                            if let answerMediaConstraint = answerMediaConstraint {
-                                                constraint = answerMediaConstraint
-                                            } else {
-                                                constraint = RTCMediaConstraints(
-                                                        mandatoryConstraints: nil,
-                                                        optionalConstraints: nil
-                                                )
-                                            }
-                                            return self.makeAnswer(mediaConstraint: constraint)
+                                            return self.makeAnswer(mediaConstraint: mediaOfferConstraint)
                                         }
                                         return Completable.empty()
                                     }

@@ -8,7 +8,7 @@ PODS:
   - LanguageManager-iOS (1.2.6-beta.2)
   - Nimble (12.0.1)
   - Quick (6.1.0)
-  - SwiftLint (0.52.2)
+  - SwiftLint (0.52.3)
 
 DEPENDENCIES:
   - Cuckoo (~> 1.10)
@@ -40,7 +40,7 @@ SPEC CHECKSUMS:
   LanguageManager-iOS: 5fac7a37b621cf2841d136ad6c46f21f15bb4de1
   Nimble: b279b3ca9e094508778aab5c76417be158d3ad04
   Quick: 6676ffb409bf04abba2ff23902af2407bfc6ac90
-  SwiftLint: 1ac76dac888ca05cb0cf24d0c85887ec1209961d
+  SwiftLint: 76ec9c62ad369cff2937474cb34c9af3fa270b7b
 
 PODFILE CHECKSUM: ae80e369c6b454c60478d23d5d9a2ce866430b92
 

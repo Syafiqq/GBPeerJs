@@ -65,10 +65,6 @@ class Socket: ISocket {
     func send(_ message: String) {
         doSend(message)
     }
-
-    func cleanup() {
-        doCleanup()
-    }
 }
 
 private extension Socket {
@@ -164,7 +160,7 @@ private extension Socket {
         disconnected = true
     }
 
-    func doCleanup() {
+    func cleanup() {
         socket?.delegate = nil
         socket?.disconnect()
         socket = nil

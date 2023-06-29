@@ -10,5 +10,4 @@ protocol ISocket: AnyObject {
     func start(id: String, token: String)
     func close()
     func send(_ message: String)
-    func cleanup()
 }

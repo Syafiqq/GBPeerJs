@@ -268,8 +268,8 @@ private extension GBPeer {
     func addConnection(peerId: String, connection: IConnection) {
         logger.log("add connection \(connection.type):\(connection.connectionId) to peerId:\(peerId)")
 
-        if connections.keys.contains(peerId) {
-            connections[peerId] = []
+        if !connections.keys.contains(peerId) {
+            connections[peerId] = [connection]
         } else {
             var peerConnections = connections[peerId] ?? []
             peerConnections.append(connection)
@@ -366,7 +366,6 @@ private extension GBPeer {
         }
         connections.removeAll()
 
-        socket?.cleanup()
         socket?.delegate = nil
         socket = nil
     }

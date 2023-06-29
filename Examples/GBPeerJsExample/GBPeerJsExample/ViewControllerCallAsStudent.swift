@@ -92,7 +92,6 @@ class ViewControllerCallAsStudent: UIViewController {
                 peerConfigBuilder: { [weak self] config in
                     config.iceServers = self?.iceServers ?? []
                     config.sdpSemantics = .unifiedPlan
-                    config.disableLinkLocalNetworks = true
                 }
         )
         let audioSource = factory.audioSource(with: constraint)

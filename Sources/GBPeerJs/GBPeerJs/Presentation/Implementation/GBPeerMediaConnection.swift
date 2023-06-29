@@ -13,7 +13,7 @@ public protocol GBPeerMediaConnectionDelegate: AnyObject {
     func mediaConnection(_: GBPeerMediaConnection, onIceStateChanged: RTCIceConnectionState)
 }
 
-public class GBPeerMediaConnection {
+public class GBPeerMediaConnection: GBPeerConnection {
     private static let idPrefix = "mc_"
 
     private var open = false

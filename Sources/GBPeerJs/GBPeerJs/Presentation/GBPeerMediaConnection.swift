@@ -84,8 +84,13 @@ public class GBPeerMediaConnection: GBPeerConnection {
         doClose()
     }
 
-    deinit {
+    func cleanup() {
+        doClose()
         classBag = DisposeBag()
+    }
+
+    deinit {
+        cleanup()
     }
 }
 
@@ -196,8 +201,12 @@ private extension GBPeerMediaConnection {
                 .andThen(
                         Completable.deferred { [weak self] in
                             // Retrieve lost messages stored because PeerConnection not set up.
-                            let connectionId = self?.connectionId ?? ""
-                            let messages = self?.provider?.getMessages(connectionId: connectionId) ?? []
+                            let messages: [[String: Any]]
+                            if let connectionId = self?.connectionId {
+                                messages = self?.provider?.getMessages(connectionId: connectionId) ?? []
+                            } else {
+                                messages = []
+                            }
 
                             for message in messages {
                                 self?.doHandleMessage(message: message)
@@ -221,6 +230,7 @@ private extension GBPeerMediaConnection {
                 .disposed(by: classBag)
     }
 
+    /** Allows user to close connection. */
     func doClose() {
         if negotiator != nil {
             negotiator?.cleanup()

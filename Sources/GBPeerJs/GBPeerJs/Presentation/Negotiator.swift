@@ -157,7 +157,7 @@ private extension Negotiator {
     ) throws -> RTCPeerConnection {
         logger.log("Creating RTCPeerConnection.")
 
-        var config = RTCConfiguration()
+        let config = RTCConfiguration()
         peerBuilder.peerConfigBuilder(config)
         guard let peerConnection = peerBuilder.peerBuilder.peerFactory
                 .peerConnection(with: config, constraints: peerBuilder.peerConstraint, delegate: nil) else {

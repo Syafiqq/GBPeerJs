@@ -20,4 +20,5 @@ Description
 
   s.dependency 'LanguageManager-iOS', '~> 1.2.6-beta.2'
   s.dependency 'GBWebRTC', '= 114.0.5735.124'
+  s.dependency 'RxSwift', '~> 5'
 end

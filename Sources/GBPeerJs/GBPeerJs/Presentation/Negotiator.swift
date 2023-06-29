@@ -57,8 +57,8 @@ class Negotiator: NSObject, INegotiator {
 }
 
 private extension Negotiator {
-    // swiftlint:disable:next function_body_length
-    func doStartConnection(
+    /** Returns a PeerConnection object set up correctly (for data, media). */
+    func doStartConnection( // swiftlint:disable:this function_body_length
             stream: GBPeerMediaStream? = nil,
             originator: Bool = false,
             mediaOfferConstraint: RTCMediaConstraints,
@@ -152,6 +152,7 @@ private extension Negotiator {
         )
     }
 
+    /** Start a PC. */
     func startPeerConnection(
             peerBuilder: GBPeerConnectionBuilder
     ) throws -> RTCPeerConnection {
@@ -169,6 +170,7 @@ private extension Negotiator {
         return peerConnection
     }
 
+    /** Set up various WebRTC listeners. */
     func setupListeners(peerConnection: RTCPeerConnection) {
         // ICE CANDIDATES.
         logger.log("Listening for ICE candidates.")
@@ -293,7 +295,7 @@ private extension Negotiator {
                     let disposable = createOfferAsync(mediaConstraint: mediaConstraint)
                             .do(
                                     onSuccess: { [weak self] _ in
-                                        self?.logger.log("Created session.")
+                                        self?.logger.log("Created offer.")
                                     },
                                     onError: { [weak self] error in
                                         self?.logger.log("Failed to createOffer, ", error)
@@ -462,10 +464,10 @@ private extension Negotiator {
                     let disposable = createAnswerAsync(mediaConstraint: mediaConstraint)
                             .do(
                                     onSuccess: { [weak self] _ in
-                                        self?.logger.log("Created session.")
+                                        self?.logger.log("Created answer.")
                                     },
                                     onError: { [weak self] error in
-                                        self?.logger.log("Failed to create session, ", error)
+                                        self?.logger.log("Failed to create answer, ", error)
                                     }
                             )
                             /*.map {
@@ -545,11 +547,11 @@ private extension Negotiator {
         )
     }
 
-    // swiftlint:disable:next function_body_length
-    func doHandleSDP(
-            type: String,
-            sdp: String,
-            mediaOfferConstraint: RTCMediaConstraints
+    /** Handle an SDP. */
+    func doHandleSDP(// swiftlint:disable:this function_body_length
+                     type: String,
+                     sdp: String,
+                     mediaOfferConstraint: RTCMediaConstraints
     ) -> Completable {
         func setRemoteDescriptionAsync(session: RTCSessionDescription) -> Completable {
             Completable.create(subscribe: { [weak self] observer in
@@ -611,12 +613,12 @@ private extension Negotiator {
                             )
                             .subscribe(
                                     onCompleted: { [weak self] in
-                                        guard self != nil else {
+                                        if self == nil {
                                             observer(.error(RxError.disposed(object: Self.self)))
                                             return
+                                        } else {
+                                            observer(.completed)
                                         }
-
-                                        observer(.completed)
                                     },
                                     onError: { [weak self] error in
                                         if self == nil {
@@ -636,8 +638,9 @@ private extension Negotiator {
         )
     }
 
-    // swiftlint:disable:next function_body_length
+    /** Handle a candidate. */
     func doHandleCandidate(_ ice: RTCIceCandidate) -> Completable {
+        // swiftlint:disable:previous function_body_length
         func addIceCandidateAsync(ice: RTCIceCandidate) -> Completable {
             Completable.create(subscribe: { [weak self] observer in
                 guard let self = self else {
@@ -718,7 +721,7 @@ private extension Negotiator {
             stream: RTCMediaStream,
             peerConnection: RTCPeerConnection
     ) {
-        logger.log("add tracks from stream \(stream.streamId) to peer initialization")
+        logger.log("add tracks from stream \(stream.streamId) to peer connection")
 
         /*guard (peerConnection.canAddTrack) else {
             logger.error("Your browser does't support RTCPeerConnection#addTrack. Ignored.")
@@ -790,7 +793,8 @@ extension Negotiator: RTCPeerConnectionDelegate {
     }
 
     func peerConnection(_ peerConnection: RTCPeerConnection, didGenerate candidate: RTCIceCandidate) {
-        guard !candidate.sdp.isEmpty else {
+        guard peerConnection.iceConnectionState != .completed,
+              !candidate.sdp.isEmpty else {
             return
         }
 

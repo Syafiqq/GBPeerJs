@@ -19,4 +19,5 @@ Description
   s.swift_version = '5.6'
 
   s.dependency 'LanguageManager-iOS', '~> 1.2.6-beta.2'
+  s.dependency 'GBWebRTC', '= 114.0.5735.124'
 end

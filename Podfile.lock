@@ -8,6 +8,8 @@ PODS:
   - LanguageManager-iOS (1.2.6-beta.2)
   - Nimble (12.0.1)
   - Quick (6.1.0)
+  - RxSwift (5.1.3)
+  - Starscream (3.1.1)
   - SwiftLint (0.52.3)
 
 DEPENDENCIES:
@@ -17,6 +19,8 @@ DEPENDENCIES:
   - LanguageManager-iOS (~> 1.2.6-beta.2)
   - Nimble (~> 12.0)
   - Quick (~> 6.1)
+  - RxSwift (~> 5)
+  - Starscream (~> 3)
   - SwiftLint (~> 0.51)
 
 SPEC REPOS:
@@ -27,6 +31,8 @@ SPEC REPOS:
     - Cuckoo
     - Nimble
     - Quick
+    - RxSwift
+    - Starscream
     - SwiftLint
 
 EXTERNAL SOURCES:
@@ -40,8 +46,10 @@ SPEC CHECKSUMS:
   LanguageManager-iOS: 5fac7a37b621cf2841d136ad6c46f21f15bb4de1
   Nimble: b279b3ca9e094508778aab5c76417be158d3ad04
   Quick: 6676ffb409bf04abba2ff23902af2407bfc6ac90
+  RxSwift: 915abbdfb62214aa89ccd0b194d44fb478019b27
+  Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
   SwiftLint: 76ec9c62ad369cff2937474cb34c9af3fa270b7b
 
-PODFILE CHECKSUM: ae80e369c6b454c60478d23d5d9a2ce866430b92
+PODFILE CHECKSUM: bf757072afb81feaae82fd3380dccf345e26313a
 
 COCOAPODS: 1.12.1

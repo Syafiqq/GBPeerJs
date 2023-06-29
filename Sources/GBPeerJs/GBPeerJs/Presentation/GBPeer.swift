@@ -37,6 +37,7 @@ public class GBPeer {
     private var connections: [String: [IConnection]] = [:]
     private let connectionsQueue = DispatchQueue(label: "GBPeer_connections", attributes: .concurrent)
     private var lostMessages: [String: [[String: Any]]] = [:]
+    private var lostMessagesQueue = DispatchQueue(label: "GBPeer_lostMessages", attributes: .concurrent)
 
     private var logger: ILogger = Logger.shared
 
@@ -211,21 +212,31 @@ private extension GBPeer {
 
     func storeMessage(connectionId: String, message: [String: Any]) {
         if lostMessages.keys.contains(connectionId) {
-            lostMessages[connectionId] = [message]
+            lostMessagesQueue.async { [weak self] in
+                self?.lostMessages[connectionId] = [message]
+            }
         } else {
-            var peerConnections = lostMessages[connectionId] ?? []
+            var peerConnections = lostMessagesQueue.sync {
+                lostMessages[connectionId] ?? []
+            }
             peerConnections.append(message)
-            lostMessages[connectionId] = peerConnections
+            lostMessagesQueue.async { [weak self] in
+                self?.lostMessages[connectionId] = peerConnections
+            }
         }
     }
 
     // TODO Change it to private
     /** Retrieve messages from lost message store */
     func doGetMessages(connectionId: String) -> [[String: Any]] {
-        let messages = lostMessages[connectionId] ?? []
+        let messages = lostMessagesQueue.sync {
+            lostMessages[connectionId] ?? []
+        }
 
         if !messages.isEmpty {
-            lostMessages.removeValue(forKey: connectionId)
+            lostMessagesQueue.async { [weak self] in
+                self?.lostMessages.removeValue(forKey: connectionId)
+            }
             return messages
         }
 
@@ -302,7 +313,9 @@ private extension GBPeer {
         }
 
         // remove from lost messages
-        lostMessages.removeValue(forKey: connection.peer)
+        lostMessagesQueue.async { [weak self] in
+            self?.lostMessages.removeValue(forKey: connection.peer)
+        }
     }
 
     /** Retrieve a data/media connection for this peer. */

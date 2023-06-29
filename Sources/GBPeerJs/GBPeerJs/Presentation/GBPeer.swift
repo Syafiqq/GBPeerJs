@@ -201,14 +201,14 @@ private extension GBPeer {
                     logger.warn("You received an unrecognized message:", message)
                 }
             } else {
-                logger.warn("Received malformed connection type:\(type ?? "-")")
+                logger.warn("Received malformed type:\(type ?? "-")")
             }
         }
     }
 
     func storeMessage(connectionId: String, message: [String: Any]) {
         if lostMessages.keys.contains(connectionId) {
-            lostMessages[connectionId] = []
+            lostMessages[connectionId] = [message]
         } else {
             var peerConnections = lostMessages[connectionId] ?? []
             peerConnections.append(message)

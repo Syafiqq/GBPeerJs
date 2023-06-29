@@ -111,6 +111,7 @@
 				65B8CCF436BFA68301C842E8 /* GBPeerJs.swift */,
 				59D145852936F0B700339673 /* i18n */,
 				65B8C3C01777C617B2870414 /* Presentation */,
+				65B8C0DCB8618F6F42D835FC /* Common */,
 			);
 			path = GBPeerJs;
 			sourceTree = "<group>";
@@ -143,6 +144,13 @@
 			);
 			name = Pods;
 			path = ../../Pods;
+			sourceTree = "<group>";
+		};
+		65B8C0DCB8618F6F42D835FC /* Common */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		65B8C3C01777C617B2870414 /* Presentation */ = {

@@ -19,6 +19,7 @@
 		65B8C47ABAB76D2614132C8A /* INegotiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CDCBF1B44F6472F40D42 /* INegotiator.swift */; };
 		65B8C66F5298215B6D14DBA8 /* IPeer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C7AEA53C90F75A44569E /* IPeer.swift */; };
 		65B8C77C3A00C25BB46A1F18 /* IConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C0261BA46635AB51D3DD /* IConnection.swift */; };
+		65B8C8C96435E8AEC51BD80E /* Negotiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C5AC2460D04AD49B9EBB /* Negotiator.swift */; };
 		65B8C8D2E622D1E1D26C0E16 /* GBPeerMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C90EA44AD0AD22ED5BD2 /* GBPeerMedia.swift */; };
 		65B8CB3074C34C26BF94A81C /* ISocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C1D4E3595F93BE5A7A98 /* ISocket.swift */; };
 		65B8CB4C5DBA6103913DF02C /* GBPeerJs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CCF436BFA68301C842E8 /* GBPeerJs.swift */; };
@@ -64,6 +65,7 @@
 		65B8C2A29B85B3906E4987A8 /* PeerJsCandidateRequestEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerJsCandidateRequestEntity.swift; sourceTree = "<group>"; };
 		65B8C4FFE0F6E4740E9CE2F9 /* GBPeerJsError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeerJsError.swift; sourceTree = "<group>"; };
 		65B8C5A7117260530071C134 /* PeerJsOfferRequestEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerJsOfferRequestEntity.swift; sourceTree = "<group>"; };
+		65B8C5AC2460D04AD49B9EBB /* Negotiator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Negotiator.swift; sourceTree = "<group>"; };
 		65B8C7AEA53C90F75A44569E /* IPeer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPeer.swift; sourceTree = "<group>"; };
 		65B8C90EA44AD0AD22ED5BD2 /* GBPeerMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeerMedia.swift; sourceTree = "<group>"; };
 		65B8CB1F6574536DBFB8EA36 /* ConnectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionType.swift; sourceTree = "<group>"; };
@@ -223,6 +225,7 @@
 			isa = PBXGroup;
 			children = (
 				65B8CF51783AC6F14E740DDE /* Logger.swift */,
+				65B8C5AC2460D04AD49B9EBB /* Negotiator.swift */,
 			);
 			path = Implementation;
 			sourceTree = "<group>";
@@ -471,6 +474,7 @@
 				65B8C66F5298215B6D14DBA8 /* IPeer.swift in Sources */,
 				65B8C0204542A2801106BA47 /* GBPeerConnection.swift in Sources */,
 				65B8C071DD87580BCFF2F6AE /* Logger.swift in Sources */,
+				65B8C8C96435E8AEC51BD80E /* Negotiator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

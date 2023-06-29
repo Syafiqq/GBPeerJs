@@ -131,6 +131,31 @@ private extension GBPeerMediaConnection {
                                 sdpType: (sdp["type"] as? String) ?? "",
                                 mediaOfferConstraint: constraint
                         )
+                        .do(
+                                onError: { [weak self] error in
+                                    self?.logger.log("Failed to handle SDP", error)
+                                },
+                                onCompleted: { [weak self] in
+                                    self?.logger.log("Success handle SDP")
+                                }
+                        )
+                        .andThen(
+                                Completable.deferred { [weak self] in
+                                    // Retrieve lost messages stored because PeerConnection not set up.
+                                    let messages: [[String: Any]]
+                                    if let connectionId = self?.connectionId {
+                                        messages = self?.provider?.getMessages(connectionId: connectionId) ?? []
+                                    } else {
+                                        messages = []
+                                    }
+
+                                    for message in messages {
+                                        self?.doHandleMessage(message: message)
+                                    }
+
+                                    return Completable.empty()
+                                }
+                        )
                         .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
                         .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
                         .subscribe(
@@ -146,9 +171,12 @@ private extension GBPeerMediaConnection {
                 open = true
             }
         case ServerMessageType.candidate.rawValue:
-            if let payload = message["payload"] as? [String: Any],
-               let candidate = payload["candidate"] as? [String: Any],
-               let candidateString = candidate["candidate"] as? String {
+            if let peerConnection = peerConnection,
+               peerConnection.remoteDescription == nil {
+                 provider?.storeMessage(connectionId: connectionId, message: message)
+            } else if let payload = message["payload"] as? [String: Any],
+                      let candidate = payload["candidate"] as? [String: Any],
+                      let candidateString = candidate["candidate"] as? String {
                 let sdpMLineIndex = candidate["sdpMLineIndex"] as? Int
                 let sdpMLineIndex32: Int32
                 if let sdpMLineIndex {

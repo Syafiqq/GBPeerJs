@@ -28,6 +28,7 @@ class Socket: ISocket {
 
     private var socket: WebSocket?
     private var messagesQueue: [String] = []
+    private var messagesQueueQueue = DispatchQueue(label: "Socket_messagesQueue", attributes: .concurrent)
 
     private var heartbeatWorkItem: DispatchWorkItem?
 
@@ -118,8 +119,12 @@ private extension Socket {
     func sendQueuedMessages() {
         // Create copy of queue and clear it,
         // because send method push the message back to queue if smth will go wrong
-        let copiedQueue = Array(messagesQueue)
-        messagesQueue.removeAll()
+        let copiedQueue = messagesQueueQueue.sync {
+            Array(messagesQueue)
+        }
+        messagesQueueQueue.async { [weak self] in
+            self?.messagesQueue.removeAll()
+        }
 
         for message in copiedQueue {
             doSend(message)
@@ -134,7 +139,9 @@ private extension Socket {
         // If we didn't get an ID yet, we can't yet send anything so we should queue
         // up these messages.
         if id == nil {
-            messagesQueue.append(message)
+            messagesQueueQueue.async { [weak self] in
+                self?.messagesQueue.append(message)
+            }
             return
         }
 

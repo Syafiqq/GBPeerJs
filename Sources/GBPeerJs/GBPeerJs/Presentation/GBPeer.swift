@@ -35,6 +35,7 @@ public class GBPeer {
     private var open = false
 
     private var connections: [String: [IConnection]] = [:]
+    private let connectionsQueue = DispatchQueue(label: "GBPeer_connections", attributes: .concurrent)
     private var lostMessages: [String: [[String: Any]]] = [:]
 
     private var logger: ILogger = Logger.shared
@@ -123,7 +124,9 @@ private extension GBPeer {
             logger.log("Received leave message from \(peerId ?? "-")")
             if let peerId {
                 cleanupPeer(peerId)
-                connections.removeValue(forKey: peerId)
+                connectionsQueue.async { [weak self] in
+                    self?.connections.removeValue(forKey: peerId)
+                }
             }
         case ServerMessageType.expire.rawValue: // The offer sent to a peer has expired without response.
             let peerId = (message["src"] as? String) ?? "-"
@@ -269,23 +272,33 @@ private extension GBPeer {
         logger.log("add connection \(connection.type):\(connection.connectionId) to peerId:\(peerId)")
 
         if !connections.keys.contains(peerId) {
-            connections[peerId] = [connection]
+            connectionsQueue.async { [weak self] in
+                self?.connections[peerId] = [connection]
+            }
         } else {
-            var peerConnections = connections[peerId] ?? []
+            var peerConnections = connectionsQueue.sync {
+                connections[peerId] ?? []
+            }
             peerConnections.append(connection)
-            connections[peerId] = peerConnections
+            connectionsQueue.async { [weak self] in
+                self?.connections[peerId] = peerConnections
+            }
         }
     }
 
     func doRemoveConnection(_ connection: IConnection) {
-        var connections = connections[connection.peer]
+        var connections = connectionsQueue.sync {
+            self.connections[connection.peer]
+        }
 
         if connections?.isEmpty == false {
             if let index = connections?.firstIndex(where: { $0 === connection }) {
                 connections?.remove(at: index)
             }
 
-            self.connections[connection.peer] = connections
+            connectionsQueue.async { [weak self] in
+                self?.connections[connection.peer] = connections
+            }
         }
 
         // remove from lost messages
@@ -294,7 +307,9 @@ private extension GBPeer {
 
     /** Retrieve a data/media connection for this peer. */
     func doGetConnection(peerId: String, connectionId: String) -> IConnection? {
-        let connections = connections[peerId]
+        let connections = connectionsQueue.sync {
+            self.connections[peerId]
+        }
         if connections?.isEmpty == true {
             return nil
         }
@@ -362,9 +377,13 @@ private extension GBPeer {
     func cleanup() {
         for peerId in connections.keys {
             cleanupPeer(peerId)
-            connections[peerId]?.removeAll()
+            connectionsQueue.async {
+                self.connections[peerId] = []
+            }
         }
-        connections.removeAll()
+        connectionsQueue.async {
+            self.connections.removeAll()
+        }
 
         socket?.delegate = nil
         socket = nil
@@ -372,7 +391,9 @@ private extension GBPeer {
 
     /** Closes all connections to this peer. */
     func cleanupPeer(_ peerId: String) {
-        let connections = connections[peerId] ?? []
+        let connections = connectionsQueue.sync {
+            self.connections[peerId] ?? []
+        }
 
         guard !connections.isEmpty else {
             return

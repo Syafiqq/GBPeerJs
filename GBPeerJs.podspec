@@ -7,8 +7,8 @@ PeerJs Swift port
                             DESC
   s.homepage                = "https://geniebook.com"
   s.license                 = 'MIT'
-  s.author                  = { "" => "" }
-  s.source                  = { :git => "", :tag => s.version.to_s }
+  s.author                  = { "Geniebook" => "developer@geniebook.com" }
+  s.source                  = { :git => "https://bitbucket.org/beautyfu/ios-gb-peer-js.git", :tag => s.version.to_s }
 
   s.requires_arc            = true
 

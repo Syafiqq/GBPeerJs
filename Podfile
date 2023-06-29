@@ -24,6 +24,7 @@ end
 
 def example_lib_pods
   lib_pods
+  pod 'SnapKit', '~> 5'
 end
 
 target 'GBPeerJs' do

@@ -306,13 +306,7 @@ class Student2Vc: UIViewController {
         let peerMedia = GBPeerMediaStream(
                 stream: stream,
                 peerBuilder: peerBuilder,
-                offerConstraint: RTCMediaConstraints(
-                        mandatoryConstraints: [
-                            kRTCMediaConstraintsOfferToReceiveAudio: kRTCMediaConstraintsValueTrue,
-                            kRTCMediaConstraintsOfferToReceiveVideo: kRTCMediaConstraintsValueFalse
-                        ],
-                        optionalConstraints: nil
-                )
+                offerConstraint: RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
         )
         do {
             media.answer(stream: peerMedia)

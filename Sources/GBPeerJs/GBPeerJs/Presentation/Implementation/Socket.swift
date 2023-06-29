@@ -7,7 +7,7 @@ import Starscream
 
 private let kVersion = "1.4.7"
 
-class Socket {
+class Socket: ISocket {
     private let secure: Bool
     private let host: String
     private let port: Int
@@ -46,6 +46,18 @@ class Socket {
 
         let wsProtocol = secure ? "wss://" : "ws://"
         baseUrl = "\(wsProtocol)\(host):\(port)\(path)peerjs?key=\(key)"
+    }
+
+    func start(id: String, token: String) {
+        doStart(id: id, token: token)
+    }
+
+    func close() {
+        doClose()
+    }
+
+    func send(_ message: String) {
+        doSend(message)
     }
 }
 

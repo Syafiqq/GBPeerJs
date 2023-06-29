@@ -291,3 +291,33 @@ private extension GBPeerMediaConnection {
         delegate?.mediaConnection(self, onClose: ())
     }
 }
+
+extension GBPeerMediaConnection: IConnection {
+    func setPeerConnection(_ peer: RTCPeerConnection) {
+        peerConnection = peer
+    }
+
+    func unsetPeerConnection() {
+        peerConnection = nil
+    }
+
+    func addStream(_ stream: RTCMediaStream) {
+        doAddStream(stream)
+    }
+
+    func requestClose() {
+        doClose()
+    }
+
+    func emitError(_ error: Error) {
+        delegate?.mediaConnection(self, onError: error)
+    }
+
+    func emitIceStateChanged(_ state: RTCIceConnectionState) {
+        delegate?.mediaConnection(self, onIceStateChanged: state)
+    }
+
+    func handleMessage(message: [String: Any]) {
+        doHandleMessage(message: message)
+    }
+}

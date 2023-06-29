@@ -6,13 +6,51 @@ import Foundation
 import WebRTC
 import RxSwift
 
-class Negotiator: NSObject {
+class Negotiator: NSObject, INegotiator {
     weak var connection: IConnection?
     private let logger: ILogger = Logger.shared
 
     init(connection: IConnection) {
         self.connection = connection
         super.init()
+    }
+
+    func startConnection(
+            stream: GBPeerMediaStream? = nil,
+            originator: Bool = false,
+            mediaOfferConstraint: RTCMediaConstraints,
+            remoteOfferSdp: String,
+            remoteOfferSdpType: String
+    ) -> Completable {
+        doStartConnection(
+                stream: stream,
+                originator: originator,
+                mediaOfferConstraint: mediaOfferConstraint,
+                remoteOfferSdp: remoteOfferSdp,
+                remoteOfferSdpType: remoteOfferSdpType
+        )
+    }
+
+    func handleSDP(
+            type: String,
+            sdp: String,
+            sdpType: String,
+            mediaOfferConstraint: RTCMediaConstraints
+    ) -> Completable {
+        doHandleSDP(
+                type: type,
+                sdp: sdp,
+                sdpType: sdpType,
+                mediaOfferConstraint: mediaOfferConstraint
+        )
+    }
+
+    func handleCandidate(_ ice: RTCIceCandidate) -> Completable {
+        doHandleCandidate(ice)
+    }
+
+    func cleanup() {
+        doCleanup()
     }
 
     deinit {

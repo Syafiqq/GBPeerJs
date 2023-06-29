@@ -15,6 +15,8 @@ class Negotiator: NSObject, INegotiator {
     init(connection: IConnection, logger: ILogger) {
         self.connection = connection
         super.init()
+
+        trackLifetime()
     }
 
     func startConnection(
@@ -848,5 +850,13 @@ extension Negotiator: RTCPeerConnectionDelegate {
         )
 
         connection.initialize(dataChannel)*/
+    }
+}
+
+import LifetimeTracker
+
+extension Negotiator: LifetimeTrackable {
+    public class var lifetimeConfiguration: LifetimeConfiguration {
+        LifetimeConfiguration(maxCount: 1)
     }
 }

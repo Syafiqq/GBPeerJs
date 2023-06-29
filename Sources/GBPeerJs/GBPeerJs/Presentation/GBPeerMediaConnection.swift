@@ -55,11 +55,13 @@ public class GBPeerMediaConnection: GBPeerConnection {
         negotiator = Negotiator(connection: self, logger: logger)
 
         if let stream = stream {
+            let sdp = (remoteOfferPayload["sdp"] as? [String: Any]) ?? [:]
             negotiator?.startConnection(
                             stream: stream,
                             originator: true,
                             mediaOfferConstraint: stream.offerConstraint,
-                            remoteOfferSdp: (remoteOfferPayload["sdp"] as? String) ?? ""
+                            remoteOfferSdp: (sdp["sdp"] as? String) ?? "",
+                            remoteOfferSdpType: (sdp["type"] as? String) ?? ""
                     )
                     .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
                     .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
@@ -96,7 +98,7 @@ public class GBPeerMediaConnection: GBPeerConnection {
 
 private extension GBPeerMediaConnection {
     func doAddStream(_ remoteStream: RTCMediaStream) {
-        logger.log("Receiving stream", remoteStream)
+        logger.log("Receiving stream", remoteStream.streamId)
 
         self.remoteStream = remoteStream
         delegate?.mediaConnection(self, onRemoteStreamAdded: remoteStream) // Should we call this `open`?
@@ -111,7 +113,7 @@ private extension GBPeerMediaConnection {
             // Forward to negotiator
             if let type = type,
                let payload = message["payload"] as? [String: Any],
-               let sdp = payload["sdp"] as? String {
+               let sdp = payload["sdp"] as? [String: Any] {
 
                 let constraint: RTCMediaConstraints
                 if let mediaOfferConstraint = mediaOfferConstraint {
@@ -125,17 +127,18 @@ private extension GBPeerMediaConnection {
 
                 negotiator?.handleSDP(
                                 type: type,
-                                sdp: sdp,
+                                sdp: (sdp["sdp"] as? String) ?? "",
+                                sdpType: (sdp["type"] as? String) ?? "",
                                 mediaOfferConstraint: constraint
                         )
                         .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
                         .subscribeOn(SerialDispatchQueueScheduler(qos: .default))
                         .subscribe(
                                 onCompleted: { [weak self] in
-                                    self?.logger.log("Success handle SDP")
+                                    self?.logger.log("Success answer")
                                 },
                                 onError: { [weak self] error in
-                                    self?.logger.log("Failed to handle SDP")
+                                    self?.logger.log("Failed to answer")
                                     self?.provider?.emitError(error)
                                 }
                         )
@@ -192,11 +195,13 @@ private extension GBPeerMediaConnection {
             this.options.sdpTransform = options.sdpTransform;
         }*/
 
+        let sdp = (remoteOfferPayload["sdp"] as? [String: Any]) ?? [:]
         negotiator?.startConnection(
                         stream: stream,
                         originator: false,
                         mediaOfferConstraint: stream.offerConstraint,
-                        remoteOfferSdp: (remoteOfferPayload["sdp"] as? String) ?? ""
+                        remoteOfferSdp: (sdp["sdp"] as? String) ?? "",
+                        remoteOfferSdpType: (sdp["type"] as? String) ?? ""
                 )
                 .andThen(
                         Completable.deferred { [weak self] in

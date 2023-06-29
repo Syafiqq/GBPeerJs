@@ -5,7 +5,7 @@
 import Foundation
 
 extension GBPeer {
-    struct PeerOptions {
+    public struct PeerOptions {
         let debug: Bool
         let host: String?
         let port: Int?
@@ -15,7 +15,7 @@ extension GBPeer {
         let secure: Bool
         let pingInterval: TimeInterval?
 
-        init(
+        public init(
                 debug: Bool,
                 host: String? = nil,
                 port: Int? = nil,

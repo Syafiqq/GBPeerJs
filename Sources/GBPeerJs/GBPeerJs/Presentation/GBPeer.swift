@@ -24,7 +24,7 @@ public protocol GBPeerDelegate: AnyObject {
 
 public class GBPeer {
     private let options: PeerOptions
-    internal weak var socket: ISocket?
+    internal var socket: ISocket?
 
     private var id: String?
     private var lastServerId: String?
@@ -41,9 +41,9 @@ public class GBPeer {
 
     private var logger: ILogger = Logger.shared
 
-    weak var delegate: GBPeerDelegate?
+    public weak var delegate: GBPeerDelegate?
 
-    init(
+    public init(
             id: String,
             options: PeerOptions
     ) {
@@ -210,7 +210,7 @@ private extension GBPeer {
         }
     }
 
-    func storeMessage(connectionId: String, message: [String: Any]) {
+    func doStoreMessage(connectionId: String, message: [String: Any]) {
         if lostMessages.keys.contains(connectionId) {
             lostMessagesQueue.async { [weak self] in
                 self?.lostMessages[connectionId] = [message]
@@ -465,6 +465,10 @@ private extension GBPeer {
 }
 
 extension GBPeer: IPeer {
+    func storeMessage(connectionId: String, message: [String: Any]) {
+        doStoreMessage(connectionId: connectionId, message: message)
+    }
+
     func getMessages(connectionId: String) -> [[String: Any]] {
         doGetMessages(connectionId: connectionId)
     }

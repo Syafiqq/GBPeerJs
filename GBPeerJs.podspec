@@ -3,7 +3,7 @@ Pod::Spec.new do |s|
   s.version                 = "0.0.1"
   s.summary                 = "Summary"
   s.description             = <<-DESC
-Description
+PeerJs Swift port
                             DESC
   s.homepage                = "https://geniebook.com"
   s.license                 = 'MIT'

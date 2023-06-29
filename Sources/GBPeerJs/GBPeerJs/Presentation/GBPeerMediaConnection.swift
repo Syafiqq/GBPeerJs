@@ -52,7 +52,7 @@ public class GBPeerMediaConnection: GBPeerConnection {
 
         localStream = stream?.stream
         self.connectionId = connectionId ?? "\(Self.idPrefix)\(Util.randomToken(11))"
-        negotiator = Negotiator(connection: self, logger: logger)
+        negotiator = Negotiator(connection: self)
 
         if let stream = stream {
             let sdp = (remoteOfferPayload["sdp"] as? [String: Any]) ?? [:]

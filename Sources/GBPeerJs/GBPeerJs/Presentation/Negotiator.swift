@@ -10,9 +10,7 @@ class Negotiator: NSObject, INegotiator {
     weak var connection: IConnection?
     private let logger: ILogger = Logger.shared
 
-    private var classBag = DisposeBag()
-
-    init(connection: IConnection, logger: ILogger) {
+    init(connection: IConnection) {
         self.connection = connection
         super.init()
 
@@ -54,7 +52,6 @@ class Negotiator: NSObject, INegotiator {
     }
 
     func cleanup() {
-        classBag = DisposeBag()
         doCleanup()
     }
 

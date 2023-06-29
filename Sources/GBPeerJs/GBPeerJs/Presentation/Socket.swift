@@ -33,9 +33,6 @@ class Socket: ISocket {
 
     weak var delegate: SocketDelegate?
 
-    private var wsOpen: Bool {
-        socket != nil && !disconnected
-    }
     private let logger: ILogger = Logger.shared
 
     init(
@@ -58,6 +55,24 @@ class Socket: ISocket {
     }
 
     func start(id: String, token: String) {
+        doStart(id: id, token: token)
+    }
+
+    func close() {
+        doClose()
+    }
+
+    func send(_ message: String) {
+        doSend(message)
+    }
+
+    func cleanup() {
+        doCleanup()
+    }
+}
+
+private extension Socket {
+    func doStart(id: String, token: String) {
         self.id = id
 
         let wsUrl = "\(baseUrl)&id=\(id)&token=\(token)"
@@ -81,7 +96,65 @@ class Socket: ISocket {
         socket.connect()
     }
 
-    func close() {
+    func scheduleHeartbeat() {
+        let heartbeatWorkItem = DispatchWorkItem { [weak self] in
+            self?.sendHeartbeat()
+        }
+        self.heartbeatWorkItem = heartbeatWorkItem
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(Int(pingInterval)), execute: heartbeatWorkItem)
+    }
+
+    func sendHeartbeat() {
+        guard wsOpen() else {
+            logger.log("Cannot send heartbeat, because socket closed")
+            return
+        }
+
+        socket?.write(string: "{\"type\":\"\(ServerMessageType.heartbeat)\"}")
+        scheduleHeartbeat()
+    }
+
+    func wsOpen() -> Bool {
+        socket != nil && !disconnected
+    }
+
+    func sendQueuedMessages() {
+        // Create copy of queue and clear it,
+        // because send method push the message back to queue if smth will go wrong
+        let copiedQueue = Array(messagesQueue)
+        messagesQueue.removeAll()
+
+        for message in copiedQueue {
+            doSend(message)
+        }
+    }
+
+    func doSend(_ message: String) {
+        if disconnected {
+            return
+        }
+
+        // If we didn't get an ID yet, we can't yet send anything so we should queue
+        // up these messages.
+        if id == nil {
+            messagesQueue.append(message)
+            return
+        }
+
+        // if (!data.type) {
+        //     this.emit(SocketEventType.Error, "Invalid message");
+        //     return;
+        // }
+
+        if !wsOpen() {
+            return
+        }
+
+        socket?.write(string: message)
+    }
+
+    func doClose() {
         if disconnected {
             return
         }
@@ -91,11 +164,7 @@ class Socket: ISocket {
         disconnected = true
     }
 
-    func send(_ message: String) {
-        doSend(message)
-    }
-
-    func cleanup() {
+    func doCleanup() {
         socket?.delegate = nil
         socket?.disconnect()
         socket = nil
@@ -159,67 +228,5 @@ extension Socket: WebSocketDelegate {
         logger.log("Server message:data received:", data.count)
 
         delegate?.socketJs(onNewMessage: data)
-    }
-}
-
-// MARK: - Message
-
-private extension Socket {
-    func sendQueuedMessages() {
-        // Create copy of queue and clear it,
-        // because send method push the message back to queue if smth will go wrong
-        let copiedQueue = Array(messagesQueue)
-        messagesQueue.removeAll()
-
-        for message in copiedQueue {
-            doSend(message)
-        }
-    }
-
-    func doSend(_ message: String) {
-        if disconnected {
-            return
-        }
-
-        // If we didn't get an ID yet, we can't yet send anything so we should queue
-        // up these messages.
-        if id == nil {
-            messagesQueue.append(message)
-            return
-        }
-
-        // if (!data.type) {
-        //     this.emit(SocketEventType.Error, "Invalid message");
-        //     return;
-        // }
-
-        if !wsOpen {
-            return
-        }
-
-        socket?.write(string: message)
-    }
-}
-
-// MARK: - Ping Pong
-
-private extension Socket {
-    func scheduleHeartbeat() {
-        let heartbeatWorkItem = DispatchWorkItem { [weak self] in
-            self?.sendHeartbeat()
-        }
-        self.heartbeatWorkItem = heartbeatWorkItem
-
-        DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(Int(pingInterval)), execute: heartbeatWorkItem)
-    }
-
-    func sendHeartbeat() {
-        guard wsOpen else {
-            logger.log("Cannot send heartbeat, because socket closed")
-            return
-        }
-
-        socket?.write(string: "{\"type\":\"\(ServerMessageType.heartbeat)\"}")
-        scheduleHeartbeat()
     }
 }

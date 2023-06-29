@@ -17,6 +17,7 @@
 		65B8C13FF437305D3DD2317E /* GBPeer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C9A59E9800B4446CE3ED /* GBPeer.swift */; };
 		65B8C271A82463557BCC8644 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C7675C918B5B96241B51 /* Util.swift */; };
 		65B8C47EFB65B8067613D0FB /* INegotiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C7F8E7B258F63D17DEFE /* INegotiator.swift */; };
+		65B8C493D9655F8B5C9E2997 /* GBPeer+Params.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CB9E7BB48678A9FE1728 /* GBPeer+Params.swift */; };
 		65B8C4F14E3B8D0406485DAB /* IConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C8C730A99C0C950DCCD5 /* IConnection.swift */; };
 		65B8C5F72C04DC7F69AAFD2A /* ISocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C6E871AFE1F5DFD0273F /* ISocket.swift */; };
 		65B8C6E7B8F030458291B4DD /* PeerJsCandidateRequestEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CA5B5A3638D9EF2CC8AD /* PeerJsCandidateRequestEntity.swift */; };
@@ -77,6 +78,7 @@
 		65B8CA5B5A3638D9EF2CC8AD /* PeerJsCandidateRequestEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerJsCandidateRequestEntity.swift; sourceTree = "<group>"; };
 		65B8CAAF6C13FF81538C9532 /* IPeer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPeer.swift; sourceTree = "<group>"; };
 		65B8CB74B3AB7152A0D2AEDB /* GBPeerJsError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeerJsError.swift; sourceTree = "<group>"; };
+		65B8CB9E7BB48678A9FE1728 /* GBPeer+Params.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GBPeer+Params.swift"; sourceTree = "<group>"; };
 		65B8CCF436BFA68301C842E8 /* GBPeerJs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeerJs.swift; sourceTree = "<group>"; };
 		65B8CD6123D2323BA3F8B6AA /* GBPeerMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeerMedia.swift; sourceTree = "<group>"; };
 		65B8CE0B12E39A965217D4CE /* PeerJsOfferRequestEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerJsOfferRequestEntity.swift; sourceTree = "<group>"; };
@@ -243,6 +245,7 @@
 				65B8C32FE050DD2F5C6A62F4 /* Interfaces */,
 				65B8C63FEDB4D9D94BA4869D /* Entity */,
 				65B8C7C2D411A41BBBB1713B /* Util */,
+				65B8CB9E7BB48678A9FE1728 /* GBPeer+Params.swift */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -495,6 +498,7 @@
 				65B8C879C286C38BE4193217 /* PeerJsOfferRequestEntity.swift in Sources */,
 				65B8C6E7B8F030458291B4DD /* PeerJsCandidateRequestEntity.swift in Sources */,
 				65B8CB3745A2E0AC94A1FFA7 /* GBPeerMedia.swift in Sources */,
+				65B8C493D9655F8B5C9E2997 /* GBPeer+Params.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

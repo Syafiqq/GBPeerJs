@@ -126,7 +126,11 @@ extension Socket: WebSocketDelegate {
             return
         }
 
-        logger.log("Socket closed.", error)
+        if let error {
+            logger.log("Socket closed.", error)
+        } else {
+            logger.log("Socket closed.")
+        }
 
         cleanup()
         disconnected = true
@@ -135,12 +139,7 @@ extension Socket: WebSocketDelegate {
     }
 
     func websocketDidReceiveMessage(socket: Starscream.WebSocketClient, text: String) {
-        do {
-            logger.log("Server message received:", text)
-        } catch {
-            logger.log("Invalid server message", text)
-            return
-        }
+        logger.log("Server message:string received:", text)
 
         let data: [String: Any]
         if let source = text.data(using: .utf8) {
@@ -157,12 +156,7 @@ extension Socket: WebSocketDelegate {
     }
 
     func websocketDidReceiveData(socket: Starscream.WebSocketClient, data: Data) {
-        do {
-            logger.log("Server message received:", data)
-        } catch {
-            logger.log("Invalid server message", data)
-            return
-        }
+        logger.log("Server message:data received:", data.count)
 
         delegate?.socketJs(onNewMessage: data)
     }

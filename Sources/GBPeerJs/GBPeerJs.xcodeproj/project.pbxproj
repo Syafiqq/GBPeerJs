@@ -141,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				65B8C833FEFD346E26F50DD6 /* Entity */,
+				65B8CB69DA6793F9C9B2D73D /* Util */,
 			);
 			path = Presentation;
 			sourceTree = "<group>";
@@ -152,6 +153,13 @@
 				65B8C5A7117260530071C134 /* PeerJsOfferRequestEntity.swift */,
 			);
 			path = Entity;
+			sourceTree = "<group>";
+		};
+		65B8CB69DA6793F9C9B2D73D /* Util */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Util;
 			sourceTree = "<group>";
 		};
 		878E0B7A7ACFFF4724765B96 /* Frameworks */ = {

@@ -19,8 +19,8 @@
 		5996B6AD2A48882A00B224D7 /* GBPeerJs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5996B6AC2A48882A00B224D7 /* GBPeerJs.framework */; };
 		5996B6AE2A48882A00B224D7 /* GBPeerJs.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 5996B6AC2A48882A00B224D7 /* GBPeerJs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		65B8C175C53220B4EEAACE74 /* IceServerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C35FAA227F7B53190841 /* IceServerHelper.swift */; };
-		65B8CC2442E3B3A1C3103D7F /* Student2Vc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C5D8C428EA03387FE7BA /* Student2Vc.swift */; };
-		65B8CF6638DCF5741F55B438 /* Student1Vc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C878D4BBFD88CB40458C /* Student1Vc.swift */; };
+		65B8CC2442E3B3A1C3103D7F /* ViewControllerCallAsTeacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C5D8C428EA03387FE7BA /* ViewControllerCallAsTeacher.swift */; };
+		65B8CF6638DCF5741F55B438 /* ViewControllerCallAsStudent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C878D4BBFD88CB40458C /* ViewControllerCallAsStudent.swift */; };
 		8AE6DF00C2621EBAF89816B8 /* Pods_GBPeerJsExample_GBPeerJsExampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B918DDD2951E369B2EAC3AA8 /* Pods_GBPeerJsExample_GBPeerJsExampleUITests.framework */; };
 		A3F62B095EBD54CB58E525AF /* Pods_GBPeerJsExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B7F02D18FDAAAFE64A644C9 /* Pods_GBPeerJsExample.framework */; };
 /* End PBXBuildFile section */
@@ -74,8 +74,8 @@
 		5962A4D52935DFA200183658 /* GBPeerJsExampleUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBPeerJsExampleUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		5996B6AC2A48882A00B224D7 /* GBPeerJs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = GBPeerJs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		65B8C35FAA227F7B53190841 /* IceServerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IceServerHelper.swift; sourceTree = "<group>"; };
-		65B8C5D8C428EA03387FE7BA /* Student2Vc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student2Vc.swift; sourceTree = "<group>"; };
-		65B8C878D4BBFD88CB40458C /* Student1Vc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Student1Vc.swift; sourceTree = "<group>"; };
+		65B8C5D8C428EA03387FE7BA /* ViewControllerCallAsTeacher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerCallAsTeacher.swift; sourceTree = "<group>"; };
+		65B8C878D4BBFD88CB40458C /* ViewControllerCallAsStudent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerCallAsStudent.swift; sourceTree = "<group>"; };
 		716D753FD77C149DDE6A5FE1 /* Pods-GBPeerJsExample-GBPeerJsExampleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GBPeerJsExample-GBPeerJsExampleUITests.debug.xcconfig"; path = "Target Support Files/Pods-GBPeerJsExample-GBPeerJsExampleUITests/Pods-GBPeerJsExample-GBPeerJsExampleUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		A26519B706EE68860F1FFA54 /* Pods-GBPeerJsExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GBPeerJsExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-GBPeerJsExampleTests/Pods-GBPeerJsExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B918DDD2951E369B2EAC3AA8 /* Pods_GBPeerJsExample_GBPeerJsExampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GBPeerJsExample_GBPeerJsExampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,8 +144,8 @@
 				5962A4BB2935DFA200183658 /* Assets.xcassets */,
 				5962A4BD2935DFA200183658 /* LaunchScreen.storyboard */,
 				5962A4C02935DFA200183658 /* Info.plist */,
-				65B8C878D4BBFD88CB40458C /* Student1Vc.swift */,
-				65B8C5D8C428EA03387FE7BA /* Student2Vc.swift */,
+				65B8C878D4BBFD88CB40458C /* ViewControllerCallAsStudent.swift */,
+				65B8C5D8C428EA03387FE7BA /* ViewControllerCallAsTeacher.swift */,
 				65B8C35FAA227F7B53190841 /* IceServerHelper.swift */,
 			);
 			path = GBPeerJsExample;
@@ -513,8 +513,8 @@
 			files = (
 				5962A4B72935DFA100183658 /* ViewController.swift in Sources */,
 				5962A4B32935DFA100183658 /* AppDelegate.swift in Sources */,
-				65B8CF6638DCF5741F55B438 /* Student1Vc.swift in Sources */,
-				65B8CC2442E3B3A1C3103D7F /* Student2Vc.swift in Sources */,
+				65B8CF6638DCF5741F55B438 /* ViewControllerCallAsStudent.swift in Sources */,
+				65B8CC2442E3B3A1C3103D7F /* ViewControllerCallAsTeacher.swift in Sources */,
 				65B8C175C53220B4EEAACE74 /* IceServerHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

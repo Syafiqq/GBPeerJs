@@ -28,7 +28,7 @@ enum IceServerHelper {
 
     // swiftlint:disable all
 
-    static func fetchCoturnIceServer(completion: ([RTCIceServer]) -> Void) {
+    private static func fetchCoturnIceServer(completion: ([RTCIceServer]) -> Void) {
         let iceServers = [
             RTCIceServer(
                     urlStrings: ["stun:stun.l.google.com:19302"]
@@ -42,7 +42,7 @@ enum IceServerHelper {
         completion(iceServers)
     }
 
-    static func fetchMeteredIceServer(completion: @escaping ([RTCIceServer]) -> Void) {
+    private static func fetchMeteredIceServer(completion: @escaping ([RTCIceServer]) -> Void) {
         struct Ice: Decodable {
             var urls: String?
             var username: String?
@@ -76,7 +76,7 @@ enum IceServerHelper {
         task.resume()
     }
 
-    static func fetchMeteredStaticIceServer(completion: @escaping ([RTCIceServer]) -> Void) {
+    private static func fetchMeteredStaticIceServer(completion: @escaping ([RTCIceServer]) -> Void) {
         let iceServers = [
             RTCIceServer(
                     urlStrings: ["stun:stun.relay.metered.ca:80"]
@@ -105,7 +105,7 @@ enum IceServerHelper {
         completion(iceServers)
     }
 
-    static func fetchXirsysIceServer(completion: @escaping ([RTCIceServer]) -> Void) {
+    private static func fetchXirsysIceServer(completion: @escaping ([RTCIceServer]) -> Void) {
         struct Ice: Decodable {
             var s: String?
             var v: IceV?
@@ -165,7 +165,7 @@ enum IceServerHelper {
         task.resume()
     }
 
-    static func fetchXirsisStaticIceServer(completion: @escaping ([RTCIceServer]) -> Void) {
+    private static func fetchXirsisStaticIceServer(completion: @escaping ([RTCIceServer]) -> Void) {
         let iceServers = [
             RTCIceServer(
                     urlStrings: ["stun:hk-turn1.xirsys.com"]
@@ -186,7 +186,7 @@ enum IceServerHelper {
         completion(iceServers)
     }
 
-    static func fetchTwilioIceServer(completion: @escaping ([RTCIceServer]) -> Void) {
+    private static func fetchTwilioIceServer(completion: @escaping ([RTCIceServer]) -> Void) {
         struct Ice: Decodable {
             var ice_servers: [IceServer]?
         }

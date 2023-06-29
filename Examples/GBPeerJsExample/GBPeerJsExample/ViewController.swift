@@ -26,7 +26,7 @@ class ViewController: UIViewController {
     }
 
     private func presentVc() {
-        let vc = Student2Vc()
+        let vc = ViewControllerCallAsStudent()
         let nav = UINavigationController(rootViewController: vc)
         nav.modalPresentationStyle = .fullScreen
         present(nav, animated: true)

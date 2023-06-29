@@ -175,7 +175,7 @@ private extension GBPeerMediaConnection {
         case ServerMessageType.candidate.rawValue:
             if let peerConnection = peerConnection,
                peerConnection.remoteDescription == nil {
-                 provider?.storeMessage(connectionId: connectionId, message: message)
+                provider?.storeMessage(connectionId: connectionId, message: message)
             } else if let payload = message["payload"] as? [String: Any],
                       let candidate = payload["candidate"] as? [String: Any],
                       let candidateString = candidate["candidate"] as? String {

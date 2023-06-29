@@ -24,7 +24,7 @@ end
 
 target 'GBPeerJs' do
   project 'Sources/GBPeerJs/GBPeerJs.xcodeproj'
-  platform :ios, '11.0'
+  platform :ios, '11.2'
 
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
@@ -46,7 +46,7 @@ end
 
 target 'GBPeerJsExample' do
   project 'Examples/GBPeerJsExample/GBPeerJsExample.xcodeproj'
-  platform :ios, '11.0'
+  platform :ios, '11.2'
 
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
@@ -75,7 +75,7 @@ post_install do |installer|
       when "Cuckoo", "Quick", "Nimble"
         config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
       else
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.2'
       end
     end
   end

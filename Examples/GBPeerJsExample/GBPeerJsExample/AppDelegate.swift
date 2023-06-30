@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import LifetimeTracker
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,7 +28,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
             // swiftlint:disable:previous discouraged_optional_collection
     ) -> Bool {
-        true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            LifetimeTracker.setup(
+                    onUpdate: LifetimeTrackerDashboardIntegration(
+                            visibility: .alwaysVisible,
+                            style: .circular
+                    ).refreshUI
+            )
+        }
+        return true
     }
 
     func applicationDidBecomeActive(_ application: UIApplication) {

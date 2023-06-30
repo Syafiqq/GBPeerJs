@@ -22,5 +22,4 @@ PeerJs Swift port
   s.dependency 'GBWebRTC', '= 114.0.5735.124'
   s.dependency 'RxSwift', '~> 5'
   s.dependency 'Starscream', '~> 3'
-  s.dependency 'LifetimeTracker', '= 1.7.1'
 end

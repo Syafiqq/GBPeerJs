@@ -13,7 +13,6 @@ def lib_pods
   pod 'GBWebRTC', '= 114.0.5735.124'
   pod 'Starscream', '~> 3'
   pod 'RxSwift', '~> 5'
-  pod 'LifetimeTracker', '= 1.7.1'
 end
 
 def lib_test_pods

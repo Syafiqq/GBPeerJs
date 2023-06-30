@@ -12,7 +12,25 @@
 		593ED2572935CFA9007BC45A /* GBPeerJsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593ED2562935CFA9007BC45A /* GBPeerJsTests.swift */; };
 		593ED2582935CFA9007BC45A /* GBPeerJs.h in Headers */ = {isa = PBXBuildFile; fileRef = 593ED24A2935CFA9007BC45A /* GBPeerJs.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		59D1458D2936F74000339673 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 59D1458F2936F74000339673 /* Localizable.strings */; };
+		65B8C0204542A2801106BA47 /* GBPeerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CF62DF40564AD6CDA643 /* GBPeerConnection.swift */; };
+		65B8C052466638CD0BC35EF4 /* ConnectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CB1F6574536DBFB8EA36 /* ConnectionType.swift */; };
+		65B8C071DD87580BCFF2F6AE /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CF51783AC6F14E740DDE /* Logger.swift */; };
+		65B8C093AA83EF3EF7335BA9 /* PeerJsOfferRequestEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C5A7117260530071C134 /* PeerJsOfferRequestEntity.swift */; };
+		65B8C0E2BF683F4D019177A5 /* GBPeer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CFC5F5F0FA2F631F95E7 /* GBPeer.swift */; };
+		65B8C47ABAB76D2614132C8A /* INegotiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CDCBF1B44F6472F40D42 /* INegotiator.swift */; };
+		65B8C66F5298215B6D14DBA8 /* IPeer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C7AEA53C90F75A44569E /* IPeer.swift */; };
+		65B8C77C3A00C25BB46A1F18 /* IConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C0261BA46635AB51D3DD /* IConnection.swift */; };
+		65B8C8571E30B759EF587E0A /* GBPeerMediaConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C7067709C9F84D0E282D /* GBPeerMediaConnection.swift */; };
+		65B8C8C96435E8AEC51BD80E /* Negotiator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C5AC2460D04AD49B9EBB /* Negotiator.swift */; };
+		65B8C8D2E622D1E1D26C0E16 /* GBPeerMedia.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C90EA44AD0AD22ED5BD2 /* GBPeerMedia.swift */; };
+		65B8CAFE4A1855FE01AC55B5 /* GBPeer+Param.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C771F1BA6213FBA9B582 /* GBPeer+Param.swift */; };
+		65B8CB3074C34C26BF94A81C /* ISocket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C1D4E3595F93BE5A7A98 /* ISocket.swift */; };
 		65B8CB4C5DBA6103913DF02C /* GBPeerJs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CCF436BFA68301C842E8 /* GBPeerJs.swift */; };
+		65B8CB7F602DDC885BCF14C3 /* PeerJsCandidateRequestEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C2A29B85B3906E4987A8 /* PeerJsCandidateRequestEntity.swift */; };
+		65B8CC10900AEB418986BD44 /* GBPeerJsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C4FFE0F6E4740E9CE2F9 /* GBPeerJsError.swift */; };
+		65B8CCA1C761325326F8FF53 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C1A75CF0456C61D837F3 /* Util.swift */; };
+		65B8CCDACD8BD5BE529B0FDA /* ServerMessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CF08D9E0ECA33AC699D5 /* ServerMessageType.swift */; };
+		65B8CFD9EA5CB39DD1BBE378 /* Socket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CCE3681B0DEBC9F084B3 /* Socket.swift */; };
 		7E08E373E182F46E53D1628C /* Pods_GBPeerJsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8E82687F68207AB6A57066 /* Pods_GBPeerJsTests.framework */; };
 		DAE3C726BE474CB1552C4672 /* Pods_GBPeerJs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F132D23E0D92A9E7C37C9BE /* Pods_GBPeerJs.framework */; };
 /* End PBXBuildFile section */
@@ -45,7 +63,25 @@
 		59D145902936F77900339673 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
 		59D145912936F79A00339673 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
 		59D145922936F81B00339673 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		65B8C0261BA46635AB51D3DD /* IConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IConnection.swift; sourceTree = "<group>"; };
+		65B8C1A75CF0456C61D837F3 /* Util.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Util.swift; sourceTree = "<group>"; };
+		65B8C1D4E3595F93BE5A7A98 /* ISocket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ISocket.swift; sourceTree = "<group>"; };
+		65B8C2A29B85B3906E4987A8 /* PeerJsCandidateRequestEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerJsCandidateRequestEntity.swift; sourceTree = "<group>"; };
+		65B8C4FFE0F6E4740E9CE2F9 /* GBPeerJsError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeerJsError.swift; sourceTree = "<group>"; };
+		65B8C5A7117260530071C134 /* PeerJsOfferRequestEntity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PeerJsOfferRequestEntity.swift; sourceTree = "<group>"; };
+		65B8C5AC2460D04AD49B9EBB /* Negotiator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Negotiator.swift; sourceTree = "<group>"; };
+		65B8C7067709C9F84D0E282D /* GBPeerMediaConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeerMediaConnection.swift; sourceTree = "<group>"; };
+		65B8C771F1BA6213FBA9B582 /* GBPeer+Param.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GBPeer+Param.swift"; sourceTree = "<group>"; };
+		65B8C7AEA53C90F75A44569E /* IPeer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IPeer.swift; sourceTree = "<group>"; };
+		65B8C90EA44AD0AD22ED5BD2 /* GBPeerMedia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeerMedia.swift; sourceTree = "<group>"; };
+		65B8CB1F6574536DBFB8EA36 /* ConnectionType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionType.swift; sourceTree = "<group>"; };
+		65B8CCE3681B0DEBC9F084B3 /* Socket.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Socket.swift; sourceTree = "<group>"; };
 		65B8CCF436BFA68301C842E8 /* GBPeerJs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeerJs.swift; sourceTree = "<group>"; };
+		65B8CDCBF1B44F6472F40D42 /* INegotiator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = INegotiator.swift; sourceTree = "<group>"; };
+		65B8CF08D9E0ECA33AC699D5 /* ServerMessageType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerMessageType.swift; sourceTree = "<group>"; };
+		65B8CF51783AC6F14E740DDE /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
+		65B8CF62DF40564AD6CDA643 /* GBPeerConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeerConnection.swift; sourceTree = "<group>"; };
+		65B8CFC5F5F0FA2F631F95E7 /* GBPeer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeer.swift; sourceTree = "<group>"; };
 		AE8E82687F68207AB6A57066 /* Pods_GBPeerJsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GBPeerJsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -98,6 +134,8 @@
 				593ED24B2935CFA9007BC45A /* GBPeerJs.docc */,
 				65B8CCF436BFA68301C842E8 /* GBPeerJs.swift */,
 				59D145852936F0B700339673 /* i18n */,
+				65B8C3C01777C617B2870414 /* Presentation */,
+				65B8C0DCB8618F6F42D835FC /* Common */,
 			);
 			path = GBPeerJs;
 			sourceTree = "<group>";
@@ -130,6 +168,78 @@
 			);
 			name = Pods;
 			path = ../../Pods;
+			sourceTree = "<group>";
+		};
+		65B8C0DCB8618F6F42D835FC /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				65B8C95227567148E1580F32 /* Error */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		65B8C1267B6849C669FA576D /* Interface */ = {
+			isa = PBXGroup;
+			children = (
+				65B8CDCBF1B44F6472F40D42 /* INegotiator.swift */,
+				65B8C0261BA46635AB51D3DD /* IConnection.swift */,
+				65B8C1D4E3595F93BE5A7A98 /* ISocket.swift */,
+				65B8C7AEA53C90F75A44569E /* IPeer.swift */,
+				65B8CF62DF40564AD6CDA643 /* GBPeerConnection.swift */,
+			);
+			path = Interface;
+			sourceTree = "<group>";
+		};
+		65B8C3C01777C617B2870414 /* Presentation */ = {
+			isa = PBXGroup;
+			children = (
+				65B8C833FEFD346E26F50DD6 /* Entity */,
+				65B8CB69DA6793F9C9B2D73D /* Util */,
+				65B8C1267B6849C669FA576D /* Interface */,
+				65B8CE5F844B0B29849F0A23 /* Implementation */,
+			);
+			path = Presentation;
+			sourceTree = "<group>";
+		};
+		65B8C833FEFD346E26F50DD6 /* Entity */ = {
+			isa = PBXGroup;
+			children = (
+				65B8C2A29B85B3906E4987A8 /* PeerJsCandidateRequestEntity.swift */,
+				65B8C5A7117260530071C134 /* PeerJsOfferRequestEntity.swift */,
+			);
+			path = Entity;
+			sourceTree = "<group>";
+		};
+		65B8C95227567148E1580F32 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				65B8C4FFE0F6E4740E9CE2F9 /* GBPeerJsError.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
+		65B8CB69DA6793F9C9B2D73D /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				65B8CB1F6574536DBFB8EA36 /* ConnectionType.swift */,
+				65B8C90EA44AD0AD22ED5BD2 /* GBPeerMedia.swift */,
+				65B8CF08D9E0ECA33AC699D5 /* ServerMessageType.swift */,
+				65B8C1A75CF0456C61D837F3 /* Util.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		65B8CE5F844B0B29849F0A23 /* Implementation */ = {
+			isa = PBXGroup;
+			children = (
+				65B8CF51783AC6F14E740DDE /* Logger.swift */,
+				65B8C5AC2460D04AD49B9EBB /* Negotiator.swift */,
+				65B8C7067709C9F84D0E282D /* GBPeerMediaConnection.swift */,
+				65B8CCE3681B0DEBC9F084B3 /* Socket.swift */,
+				65B8CFC5F5F0FA2F631F95E7 /* GBPeer.swift */,
+				65B8C771F1BA6213FBA9B582 /* GBPeer+Param.swift */,
+			);
+			path = Implementation;
 			sourceTree = "<group>";
 		};
 		878E0B7A7ACFFF4724765B96 /* Frameworks */ = {
@@ -363,6 +473,24 @@
 			files = (
 				593ED24C2935CFA9007BC45A /* GBPeerJs.docc in Sources */,
 				65B8CB4C5DBA6103913DF02C /* GBPeerJs.swift in Sources */,
+				65B8CB7F602DDC885BCF14C3 /* PeerJsCandidateRequestEntity.swift in Sources */,
+				65B8C093AA83EF3EF7335BA9 /* PeerJsOfferRequestEntity.swift in Sources */,
+				65B8C052466638CD0BC35EF4 /* ConnectionType.swift in Sources */,
+				65B8C8D2E622D1E1D26C0E16 /* GBPeerMedia.swift in Sources */,
+				65B8CCDACD8BD5BE529B0FDA /* ServerMessageType.swift in Sources */,
+				65B8CCA1C761325326F8FF53 /* Util.swift in Sources */,
+				65B8CC10900AEB418986BD44 /* GBPeerJsError.swift in Sources */,
+				65B8C47ABAB76D2614132C8A /* INegotiator.swift in Sources */,
+				65B8C77C3A00C25BB46A1F18 /* IConnection.swift in Sources */,
+				65B8CB3074C34C26BF94A81C /* ISocket.swift in Sources */,
+				65B8C66F5298215B6D14DBA8 /* IPeer.swift in Sources */,
+				65B8C0204542A2801106BA47 /* GBPeerConnection.swift in Sources */,
+				65B8C071DD87580BCFF2F6AE /* Logger.swift in Sources */,
+				65B8C8C96435E8AEC51BD80E /* Negotiator.swift in Sources */,
+				65B8C8571E30B759EF587E0A /* GBPeerMediaConnection.swift in Sources */,
+				65B8CFD9EA5CB39DD1BBE378 /* Socket.swift in Sources */,
+				65B8C0E2BF683F4D019177A5 /* GBPeer.swift in Sources */,
+				65B8CAFE4A1855FE01AC55B5 /* GBPeer+Param.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,7 +579,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -509,7 +637,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -535,7 +663,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -568,7 +696,7 @@
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -596,7 +724,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 68M5L3KNEH;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.geniebook.GBPeerJsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -618,7 +746,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 68M5L3KNEH;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.geniebook.GBPeerJsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

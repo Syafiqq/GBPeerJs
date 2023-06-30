@@ -10,6 +10,9 @@ end
 
 def lib_pods
   pod 'LanguageManager-iOS', '~> 1.2.6-beta.2'
+  pod 'GBWebRTC', '= 114.0.5735.124'
+  pod 'Starscream', '~> 3'
+  pod 'RxSwift', '~> 5'
 end
 
 def lib_test_pods
@@ -24,7 +27,7 @@ end
 
 target 'GBPeerJs' do
   project 'Sources/GBPeerJs/GBPeerJs.xcodeproj'
-  platform :ios, '11.0'
+  platform :ios, '11.2'
 
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
@@ -46,7 +49,7 @@ end
 
 target 'GBPeerJsExample' do
   project 'Examples/GBPeerJsExample/GBPeerJsExample.xcodeproj'
-  platform :ios, '11.0'
+  platform :ios, '11.2'
 
   # Comment the next line if you don't want to use dynamic frameworks
   use_frameworks!
@@ -75,7 +78,7 @@ post_install do |installer|
       when "Cuckoo", "Quick", "Nimble"
         config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
       else
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.0'
+        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '11.2'
       end
     end
   end

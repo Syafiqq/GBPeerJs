@@ -20,6 +20,8 @@ class ViewControllerCallAsStudent: UIViewController {
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+
+        trackLifetime()
     }
 
     required init(coder: NSCoder) {
@@ -153,5 +155,13 @@ extension ViewControllerCallAsStudent: GBPeerMediaConnectionDelegate {
 
     func mediaConnection(_: GBPeerMediaConnection, onIceStateChanged: RTCIceConnectionState) {
         print("CurrentLog - peerJsMedia - onIceStateChanged - \(onIceStateChanged)")
+    }
+}
+
+import LifetimeTracker
+
+extension ViewControllerCallAsStudent: LifetimeTrackable {
+    public class var lifetimeConfiguration: LifetimeConfiguration {
+        LifetimeConfiguration(maxCount: 1)
     }
 }

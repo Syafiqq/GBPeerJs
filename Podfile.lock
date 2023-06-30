@@ -2,12 +2,6 @@ PODS:
   - Cuckoo (1.10.3):
     - Cuckoo/Swift (= 1.10.3)
   - Cuckoo/Swift (1.10.3)
-  - GBPeerJs (1.4.7):
-    - GBWebRTC (= 114.0.5735.124)
-    - LanguageManager-iOS (~> 1.2.6-beta.2)
-    - LifetimeTracker (= 1.7.1)
-    - RxSwift (~> 5)
-    - Starscream (~> 3)
   - GBWebRTC (114.0.5735.124)
   - LanguageManager-iOS (1.2.6-beta.2)
   - LifetimeTracker (1.7.1)
@@ -19,7 +13,6 @@ PODS:
 
 DEPENDENCIES:
   - Cuckoo (~> 1.10)
-  - GBPeerJs (from `./`)
   - GBWebRTC (= 114.0.5735.124)
   - LanguageManager-iOS (~> 1.2.6-beta.2)
   - LifetimeTracker (= 1.7.1)
@@ -42,13 +35,8 @@ SPEC REPOS:
     - Starscream
     - SwiftLint
 
-EXTERNAL SOURCES:
-  GBPeerJs:
-    :path: "./"
-
 SPEC CHECKSUMS:
   Cuckoo: 930598bd4ae95860c658b3eea30903d946ebef36
-  GBPeerJs: fde782ad658885965ae34943cf63f79ad2a4e97f
   GBWebRTC: 9a6c3809e5dabfeeee757a024761d725dfedc065
   LanguageManager-iOS: 5fac7a37b621cf2841d136ad6c46f21f15bb4de1
   LifetimeTracker: 12f58bfab48593408fb4cab9d9050e319deb8299
@@ -58,6 +46,6 @@ SPEC CHECKSUMS:
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
   SwiftLint: 76ec9c62ad369cff2937474cb34c9af3fa270b7b
 
-PODFILE CHECKSUM: c0b250cf23cb7fef0ecbf2b4ec58962499faec06
+PODFILE CHECKSUM: acde968a99fa7157736ec26c8de62e43b833f9e5
 
 COCOAPODS: 1.12.1

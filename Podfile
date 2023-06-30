@@ -13,6 +13,7 @@ def lib_pods
   pod 'WebRTC-SDK', '= 129.6668.01-beta.1'
   pod 'Starscream', '~> 4'
   pod 'RxSwift', '~> 6'
+  pod 'LifetimeTracker', '= 1.8.4'
 end
 
 def lib_test_pods

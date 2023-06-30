@@ -23,7 +23,6 @@ def lib_test_pods
 end
 
 def example_lib_pods
-  lib_pods
 end
 
 target 'GBPeerJs' do

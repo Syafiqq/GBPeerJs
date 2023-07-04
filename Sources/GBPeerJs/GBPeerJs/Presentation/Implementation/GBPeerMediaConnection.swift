@@ -7,10 +7,10 @@ import WebRTC
 import RxSwift
 
 public protocol GBPeerMediaConnectionDelegate: AnyObject {
-    func mediaConnection(_: GBPeerMediaConnection, onRemoteStreamAdded: RTCMediaStream)
-    func mediaConnection(_: GBPeerMediaConnection, onClose: ())
-    func mediaConnection(_: GBPeerMediaConnection, onError: Error)
-    func mediaConnection(_: GBPeerMediaConnection, onIceStateChanged: RTCIceConnectionState)
+    func mediaConnection(_ sender: GBPeerMediaConnection, onRemoteStreamAdded: RTCMediaStream)
+    func mediaConnection(_ sender: GBPeerMediaConnection, onClose: ())
+    func mediaConnection(_ sender: GBPeerMediaConnection, onError: Error)
+    func mediaConnection(_ sender: GBPeerMediaConnection, onIceStateChanged: RTCIceConnectionState)
 }
 
 public class GBPeerMediaConnection: GBPeerConnection {

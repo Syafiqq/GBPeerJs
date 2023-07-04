@@ -225,7 +225,9 @@ private extension Negotiator {
         }*/
 
         if peerConnectionNotClosed || dataChannelNotClosed {
-            peerConnection?.close()
+            DispatchQueue.main.async {
+                peerConnection?.close()
+            }
         }
     }
 
@@ -782,6 +784,7 @@ extension Negotiator: RTCPeerConnectionDelegate {
     }
 
     func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceConnectionState) {
+        logger.log("peerConnection - didChange -\(newState)")
         switch peerConnection.iceConnectionState {
         case .failed:
             logger.log("iceConnectionState is failed, closing connections to \(connection?.peer ?? "-")")

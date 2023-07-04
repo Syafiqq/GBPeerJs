@@ -90,7 +90,6 @@ private extension GBPeer {
                 key: options.key ?? kKeyDefault,
                 pingInterval: options.pingInterval ?? kPingIntervalDefault
         )
-        socket.delegate = self
 
         return socket
     }

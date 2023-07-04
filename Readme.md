@@ -26,7 +26,7 @@ with pod
 ```ruby
 source 'https://bitbucket.org/beautyfu/ios-pod-specs.git'
 
-pod GBPeerJS
+pod GBPeerJs
 ```
 
 ## Usage

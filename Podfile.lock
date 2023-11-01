@@ -7,7 +7,7 @@ PODS:
   - LifetimeTracker (1.7.1)
   - Nimble (12.0.1)
   - Quick (6.1.0)
-  - RxSwift (5.1.3)
+  - RxSwift (6.6.0)
   - Starscream (3.1.1)
   - SwiftLint (0.52.3)
 
@@ -18,7 +18,7 @@ DEPENDENCIES:
   - LifetimeTracker (= 1.7.1)
   - Nimble (~> 12.0)
   - Quick (~> 6.1)
-  - RxSwift (~> 5)
+  - RxSwift (~> 6)
   - Starscream (~> 3)
   - SwiftLint (~> 0.51)
 
@@ -42,10 +42,10 @@ SPEC CHECKSUMS:
   LifetimeTracker: 12f58bfab48593408fb4cab9d9050e319deb8299
   Nimble: b279b3ca9e094508778aab5c76417be158d3ad04
   Quick: 6676ffb409bf04abba2ff23902af2407bfc6ac90
-  RxSwift: 915abbdfb62214aa89ccd0b194d44fb478019b27
+  RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
   SwiftLint: 76ec9c62ad369cff2937474cb34c9af3fa270b7b
 
-PODFILE CHECKSUM: 61b50dbf4154fd536fb3dbca1dfd6c6a7544cd8e
+PODFILE CHECKSUM: b868c9f805e37314a40d1e4203bd2d2c80c60305
 
 COCOAPODS: 1.12.1

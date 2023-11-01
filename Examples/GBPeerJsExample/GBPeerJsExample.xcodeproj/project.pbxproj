@@ -686,7 +686,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.8-beta.1;
+				MARKETING_VERSION = 1.4.8-beta.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.geniebook.GBPeerJsExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -719,7 +719,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.8-beta.1;
+				MARKETING_VERSION = 1.4.8-beta.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.geniebook.GBPeerJsExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -742,7 +742,7 @@
 				DEVELOPMENT_TEAM = 68M5L3KNEH;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
-				MARKETING_VERSION = 1.4.8-beta.1;
+				MARKETING_VERSION = 1.4.8-beta.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.geniebook.GBPeerJsExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -766,7 +766,7 @@
 				DEVELOPMENT_TEAM = 68M5L3KNEH;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
-				MARKETING_VERSION = 1.4.8-beta.1;
+				MARKETING_VERSION = 1.4.8-beta.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.geniebook.GBPeerJsExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -789,7 +789,7 @@
 				DEVELOPMENT_TEAM = 68M5L3KNEH;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
-				MARKETING_VERSION = 1.4.8-beta.1;
+				MARKETING_VERSION = 1.4.8-beta.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.geniebook.GBPeerJsExampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -812,7 +812,7 @@
 				DEVELOPMENT_TEAM = 68M5L3KNEH;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
-				MARKETING_VERSION = 1.4.8-beta.1;
+				MARKETING_VERSION = 1.4.8-beta.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.geniebook.GBPeerJsExampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

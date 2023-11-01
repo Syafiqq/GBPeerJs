@@ -234,7 +234,7 @@ private extension Negotiator {
         func createOfferAsync(mediaConstraint: RTCMediaConstraints) -> Single<RTCSessionDescription> {
             Single.create { [weak self] observer in
                 guard let self = self else {
-                    observer(.error(RxError.disposed(object: Self.self)))
+                    observer(.failure(RxError.disposed(object: Self.self)))
                     return Disposables.create()
                 }
 
@@ -243,22 +243,22 @@ private extension Negotiator {
                             for: mediaConstraint,
                             completionHandler: { [weak self] description, error in
                                 if self == nil {
-                                    observer(.error(RxError.disposed(object: Self.self)))
+                                    observer(.failure(RxError.disposed(object: Self.self)))
                                 } else if let error = error {
-                                    observer(.error(
+                                    observer(.failure(
                                             GBPeerJsError.WebRtcLocalOfferErrorReason.createLocalOfferFailed(error)
                                     ))
                                 } else if let description = description {
                                     observer(.success(description))
                                 } else {
-                                    observer(.error(
+                                    observer(.failure(
                                             GBPeerJsError.WebRtcLocalOfferErrorReason.createLocalOfferFailed(nil)
                                     ))
                                 }
                             }
                     )
                 } else {
-                    observer(.error(GBPeerJsError.WebRtcCommonErrorReason.unknownPeerConnection))
+                    observer(.failure(GBPeerJsError.WebRtcCommonErrorReason.unknownPeerConnection))
                 }
                 return Disposables.create()
             }
@@ -403,7 +403,7 @@ private extension Negotiator {
         func createAnswerAsync(mediaConstraint: RTCMediaConstraints) -> Single<RTCSessionDescription> {
             Single.create { [weak self] observer in
                 guard let self = self else {
-                    observer(.error(RxError.disposed(object: Self.self)))
+                    observer(.failure(RxError.disposed(object: Self.self)))
                     return Disposables.create()
                 }
 
@@ -412,22 +412,22 @@ private extension Negotiator {
                             for: mediaConstraint,
                             completionHandler: { [weak self] description, error in
                                 if self == nil {
-                                    observer(.error(RxError.disposed(object: Self.self)))
+                                    observer(.failure(RxError.disposed(object: Self.self)))
                                 } else if let error = error {
-                                    observer(.error(
+                                    observer(.failure(
                                             GBPeerJsError.WebRtcLocalAnswerErrorReason.createLocalAnswerFailed(error)
                                     ))
                                 } else if let description = description {
                                     observer(.success(description))
                                 } else {
-                                    observer(.error(
+                                    observer(.failure(
                                             GBPeerJsError.WebRtcLocalAnswerErrorReason.createLocalAnswerFailed(nil)
                                     ))
                                 }
                             }
                     )
                 } else {
-                    observer(.error(GBPeerJsError.WebRtcCommonErrorReason.unknownPeerConnection))
+                    observer(.failure(GBPeerJsError.WebRtcCommonErrorReason.unknownPeerConnection))
                 }
                 return Disposables.create()
             }

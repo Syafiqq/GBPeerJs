@@ -20,7 +20,7 @@ PeerJs Swift port
 
   s.dependency 'LanguageManager-iOS', '~> 1.2.6-beta.2'
   s.dependency 'GBWebRTC', '= 114.0.5735.124'
-  s.dependency 'RxSwift', '~> 5'
+  s.dependency 'RxSwift', '~> 6'
   s.dependency 'Starscream', '~> 3'
   s.dependency 'LifetimeTracker', '= 1.7.1'
 end

@@ -2,57 +2,49 @@ PODS:
   - Cuckoo (1.10.3):
     - Cuckoo/Swift (= 1.10.3)
   - Cuckoo/Swift (1.10.3)
-  - GBPeerJs (1.4.8-beta.2):
-    - GBWebRTC (= 114.0.5735.124)
-    - LanguageManager-iOS (~> 1.2.6-beta.2)
-    - RxSwift (~> 6)
-    - Starscream (~> 3)
-  - GBWebRTC (114.0.5735.124)
-  - LanguageManager-iOS (1.2.6-beta.2)
-  - Nimble (12.0.1)
+  - LanguageManager-iOS (1.2.7)
+  - LifetimeTracker (1.7.1)
+  - Nimble (12.3.0)
   - Quick (6.1.0)
   - RxSwift (6.6.0)
-  - Starscream (3.1.1)
-  - SwiftLint (0.52.3)
+  - Starscream (4.0.6)
+  - SwiftLint (0.54.0)
+  - WebRTC-SDK (114.5735.08)
 
 DEPENDENCIES:
   - Cuckoo (~> 1.10)
-  - GBPeerJs (from `./`)
-  - GBWebRTC (= 114.0.5735.124)
   - LanguageManager-iOS (~> 1.2.6-beta.2)
+  - LifetimeTracker (= 1.7.1)
   - Nimble (~> 12.0)
   - Quick (~> 6.1)
   - RxSwift (~> 6)
-  - Starscream (~> 3)
+  - Starscream (~> 4)
   - SwiftLint (~> 0.51)
+  - WebRTC-SDK (= 114.5735.08)
 
 SPEC REPOS:
-  https://bitbucket.org/beautyfu/ios-pod-specs.git:
-    - GBWebRTC
-    - LanguageManager-iOS
   trunk:
     - Cuckoo
+    - LanguageManager-iOS
+    - LifetimeTracker
     - Nimble
     - Quick
     - RxSwift
     - Starscream
     - SwiftLint
-
-EXTERNAL SOURCES:
-  GBPeerJs:
-    :path: "./"
+    - WebRTC-SDK
 
 SPEC CHECKSUMS:
   Cuckoo: 930598bd4ae95860c658b3eea30903d946ebef36
-  GBPeerJs: c0eb7d3b377ab5d623f981f6d75ffae903c724a0
-  GBWebRTC: 9a6c3809e5dabfeeee757a024761d725dfedc065
-  LanguageManager-iOS: 5fac7a37b621cf2841d136ad6c46f21f15bb4de1
-  Nimble: b279b3ca9e094508778aab5c76417be158d3ad04
+  LanguageManager-iOS: 6b2dbb3793445827114708f0759b76e96932d7c8
+  LifetimeTracker: 12f58bfab48593408fb4cab9d9050e319deb8299
+  Nimble: f8a8219d16f176429b951e8f7e72df5c23ceddc0
   Quick: 6676ffb409bf04abba2ff23902af2407bfc6ac90
   RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
-  Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
-  SwiftLint: 76ec9c62ad369cff2937474cb34c9af3fa270b7b
+  Starscream: fb2c4510bebf908c62bd383bcf05e673720e91fd
+  SwiftLint: c1de071d9d08c8aba837545f6254315bc900e211
+  WebRTC-SDK: c24d2a6c9f571f2ed42297cb8ffba9557093142b
 
-PODFILE CHECKSUM: be66b5c5e49b3b160255dcec10101c9c7d09aa0c
+PODFILE CHECKSUM: c67f6b465ba1d217a220b4525b1e14b72bc5e521
 
-COCOAPODS: 1.12.1
+COCOAPODS: 1.14.3

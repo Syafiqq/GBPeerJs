@@ -75,12 +75,7 @@ end
 post_install do |installer|
   installer.pods_project.targets.each do |t|
     t.build_configurations.each do |config|
-      case t.name
-      when "Cuckoo", "Quick", "Nimble"
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
-      else
-        config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
-      end
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '13.0'
     end
   end
 end

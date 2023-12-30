@@ -374,6 +374,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"$(PODS_PODFILE_DIR_PATH)/Sources/GBPeerJs/GBPeerJs",
 			);
 			name = Linting;
 			outputFileListPaths = (
@@ -393,6 +394,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"$(PODS_PODFILE_DIR_PATH)/Sources/GBPeerJs/GBPeerJsTests",
 			);
 			name = Linting;
 			outputFileListPaths = (

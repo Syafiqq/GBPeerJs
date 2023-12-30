@@ -8,7 +8,7 @@ import WebRTC
 public struct GBPeerBuilder {
     let peerFactory: RTCPeerConnectionFactory
 
-    // @swiftlint:disable:next unneeded_synthesized_initializer
+    // swiftlint:disable:next unneeded_synthesized_initializer
     internal init(peerFactory: RTCPeerConnectionFactory) {
         self.peerFactory = peerFactory
     }

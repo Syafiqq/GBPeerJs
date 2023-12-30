@@ -227,6 +227,34 @@ extension Socket: WebSocketDelegate {
 
         delegate?.socketJs(onNewMessage: data)
     }
+
+    // swiftlint:disable:next cyclomatic_complexity
+    func didReceive(event: Starscream.WebSocketEvent, client: Starscream.WebSocketClient) {
+        switch event {
+        case .connected(let headers):
+            websocketDidConnect(socket: client)
+        case .disconnected:
+            websocketDidDisconnect(socket: client, error: nil)
+        case .text(let string):
+            websocketDidReceiveMessage(socket: client, text: string)
+        case .binary(let data):
+            websocketDidReceiveData(socket: client, data: data)
+        case .ping:
+            break
+        case .pong:
+            break
+        case .viabilityChanged:
+            break
+        case .reconnectSuggested:
+            break
+        case .cancelled:
+            break
+        case .error(let error):
+            websocketDidDisconnect(socket: client, error: error)
+        case .peerClosed:
+           break
+        }
+    }
 }
 
 import LifetimeTracker

@@ -10,7 +10,7 @@ end
 
 def lib_pods
   pod 'LanguageManager-iOS', '~> 1.2.6-beta.2'
-  pod 'GBWebRTC', '= 114.0.5735.124'
+  pod 'WebRTC-SDK', '= 114.5735.08'
   pod 'Starscream', '~> 3'
   pod 'RxSwift', '~> 6'
   pod 'LifetimeTracker', '= 1.7.1'

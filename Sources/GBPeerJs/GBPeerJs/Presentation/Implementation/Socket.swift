@@ -80,7 +80,12 @@ private extension Socket {
         var request = URLRequest(url: url)
         request.timeoutInterval = 10
 
-        let socket = WebSocket(request: request)
+        let socket = WebSocket(
+            request: request,
+            certPinner: FoundationSecurity(),
+            compressionHandler: nil,
+            useCustomEngine: false
+        )
         disconnected = false
         socket.delegate = self
 

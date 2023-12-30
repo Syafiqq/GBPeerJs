@@ -755,7 +755,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = A26519B706EE68860F1FFA54 /* Pods-GBPeerJsExampleTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -779,7 +778,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 000691E42DCB89CE2C2240A0 /* Pods-GBPeerJsExampleTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -803,7 +801,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 716D753FD77C149DDE6A5FE1 /* Pods-GBPeerJsExample-GBPeerJsExampleUITests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 68M5L3KNEH;
@@ -826,7 +823,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = BCCB58961561174508C7E298 /* Pods-GBPeerJsExample-GBPeerJsExampleUITests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 68M5L3KNEH;

@@ -31,7 +31,7 @@
 		65B8CCA1C761325326F8FF53 /* Util.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C1A75CF0456C61D837F3 /* Util.swift */; };
 		65B8CCDACD8BD5BE529B0FDA /* ServerMessageType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CF08D9E0ECA33AC699D5 /* ServerMessageType.swift */; };
 		65B8CFD9EA5CB39DD1BBE378 /* Socket.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CCE3681B0DEBC9F084B3 /* Socket.swift */; };
-		7E08E373E182F46E53D1628C /* Pods_GBPeerJsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AE8E82687F68207AB6A57066 /* Pods_GBPeerJsTests.framework */; };
+		CB2B5B0101786F1C947E98F5 /* Pods_GBPeerJs_GBPeerJsTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE4E1BA5014F9E69E009EF21 /* Pods_GBPeerJs_GBPeerJsTests.framework */; };
 		DAE3C726BE474CB1552C4672 /* Pods_GBPeerJs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F132D23E0D92A9E7C37C9BE /* Pods_GBPeerJs.framework */; };
 /* End PBXBuildFile section */
 
@@ -82,7 +82,7 @@
 		65B8CF51783AC6F14E740DDE /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		65B8CF62DF40564AD6CDA643 /* GBPeerConnection.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeerConnection.swift; sourceTree = "<group>"; };
 		65B8CFC5F5F0FA2F631F95E7 /* GBPeer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeer.swift; sourceTree = "<group>"; };
-		AE8E82687F68207AB6A57066 /* Pods_GBPeerJsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GBPeerJsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DE4E1BA5014F9E69E009EF21 /* Pods_GBPeerJs_GBPeerJsTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GBPeerJs_GBPeerJsTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,7 +99,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				593ED2522935CFA9007BC45A /* GBPeerJs.framework in Frameworks */,
-				7E08E373E182F46E53D1628C /* Pods_GBPeerJsTests.framework in Frameworks */,
+				CB2B5B0101786F1C947E98F5 /* Pods_GBPeerJs_GBPeerJsTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,7 +246,7 @@
 			isa = PBXGroup;
 			children = (
 				3F132D23E0D92A9E7C37C9BE /* Pods_GBPeerJs.framework */,
-				AE8E82687F68207AB6A57066 /* Pods_GBPeerJsTests.framework */,
+				DE4E1BA5014F9E69E009EF21 /* Pods_GBPeerJs_GBPeerJsTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -314,7 +314,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1410;
-				LastUpgradeCheck = 1410;
+				LastUpgradeCheck = 1510;
 				TargetAttributes = {
 					593ED2462935CFA9007BC45A = {
 						CreatedOnToolsVersion = 14.1;
@@ -374,6 +374,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"$(PODS_PODFILE_DIR_PATH)/Sources/GBPeerJs/GBPeerJs",
 			);
 			name = Linting;
 			outputFileListPaths = (
@@ -393,6 +394,7 @@
 			inputFileListPaths = (
 			);
 			inputPaths = (
+				"$(PODS_PODFILE_DIR_PATH)/Sources/GBPeerJs/GBPeerJsTests",
 			);
 			name = Linting;
 			outputFileListPaths = (
@@ -440,7 +442,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-GBPeerJsTests-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-GBPeerJs-GBPeerJsTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -453,15 +455,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GBPeerJsTests/Pods-GBPeerJsTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-GBPeerJs-GBPeerJsTests/Pods-GBPeerJs-GBPeerJsTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GBPeerJsTests/Pods-GBPeerJsTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-GBPeerJs-GBPeerJsTests/Pods-GBPeerJs-GBPeerJsTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GBPeerJsTests/Pods-GBPeerJsTests-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GBPeerJs-GBPeerJsTests/Pods-GBPeerJs-GBPeerJsTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -565,6 +567,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -579,7 +582,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -629,6 +632,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -637,7 +641,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -653,6 +657,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 147FA6809C4954FF37377822 /* Pods-GBPeerJs.debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -660,16 +665,19 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.4.7;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = com.geniebook.GBPeerJs;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -686,6 +694,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 09412B351DA2C7831D41485B /* Pods-GBPeerJs.release.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
@@ -693,16 +702,19 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
 				MARKETING_VERSION = 1.4.7;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu11 gnu++20";
 				PRODUCT_BUNDLE_IDENTIFIER = com.geniebook.GBPeerJs;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
@@ -717,14 +729,13 @@
 		};
 		593ED25F2935CFA9007BC45A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3412C19EE79C2A33D01FB623 /* Pods-GBPeerJsTests.debug.xcconfig */;
+			baseConfigurationReference = 12C2E91F1D62E48C76012D03 /* Pods-GBPeerJs-GBPeerJsTests.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 68M5L3KNEH;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.4.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.geniebook.GBPeerJsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -739,14 +750,13 @@
 		};
 		593ED2602935CFA9007BC45A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 07E60423242738625B08B5F7 /* Pods-GBPeerJsTests.release.xcconfig */;
+			baseConfigurationReference = 5545F781B442D5BFF3370D20 /* Pods-GBPeerJs-GBPeerJsTests.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 68M5L3KNEH;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.4.7;
 				PRODUCT_BUNDLE_IDENTIFIER = com.geniebook.GBPeerJsTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

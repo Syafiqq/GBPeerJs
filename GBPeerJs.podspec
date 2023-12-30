@@ -12,7 +12,7 @@ PeerJs Swift port
 
   s.requires_arc            = true
 
-  s.ios.deployment_target   = '11.2'
+  s.ios.deployment_target   = '13.0'
 
   s.source_files            = 'Sources/GBPeerJs/GBPeerJs/**/*.swift'
 

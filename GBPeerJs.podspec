@@ -1,6 +1,7 @@
 Pod::Spec.new do |s|
   s.name                    = "GBPeerJs"
   s.version                 = "1.4.8-beta.2"
+#  s.peer_js_version         = "1.4.7"
   s.summary                 = "Summary"
   s.description             = <<-DESC
 PeerJs Swift port

@@ -5,12 +5,12 @@ workspace 'GBPeerJs'
 # Uncomment the next line to define a global platform for your project
 
 def dev_pods
-  pod 'SwiftLint', '~> 0.51'
+  pod 'SwiftLint', '~> 0.57'
 end
 
 def lib_pods
-  pod 'LanguageManager-iOS', '~> 1.2.6-beta.2'
-  pod 'WebRTC-SDK', '= 114.5735.08'
+  pod 'LanguageManager-iOS', '~> 1.2.9-beta.1'
+  pod 'WebRTC-SDK', '= 125.6422.04'
   pod 'Starscream', '~> 4'
   pod 'RxSwift', '~> 6'
 end

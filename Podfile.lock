@@ -9,7 +9,7 @@ PODS:
   - RxSwift (6.6.0)
   - Starscream (4.0.6)
   - SwiftLint (0.57.0)
-  - WebRTC-SDK (125.6422.04)
+  - WebRTC-SDK (129.6668.01-beta.1)
 
 DEPENDENCIES:
   - Cuckoo (~> 1.10)
@@ -20,11 +20,12 @@ DEPENDENCIES:
   - RxSwift (~> 6)
   - Starscream (~> 4)
   - SwiftLint (~> 0.57)
-  - WebRTC-SDK (= 125.6422.04)
+  - WebRTC-SDK (= 129.6668.01-beta.1)
 
 SPEC REPOS:
   https://bitbucket.org/beautyfu/ios-pod-specs.git:
     - LifetimeTracker
+    - WebRTC-SDK
   trunk:
     - Cuckoo
     - LanguageManager-iOS
@@ -33,7 +34,6 @@ SPEC REPOS:
     - RxSwift
     - Starscream
     - SwiftLint
-    - WebRTC-SDK
 
 SPEC CHECKSUMS:
   Cuckoo: 930598bd4ae95860c658b3eea30903d946ebef36
@@ -44,8 +44,8 @@ SPEC CHECKSUMS:
   RxSwift: a4b44f7d24599f674deebd1818eab82e58410632
   Starscream: fb2c4510bebf908c62bd383bcf05e673720e91fd
   SwiftLint: eb47480d47c982481592c195c221d11013a679cc
-  WebRTC-SDK: c3d69a87e7185fad3568f6f3cff7c9ac5890acf3
+  WebRTC-SDK: 4d7babaa3b31762a391e4dc25c4ffad381fd9b8c
 
-PODFILE CHECKSUM: 441c176dbc34cc1c14a670428acd94b81f26e9d1
+PODFILE CHECKSUM: 3cf9b3ba10e8bb2733757f54879a89ceb645b125
 
 COCOAPODS: 1.15.2

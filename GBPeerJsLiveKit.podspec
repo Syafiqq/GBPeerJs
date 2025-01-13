@@ -1,5 +1,5 @@
 Pod::Spec.new do |s|
-  s.name                    = "GBPeerJSLiveKit"
+  s.name                    = "GBPeerJsLiveKit"
   s.version                 = "2.0.5"
 #  s.peer_js_version         = "1.4.7"
   s.summary                 = "Summary"

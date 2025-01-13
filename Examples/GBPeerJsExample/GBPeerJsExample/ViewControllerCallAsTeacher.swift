@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import WebRTC
+import LiveKitWebRTC
 import GBPeerJs
 
 class ViewControllerCallAsTeacher: UIViewController {
@@ -14,7 +14,7 @@ class ViewControllerCallAsTeacher: UIViewController {
     let studentId = "101843"
     let onlineLessonId = "22233"
     let meetingRoonmId = "2555000000022233"
-    var iceServers: [RTCIceServer] = []
+    var iceServers: [LKRTCIceServer] = []
     private var peer: GBPeer?
     private var media: GBPeerMediaConnection?
 
@@ -83,8 +83,8 @@ class ViewControllerCallAsTeacher: UIViewController {
         self.media = media
         let peer = "gbt-\(onlineLessonId)"
 
-        let constraint = RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
-        let factory = RTCPeerConnectionFactory(encoderFactory: nil, decoderFactory: nil)
+        let constraint = LKRTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
+        let factory = LKRTCPeerConnectionFactory(encoderFactory: nil, decoderFactory: nil)
         let peerFactory: GBPeerBuilder = GBPeerMedia.getMediaBuilder(peerFactoryBuilder: { factory })
         let peerBuilder = GBPeerConnectionBuilder(
                 peerBuilder: peerFactory,
@@ -138,7 +138,7 @@ extension ViewControllerCallAsTeacher: GBPeerDelegate {
 }
 
 extension ViewControllerCallAsTeacher: GBPeerMediaConnectionDelegate {
-    func mediaConnection(_: GBPeerMediaConnection, onRemoteStreamAdded: RTCMediaStream) {
+    func mediaConnection(_: GBPeerMediaConnection, onRemoteStreamAdded: LKRTCMediaStream) {
         print("CurrentLog - peerJsMedia - onRemoteStreamAdded")
     }
 

@@ -3,7 +3,7 @@
 //
 
 import Foundation
-import WebRTC
+import LiveKitWebRTC
 
 public struct GBPeerBuilder {
     let peerFactory: RTCPeerConnectionFactory

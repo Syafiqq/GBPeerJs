@@ -3,7 +3,7 @@
 //
 
 import Foundation
-import WebRTC
+import LiveKitWebRTC
 import RxSwift
 
 class Negotiator: NSObject, INegotiator {

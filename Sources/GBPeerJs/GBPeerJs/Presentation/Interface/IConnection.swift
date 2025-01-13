@@ -3,7 +3,7 @@
 //
 
 import Foundation
-import WebRTC
+import LiveKitWebRTC
 
 protocol IConnection: AnyObject {
     var peer: String { get }

@@ -3,7 +3,7 @@
 //
 
 import Foundation
-import WebRTC
+import LiveKitWebRTC
 
 enum IceServerSource {
     case coturn

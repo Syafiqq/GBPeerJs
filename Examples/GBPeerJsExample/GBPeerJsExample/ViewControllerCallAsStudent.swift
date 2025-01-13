@@ -6,7 +6,7 @@
 //
 
 import UIKit
-import WebRTC
+import LiveKitWebRTC
 import GBPeerJs
 
 class ViewControllerCallAsStudent: UIViewController {

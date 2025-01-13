@@ -8,7 +8,7 @@ PeerJs Swift port
   s.homepage                = "https://geniebook.com"
   s.license                 = 'MIT'
   s.author                  = { "Geniebook" => "developer@geniebook.com" }
-  s.source                  = { :git => "https://bitbucket.org/beautyfu/ios-gb-peer-js.git", :tag => s.version.to_s }
+  s.source                  = { :git => "https://bitbucket.org/beautyfu/ios-gb-peer-js.git", :tag => "livekit-#{s.version.to_s}" }
 
   s.requires_arc            = true
 

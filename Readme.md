@@ -116,7 +116,7 @@ func mediaConnection(_: GBPeerMediaConnection, onClose: ()) {
 func mediaConnection(_: GBPeerMediaConnection, onError: Error) {
 }
 
-func mediaConnection(_: GBPeerMediaConnection, onIceStateChanged: RTCIceConnectionState) {
+func mediaConnection(_: GBPeerMediaConnection, onIceStateChanged: LKRTCIceConnectionState) {
 }
 ```
 
@@ -183,7 +183,7 @@ func mediaConnection(_: GBPeerMediaConnection, onClose: ()) {
 func mediaConnection(_: GBPeerMediaConnection, onError: Error) {
 }
 
-func mediaConnection(_: GBPeerMediaConnection, onIceStateChanged: RTCIceConnectionState) {
+func mediaConnection(_: GBPeerMediaConnection, onIceStateChanged: LKRTCIceConnectionState) {
 }
 ```
 

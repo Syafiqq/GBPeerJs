@@ -150,7 +150,7 @@ extension ViewControllerCallAsTeacher: GBPeerMediaConnectionDelegate {
         print("CurrentLog - peerJsMedia - onError - \(onError)")
     }
 
-    func mediaConnection(_: GBPeerMediaConnection, onIceStateChanged: RTCIceConnectionState) {
+    func mediaConnection(_: GBPeerMediaConnection, onIceStateChanged: LKRTCIceConnectionState) {
         print("CurrentLog - peerJsMedia - onIceStateChanged - \(onIceStateChanged)")
     }
 }

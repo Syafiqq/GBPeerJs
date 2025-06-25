@@ -759,7 +759,7 @@ private extension Negotiator {
 }
 
 extension Negotiator: LKRTCPeerConnectionDelegate {
-    func peerConnection(_ peerConnection: LKRTCPeerConnection, didChange stateChanged: RTCSignalingState) {
+    func peerConnection(_ peerConnection: LKRTCPeerConnection, didChange stateChanged: LKRTCSignalingState) {
     }
 
     func peerConnection(_ peerConnection: LKRTCPeerConnection, didAdd stream: LKRTCMediaStream) {
@@ -781,7 +781,7 @@ extension Negotiator: LKRTCPeerConnectionDelegate {
     func peerConnectionShouldNegotiate(_ peerConnection: LKRTCPeerConnection) {
     }
 
-    func peerConnection(_ peerConnection: LKRTCPeerConnection, didChange newState: RTCIceConnectionState) {
+    func peerConnection(_ peerConnection: LKRTCPeerConnection, didChange newState: LKRTCIceConnectionState) {
         logger.log("peerConnection - didChange -\(newState)")
         switch peerConnection.iceConnectionState {
         case .failed:
@@ -801,7 +801,7 @@ extension Negotiator: LKRTCPeerConnectionDelegate {
         connection?.emitIceStateChanged(peerConnection.iceConnectionState)
     }
 
-    func peerConnection(_ peerConnection: LKRTCPeerConnection, didChange newState: RTCIceGatheringState) {
+    func peerConnection(_ peerConnection: LKRTCPeerConnection, didChange newState: LKRTCIceGatheringState) {
     }
 
     func peerConnection(_ peerConnection: LKRTCPeerConnection, didGenerate candidate: LKRTCIceCandidate) {

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		590D99B12E0B70DF0042F6BA /* LiveKitWebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 590D99B02E0B70DF0042F6BA /* LiveKitWebRTC */; };
 		593ED24C2935CFA9007BC45A /* GBPeerJs.docc in Sources */ = {isa = PBXBuildFile; fileRef = 593ED24B2935CFA9007BC45A /* GBPeerJs.docc */; };
 		593ED2522935CFA9007BC45A /* GBPeerJs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 593ED2472935CFA9007BC45A /* GBPeerJs.framework */; };
 		593ED2572935CFA9007BC45A /* GBPeerJsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593ED2562935CFA9007BC45A /* GBPeerJsTests.swift */; };
@@ -90,6 +91,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				590D99B12E0B70DF0042F6BA /* LiveKitWebRTC in Frameworks */,
 				DAE3C726BE474CB1552C4672 /* Pods_GBPeerJs.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -336,6 +338,9 @@
 				"zh-Hans",
 			);
 			mainGroup = 593ED23D2935CFA9007BC45A;
+			packageReferences = (
+				590D99AF2E0B70DF0042F6BA /* XCRemoteSwiftPackageReference "webrtc-xcframework" */,
+			);
 			productRefGroup = 593ED2482935CFA9007BC45A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -457,9 +462,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GBPeerJs-GBPeerJsTests/Pods-GBPeerJs-GBPeerJsTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-GBPeerJs-GBPeerJsTests/Pods-GBPeerJs-GBPeerJsTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -800,6 +809,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		590D99AF2E0B70DF0042F6BA /* XCRemoteSwiftPackageReference "webrtc-xcframework" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/livekit/webrtc-xcframework.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 125.6422.33;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		590D99B02E0B70DF0042F6BA /* LiveKitWebRTC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 590D99AF2E0B70DF0042F6BA /* XCRemoteSwiftPackageReference "webrtc-xcframework" */;
+			productName = LiveKitWebRTC;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 593ED23E2935CFA9007BC45A /* Project object */;
 }

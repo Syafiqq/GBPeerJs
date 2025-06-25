@@ -18,6 +18,6 @@ protocol IConnection: AnyObject {
     func addStream(_ stream: LKRTCMediaStream)
     func emitError(_ error: Error)
     func requestClose()
-    func emitIceStateChanged(_ state: RTCIceConnectionState)
+    func emitIceStateChanged(_ state: LKRTCIceConnectionState)
     func handleMessage(message: [String: Any])
 }

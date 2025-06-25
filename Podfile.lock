@@ -4,7 +4,6 @@ PODS:
   - Cuckoo/Swift (1.10.4)
   - LanguageManager-iOS (1.2.9)
   - LifetimeTracker (1.8.4)
-  - LiveKitWebRTC (125.6422.07)
   - Nimble (12.3.0)
   - Quick (6.1.0)
   - RxSwift (6.8.0)
@@ -15,7 +14,6 @@ DEPENDENCIES:
   - Cuckoo (~> 1.10)
   - LanguageManager-iOS (~> 1.2.9-beta.1)
   - LifetimeTracker (= 1.8.4)
-  - LiveKitWebRTC (= 125.6422.07)
   - Nimble (~> 12.0)
   - Quick (~> 6.1)
   - RxSwift (~> 6)
@@ -28,7 +26,6 @@ SPEC REPOS:
   trunk:
     - Cuckoo
     - LanguageManager-iOS
-    - LiveKitWebRTC
     - Nimble
     - Quick
     - RxSwift
@@ -39,13 +36,12 @@ SPEC CHECKSUMS:
   Cuckoo: 20b8aed94022e0e43e90f7c9e4fb0c86f0926a01
   LanguageManager-iOS: c1dbb2329fc4b8c0dbc0b0d386a11ea9553a359b
   LifetimeTracker: 1a3af18793414fd5cc591ac6eab6fd27f0bfd515
-  LiveKitWebRTC: 99d224d0d657e09b9463d03376194b14f308ab1e
   Nimble: f8a8219d16f176429b951e8f7e72df5c23ceddc0
   Quick: 6676ffb409bf04abba2ff23902af2407bfc6ac90
   RxSwift: 4e28be97cbcfeee614af26d83415febbf2bf6f45
   Starscream: 19b5533ddb925208db698f0ac508a100b884a1b9
   SwiftLint: 92196976e597b9afec5dbe374810103e6c1d9d7c
 
-PODFILE CHECKSUM: 22d569f1d045b745e6b242c0265d6c9268abb15d
+PODFILE CHECKSUM: d4686ea9a3c980e369cb3b4bd9ee6df47e462142
 
 COCOAPODS: 1.16.2

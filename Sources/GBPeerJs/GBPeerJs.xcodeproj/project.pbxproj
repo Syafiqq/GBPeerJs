@@ -11,6 +11,10 @@
 		593ED2522935CFA9007BC45A /* GBPeerJs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 593ED2472935CFA9007BC45A /* GBPeerJs.framework */; };
 		593ED2572935CFA9007BC45A /* GBPeerJsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593ED2562935CFA9007BC45A /* GBPeerJsTests.swift */; };
 		593ED2582935CFA9007BC45A /* GBPeerJs.h in Headers */ = {isa = PBXBuildFile; fileRef = 593ED24A2935CFA9007BC45A /* GBPeerJs.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		599297112F09256C003A4C65 /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 599297102F09256C003A4C65 /* WebRTC */; };
+		599297142F0925B0003A4C65 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 599297132F0925B0003A4C65 /* Starscream */; };
+		599297172F092687003A4C65 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 599297162F092687003A4C65 /* RxSwift */; };
+		5992971A2F0926AB003A4C65 /* LifetimeTracker in Frameworks */ = {isa = PBXBuildFile; productRef = 599297192F0926AB003A4C65 /* LifetimeTracker */; };
 		59D1458D2936F74000339673 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 59D1458F2936F74000339673 /* Localizable.strings */; };
 		65B8C0204542A2801106BA47 /* GBPeerConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CF62DF40564AD6CDA643 /* GBPeerConnection.swift */; };
 		65B8C052466638CD0BC35EF4 /* ConnectionType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CB1F6574536DBFB8EA36 /* ConnectionType.swift */; };
@@ -91,6 +95,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAE3C726BE474CB1552C4672 /* Pods_GBPeerJs.framework in Frameworks */,
+				599297112F09256C003A4C65 /* WebRTC in Frameworks */,
+				599297172F092687003A4C65 /* RxSwift in Frameworks */,
+				5992971A2F0926AB003A4C65 /* LifetimeTracker in Frameworks */,
+				599297142F0925B0003A4C65 /* Starscream in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,7 +302,6 @@
 				5901DC5A29370CD200FF0A94 /* Linting */,
 				593ED24E2935CFA9007BC45A /* Frameworks */,
 				593ED24F2935CFA9007BC45A /* Resources */,
-				FA3A47A536C73BEB5E813C70 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -336,6 +343,11 @@
 				"zh-Hans",
 			);
 			mainGroup = 593ED23D2935CFA9007BC45A;
+			packageReferences = (
+				599297122F0925B0003A4C65 /* XCRemoteSwiftPackageReference "Starscream" */,
+				599297152F092687003A4C65 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				599297182F0926AB003A4C65 /* XCRemoteSwiftPackageReference "LifetimeTracker" */,
+			);
 			productRefGroup = 593ED2482935CFA9007BC45A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -447,23 +459,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		FA3A47A536C73BEB5E813C70 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GBPeerJs-GBPeerJsTests/Pods-GBPeerJs-GBPeerJsTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GBPeerJs-GBPeerJsTests/Pods-GBPeerJs-GBPeerJsTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GBPeerJs-GBPeerJsTests/Pods-GBPeerJs-GBPeerJsTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -800,6 +795,64 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		5992970F2F09256C003A4C65 /* XCRemoteSwiftPackageReference "WebRTC" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stasel/WebRTC.git";
+			requirement = {
+				kind = exactVersion;
+				version = 129.0.0;
+			};
+		};
+		599297122F0925B0003A4C65 /* XCRemoteSwiftPackageReference "Starscream" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/daltoniam/Starscream.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.8;
+			};
+		};
+		599297152F092687003A4C65 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.9.1;
+			};
+		};
+		599297182F0926AB003A4C65 /* XCRemoteSwiftPackageReference "LifetimeTracker" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/krzysztofzablocki/LifetimeTracker.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.8.5;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		599297102F09256C003A4C65 /* WebRTC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5992970F2F09256C003A4C65 /* XCRemoteSwiftPackageReference "WebRTC" */;
+			productName = WebRTC;
+		};
+		599297132F0925B0003A4C65 /* Starscream */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 599297122F0925B0003A4C65 /* XCRemoteSwiftPackageReference "Starscream" */;
+			productName = Starscream;
+		};
+		599297162F092687003A4C65 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 599297152F092687003A4C65 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		599297192F0926AB003A4C65 /* LifetimeTracker */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 599297182F0926AB003A4C65 /* XCRemoteSwiftPackageReference "LifetimeTracker" */;
+			productName = LifetimeTracker;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 593ED23E2935CFA9007BC45A /* Project object */;
 }

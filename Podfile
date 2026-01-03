@@ -1,15 +1,15 @@
 source 'https://bitbucket.org/beautyfu/ios-pod-specs.git'
-source 'https://cdn.cocoapods.org/'
+source 'https://github.com/CocoaPods/Specs.git'
 
 workspace 'GBPeerJs'
 # Uncomment the next line to define a global platform for your project
 
 def dev_pods
-  pod 'SwiftLint', '~> 0.57'
+  pod 'SwiftLint', '~> 0.58'
 end
 
 def lib_pods
-  pod 'LanguageManager-iOS', '~> 1.2.9-beta.1'
+  pod 'LanguageManager-iOS', '~> 1.3.1-beta.1'
   pod 'WebRTC-SDK', '= 129.6668.01-beta.1'
   pod 'Starscream', '~> 4'
   pod 'RxSwift', '~> 6'
@@ -17,9 +17,9 @@ def lib_pods
 end
 
 def lib_test_pods
-  pod 'Cuckoo', '~> 1.10'
-  pod 'Quick', '~> 6.1'
-  pod 'Nimble', '~> 12.0'
+  pod 'Cuckoo', '~> 2.0'
+  pod 'Quick', '~> 7.6'
+  pod 'RxNimble', '~> 6.3'
 end
 
 def example_lib_pods

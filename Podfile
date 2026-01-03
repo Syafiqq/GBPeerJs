@@ -5,7 +5,6 @@ workspace 'GBPeerJs'
 # Uncomment the next line to define a global platform for your project
 
 def dev_pods
-  pod 'SwiftLint', '~> 0.58'
 end
 
 def lib_pods

@@ -106,9 +106,11 @@ GEM
 
 PLATFORMS
   arm64-darwin-21
+  arm64-darwin-24
 
 DEPENDENCIES
   cocoapods (= 1.16.2)
+  concurrent-ruby (= 1.3.4)
 
 BUNDLED WITH
    2.4.22

@@ -344,7 +344,6 @@
 			);
 			mainGroup = 593ED23D2935CFA9007BC45A;
 			packageReferences = (
-				5992970F2F09256C003A4C65 /* XCRemoteSwiftPackageReference "WebRTC" */,
 				599297122F0925B0003A4C65 /* XCRemoteSwiftPackageReference "Starscream" */,
 				599297152F092687003A4C65 /* XCRemoteSwiftPackageReference "RxSwift" */,
 				599297182F0926AB003A4C65 /* XCRemoteSwiftPackageReference "LifetimeTracker" */,

@@ -1,51 +1,85 @@
 PODS:
-  - Cuckoo (1.10.4):
-    - Cuckoo/Swift (= 1.10.4)
-  - Cuckoo/Swift (1.10.4)
-  - LanguageManager-iOS (1.2.9)
+  - Cuckoo (2.2.0):
+    - Cuckoo/Swift (= 2.2.0)
+  - Cuckoo/Swift (2.2.0)
+  - CwlCatchException (2.2.1):
+    - CwlCatchExceptionSupport (~> 2.2.1)
+  - CwlCatchExceptionSupport (2.2.1)
+  - CwlMachBadInstructionHandler (2.2.2)
+  - CwlPosixPreconditionTesting (2.2.2)
+  - CwlPreconditionTesting (2.2.2):
+    - CwlCatchException (~> 2.2.1)
+    - CwlMachBadInstructionHandler (~> 2.2.2)
+    - CwlPosixPreconditionTesting (~> 2.2.2)
+  - LanguageManager-iOS (1.3.1-beta.1)
   - LifetimeTracker (1.8.4)
-  - Nimble (12.3.0)
-  - Quick (6.1.0)
-  - RxSwift (6.8.0)
+  - Nimble (13.8.0):
+    - CwlPreconditionTesting (~> 2.2.0)
+  - Quick (7.6.2)
+  - RxBlocking (6.9.0):
+    - RxSwift (= 6.9.0)
+  - RxNimble (6.3.1):
+    - RxNimble/RxBlocking (= 6.3.1)
+  - RxNimble/Core (6.3.1):
+    - Nimble (~> 13.0)
+    - RxSwift (~> 6.0)
+  - RxNimble/RxBlocking (6.3.1):
+    - RxBlocking
+    - RxNimble/Core
+  - RxSwift (6.9.0)
   - Starscream (4.0.8)
-  - SwiftLint (0.57.1)
+  - SwiftLint (0.62.2)
   - WebRTC-SDK (129.6668.01-beta.1)
 
 DEPENDENCIES:
-  - Cuckoo (~> 1.10)
-  - LanguageManager-iOS (~> 1.2.9-beta.1)
+  - Cuckoo (~> 2.0)
+  - LanguageManager-iOS (~> 1.3.1-beta.1)
   - LifetimeTracker (= 1.8.4)
-  - Nimble (~> 12.0)
-  - Quick (~> 6.1)
+  - Quick (~> 7.6)
+  - RxNimble (~> 6.3)
   - RxSwift (~> 6)
   - Starscream (~> 4)
-  - SwiftLint (~> 0.57)
+  - SwiftLint (~> 0.58)
   - WebRTC-SDK (= 129.6668.01-beta.1)
 
 SPEC REPOS:
   https://bitbucket.org/beautyfu/ios-pod-specs.git:
+    - LanguageManager-iOS
     - LifetimeTracker
     - WebRTC-SDK
-  trunk:
+  https://github.com/CocoaPods/Specs.git:
     - Cuckoo
-    - LanguageManager-iOS
+    - CwlCatchException
+    - CwlCatchExceptionSupport
+    - CwlMachBadInstructionHandler
+    - CwlPosixPreconditionTesting
+    - CwlPreconditionTesting
     - Nimble
     - Quick
+    - RxBlocking
+    - RxNimble
     - RxSwift
     - Starscream
     - SwiftLint
 
 SPEC CHECKSUMS:
-  Cuckoo: 20b8aed94022e0e43e90f7c9e4fb0c86f0926a01
-  LanguageManager-iOS: c1dbb2329fc4b8c0dbc0b0d386a11ea9553a359b
+  Cuckoo: aaec0537a3f928c29d3e3f63ed0387cee05315b4
+  CwlCatchException: 7acc161b299a6de7f0a46a6ed741eae2c8b4d75a
+  CwlCatchExceptionSupport: 54ccab8d8c78907b57f99717fb19d4cc3bce02dc
+  CwlMachBadInstructionHandler: dae4fdd124d45c9910ac240287cc7b898f4502a1
+  CwlPosixPreconditionTesting: ecd095aa2129e740b44301c34571e8d85906fb88
+  CwlPreconditionTesting: 67a0047dd4de4382b93442c0e3f25207f984f35a
+  LanguageManager-iOS: 7253b6e3cdd33401b960bb72fd70001268419eca
   LifetimeTracker: 1a3af18793414fd5cc591ac6eab6fd27f0bfd515
-  Nimble: f8a8219d16f176429b951e8f7e72df5c23ceddc0
-  Quick: 6676ffb409bf04abba2ff23902af2407bfc6ac90
-  RxSwift: 4e28be97cbcfeee614af26d83415febbf2bf6f45
+  Nimble: 84982ec98b5dfc0ffe9ae2ed4c0b2fc57807c2d5
+  Quick: b8bec97cd4b9f21da0472d45580f763b801fc353
+  RxBlocking: 5d2b26d019b6ba9eb3f58638611f124609c44822
+  RxNimble: bac9a18fdde597508356e704b34047f45f5b3ade
+  RxSwift: 31649ace6aceeb422e16ff71c60804f9c3281ed9
   Starscream: 19b5533ddb925208db698f0ac508a100b884a1b9
-  SwiftLint: 92196976e597b9afec5dbe374810103e6c1d9d7c
+  SwiftLint: f84fc7d844e9cde0dc4f5013af608a269e317aba
   WebRTC-SDK: 4d7babaa3b31762a391e4dc25c4ffad381fd9b8c
 
-PODFILE CHECKSUM: 3cf9b3ba10e8bb2733757f54879a89ceb645b125
+PODFILE CHECKSUM: f26bdaf929179f3d5117e4dc20a75ff1e3a7c5e1
 
 COCOAPODS: 1.16.2

@@ -12,9 +12,6 @@ def lib_pods
 end
 
 def lib_test_pods
-  pod 'Cuckoo', '~> 2.0'
-  pod 'Quick', '~> 7.6'
-  pod 'RxNimble', '~> 6.3'
 end
 
 def example_lib_pods

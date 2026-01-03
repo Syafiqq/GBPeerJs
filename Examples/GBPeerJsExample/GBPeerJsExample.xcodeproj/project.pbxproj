@@ -16,10 +16,6 @@
 		5962A4CA2935DFA200183658 /* GBPeerJsExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5962A4C92935DFA200183658 /* GBPeerJsExampleTests.swift */; };
 		5962A4D42935DFA200183658 /* GBPeerJsExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5962A4D32935DFA200183658 /* GBPeerJsExampleUITests.swift */; };
 		5962A4D62935DFA200183658 /* GBPeerJsExampleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5962A4D52935DFA200183658 /* GBPeerJsExampleUITestsLaunchTests.swift */; };
-		599297232F09A8A0003A4C65 /* LifetimeTracker in Frameworks */ = {isa = PBXBuildFile; productRef = 599297222F09A8A0003A4C65 /* LifetimeTracker */; };
-		599297262F09A8AA003A4C65 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 599297252F09A8AA003A4C65 /* RxSwift */; };
-		599297292F09A8B5003A4C65 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 599297282F09A8B5003A4C65 /* Starscream */; };
-		5992972F2F09A99F003A4C65 /* LiveKitWebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 5992972E2F09A99F003A4C65 /* LiveKitWebRTC */; };
 		59E0D41B2A4E63E2004CA3D2 /* GBPeerJs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 59E0D41A2A4E63E2004CA3D2 /* GBPeerJs.framework */; };
 		59E0D41C2A4E63E2004CA3D2 /* GBPeerJs.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 59E0D41A2A4E63E2004CA3D2 /* GBPeerJs.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		65B8C5B5E3B2C451BAEC7A3C /* ViewControllerCallAsTeacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CFF5A966C62BB4DE37FE /* ViewControllerCallAsTeacher.swift */; };
@@ -95,10 +91,6 @@
 			files = (
 				59E0D41B2A4E63E2004CA3D2 /* GBPeerJs.framework in Frameworks */,
 				A3F62B095EBD54CB58E525AF /* Pods_GBPeerJsExample.framework in Frameworks */,
-				5992972F2F09A99F003A4C65 /* LiveKitWebRTC in Frameworks */,
-				599297262F09A8AA003A4C65 /* RxSwift in Frameworks */,
-				599297232F09A8A0003A4C65 /* LifetimeTracker in Frameworks */,
-				599297292F09A8B5003A4C65 /* Starscream in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -297,10 +289,6 @@
 			);
 			mainGroup = 5962A4A62935DFA100183658;
 			packageReferences = (
-				599297212F09A8A0003A4C65 /* XCRemoteSwiftPackageReference "LifetimeTracker" */,
-				599297242F09A8AA003A4C65 /* XCRemoteSwiftPackageReference "RxSwift" */,
-				599297272F09A8B5003A4C65 /* XCRemoteSwiftPackageReference "Starscream" */,
-				5992972D2F09A99F003A4C65 /* XCRemoteSwiftPackageReference "webrtc-xcframework" */,
 			);
 			productRefGroup = 5962A4B02935DFA100183658 /* Products */;
 			projectDirPath = "";
@@ -845,64 +833,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		599297212F09A8A0003A4C65 /* XCRemoteSwiftPackageReference "LifetimeTracker" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/krzysztofzablocki/LifetimeTracker.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.8.5;
-			};
-		};
-		599297242F09A8AA003A4C65 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 6.9.1;
-			};
-		};
-		599297272F09A8B5003A4C65 /* XCRemoteSwiftPackageReference "Starscream" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/daltoniam/Starscream.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.8;
-			};
-		};
-		5992972D2F09A99F003A4C65 /* XCRemoteSwiftPackageReference "webrtc-xcframework" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/livekit/webrtc-xcframework.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 125.6422.32;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		599297222F09A8A0003A4C65 /* LifetimeTracker */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 599297212F09A8A0003A4C65 /* XCRemoteSwiftPackageReference "LifetimeTracker" */;
-			productName = LifetimeTracker;
-		};
-		599297252F09A8AA003A4C65 /* RxSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 599297242F09A8AA003A4C65 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxSwift;
-		};
-		599297282F09A8B5003A4C65 /* Starscream */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 599297272F09A8B5003A4C65 /* XCRemoteSwiftPackageReference "Starscream" */;
-			productName = Starscream;
-		};
-		5992972E2F09A99F003A4C65 /* LiveKitWebRTC */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5992972D2F09A99F003A4C65 /* XCRemoteSwiftPackageReference "webrtc-xcframework" */;
-			productName = LiveKitWebRTC;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5962A4A72935DFA100183658 /* Project object */;
 }

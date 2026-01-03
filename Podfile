@@ -9,7 +9,6 @@ def dev_pods
 end
 
 def lib_pods
-  pod 'LanguageManager-iOS', '~> 1.3.1-beta.1'
   pod 'WebRTC-SDK', '= 129.6668.01-beta.1'
   pod 'Starscream', '~> 4'
   pod 'RxSwift', '~> 6'

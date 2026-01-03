@@ -1,67 +1,16 @@
 PODS:
-  - Cuckoo (2.2.0):
-    - Cuckoo/Swift (= 2.2.0)
-  - Cuckoo/Swift (2.2.0)
-  - CwlCatchException (2.2.1):
-    - CwlCatchExceptionSupport (~> 2.2.1)
-  - CwlCatchExceptionSupport (2.2.1)
-  - CwlMachBadInstructionHandler (2.2.2)
-  - CwlPosixPreconditionTesting (2.2.2)
-  - CwlPreconditionTesting (2.2.2):
-    - CwlCatchException (~> 2.2.1)
-    - CwlMachBadInstructionHandler (~> 2.2.2)
-    - CwlPosixPreconditionTesting (~> 2.2.2)
-  - Nimble (13.8.0):
-    - CwlPreconditionTesting (~> 2.2.0)
-  - Quick (7.6.2)
-  - RxBlocking (6.9.0):
-    - RxSwift (= 6.9.0)
-  - RxNimble (6.3.1):
-    - RxNimble/RxBlocking (= 6.3.1)
-  - RxNimble/Core (6.3.1):
-    - Nimble (~> 13.0)
-    - RxSwift (~> 6.0)
-  - RxNimble/RxBlocking (6.3.1):
-    - RxBlocking
-    - RxNimble/Core
-  - RxSwift (6.9.0)
   - SwiftLint (0.62.2)
 
 DEPENDENCIES:
-  - Cuckoo (~> 2.0)
-  - Quick (~> 7.6)
-  - RxNimble (~> 6.3)
   - SwiftLint (~> 0.58)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
-    - Cuckoo
-    - CwlCatchException
-    - CwlCatchExceptionSupport
-    - CwlMachBadInstructionHandler
-    - CwlPosixPreconditionTesting
-    - CwlPreconditionTesting
-    - Nimble
-    - Quick
-    - RxBlocking
-    - RxNimble
-    - RxSwift
     - SwiftLint
 
 SPEC CHECKSUMS:
-  Cuckoo: aaec0537a3f928c29d3e3f63ed0387cee05315b4
-  CwlCatchException: 7acc161b299a6de7f0a46a6ed741eae2c8b4d75a
-  CwlCatchExceptionSupport: 54ccab8d8c78907b57f99717fb19d4cc3bce02dc
-  CwlMachBadInstructionHandler: dae4fdd124d45c9910ac240287cc7b898f4502a1
-  CwlPosixPreconditionTesting: ecd095aa2129e740b44301c34571e8d85906fb88
-  CwlPreconditionTesting: 67a0047dd4de4382b93442c0e3f25207f984f35a
-  Nimble: 84982ec98b5dfc0ffe9ae2ed4c0b2fc57807c2d5
-  Quick: b8bec97cd4b9f21da0472d45580f763b801fc353
-  RxBlocking: 5d2b26d019b6ba9eb3f58638611f124609c44822
-  RxNimble: bac9a18fdde597508356e704b34047f45f5b3ade
-  RxSwift: 31649ace6aceeb422e16ff71c60804f9c3281ed9
   SwiftLint: f84fc7d844e9cde0dc4f5013af608a269e317aba
 
-PODFILE CHECKSUM: c962f9e707216043718aa19ee8ae669eb678fdce
+PODFILE CHECKSUM: ec1dfa382ac44e1c2d793edf3dd43695ba7ca380
 
 COCOAPODS: 1.16.2

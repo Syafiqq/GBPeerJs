@@ -10,7 +10,7 @@ public protocol GBPeerMediaConnectionDelegate: AnyObject {
     func mediaConnection(_ sender: GBPeerMediaConnection, onRemoteStreamAdded: RTCMediaStream)
     func mediaConnection(_ sender: GBPeerMediaConnection, onClose: ())
     func mediaConnection(_ sender: GBPeerMediaConnection, onError: Error)
-    func mediaConnection(_ sender: GBPeerMediaConnection, onIceStateChanged: RTCIceConnectionState)
+    func mediaConnection(_ sender: GBPeerMediaConnection, onIceStateChanged: LKRTCIceConnectionState)
 }
 
 public class GBPeerMediaConnection: GBPeerConnection {
@@ -315,7 +315,7 @@ extension GBPeerMediaConnection: IConnection {
         delegate?.mediaConnection(self, onError: error)
     }
 
-    func emitIceStateChanged(_ state: RTCIceConnectionState) {
+    func emitIceStateChanged(_ state: LKRTCIceConnectionState) {
         delegate?.mediaConnection(self, onIceStateChanged: state)
     }
 

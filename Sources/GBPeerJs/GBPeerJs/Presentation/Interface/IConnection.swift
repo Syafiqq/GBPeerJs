@@ -3,7 +3,7 @@
 //
 
 import Foundation
-import WebRTC
+import LiveKitWebRTC
 
 protocol IConnection: AnyObject {
     var peer: String { get }
@@ -11,13 +11,13 @@ protocol IConnection: AnyObject {
     var type: ConnectionType { get }
     var provider: IPeer? { get }
     var originator: Bool { get }
-    var peerConnection: RTCPeerConnection? { get }
+    var peerConnection: LKRTCPeerConnection? { get }
 
-    func setPeerConnection(_ peer: RTCPeerConnection)
+    func setPeerConnection(_ peer: LKRTCPeerConnection)
     func unsetPeerConnection()
-    func addStream(_ stream: RTCMediaStream)
+    func addStream(_ stream: LKRTCMediaStream)
     func emitError(_ error: Error)
     func requestClose()
-    func emitIceStateChanged(_ state: RTCIceConnectionState)
+    func emitIceStateChanged(_ state: LKRTCIceConnectionState)
     func handleMessage(message: [String: Any])
 }

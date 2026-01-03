@@ -72,10 +72,10 @@ let peer = GBPeer(id: "pick-an-id")
 **Call**
 
 ```swift
-let constraint = RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
+let constraint = LKRTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
 
 // Create Peer factory
-let factory = RTCPeerConnectionFactory(encoderFactory: nil, decoderFactory: nil)
+let factory = LKRTCPeerConnectionFactory(encoderFactory: nil, decoderFactory: nil)
 let peerFactory: GBPeerBuilder = GBPeerMedia.getMediaBuilder(peerFactoryBuilder: { factory })
 
 // Create Peer Builder
@@ -107,7 +107,7 @@ let call = peer.call("another-peers-id", stream)
 // Listen events
 call.delegate = self
 
-func mediaConnection(_: GBPeerMediaConnection, onRemoteStreamAdded: RTCMediaStream) {
+func mediaConnection(_: GBPeerMediaConnection, onRemoteStreamAdded: LKRTCMediaStream) {
 }
 
 func mediaConnection(_: GBPeerMediaConnection, onClose: ()) {
@@ -116,7 +116,7 @@ func mediaConnection(_: GBPeerMediaConnection, onClose: ()) {
 func mediaConnection(_: GBPeerMediaConnection, onError: Error) {
 }
 
-func mediaConnection(_: GBPeerMediaConnection, onIceStateChanged: RTCIceConnectionState) {
+func mediaConnection(_: GBPeerMediaConnection, onIceStateChanged: LKRTCIceConnectionState) {
 }
 ```
 
@@ -141,10 +141,10 @@ func peerJs(_ sender: GBPeerJs.GBPeer, onCall withConnection: GBPeerJs.GBPeerCon
         return
     }
 
-    let constraint = RTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
+    let constraint = LKRTCMediaConstraints(mandatoryConstraints: nil, optionalConstraints: nil)
 
     // Create Peer factory
-    let factory = RTCPeerConnectionFactory(encoderFactory: nil, decoderFactory: nil)
+    let factory = LKRTCPeerConnectionFactory(encoderFactory: nil, decoderFactory: nil)
     let peerFactory: GBPeerBuilder = GBPeerMedia.getMediaBuilder(peerFactoryBuilder: { factory })
 
     // Create Peer Builder
@@ -174,7 +174,7 @@ func peerJs(_ sender: GBPeerJs.GBPeer, onCall withConnection: GBPeerJs.GBPeerCon
     call.delegate = self
 }
 
-func mediaConnection(_: GBPeerMediaConnection, onRemoteStreamAdded: RTCMediaStream) {
+func mediaConnection(_: GBPeerMediaConnection, onRemoteStreamAdded: LKRTCMediaStream) {
 }
 
 func mediaConnection(_: GBPeerMediaConnection, onClose: ()) {
@@ -183,7 +183,7 @@ func mediaConnection(_: GBPeerMediaConnection, onClose: ()) {
 func mediaConnection(_: GBPeerMediaConnection, onError: Error) {
 }
 
-func mediaConnection(_: GBPeerMediaConnection, onIceStateChanged: RTCIceConnectionState) {
+func mediaConnection(_: GBPeerMediaConnection, onIceStateChanged: LKRTCIceConnectionState) {
 }
 ```
 

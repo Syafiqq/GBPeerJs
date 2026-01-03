@@ -44,28 +44,8 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		599297472F09AA7F003A4C65 /* Presentation */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = Presentation;
-			sourceTree = "<group>";
-		};
-		5992975B2F09AA85003A4C65 /* Common */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-			);
-			explicitFileTypes = {
-			};
-			explicitFolders = (
-			);
-			path = Common;
-			sourceTree = "<group>";
-		};
+		599297472F09AA7F003A4C65 /* Presentation */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Presentation; sourceTree = "<group>"; };
+		5992975B2F09AA85003A4C65 /* Common */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Common; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -159,7 +139,6 @@
 			buildPhases = (
 				593ED2422935CFA9007BC45A /* Headers */,
 				593ED2432935CFA9007BC45A /* Sources */,
-				5901DC5929370CAE00FF0A94 /* Linting */,
 				593ED2442935CFA9007BC45A /* Frameworks */,
 				593ED2452935CFA9007BC45A /* Resources */,
 			);
@@ -181,7 +160,6 @@
 			buildConfigurationList = 593ED25E2935CFA9007BC45A /* Build configuration list for PBXNativeTarget "GBPeerJsTests" */;
 			buildPhases = (
 				593ED24D2935CFA9007BC45A /* Sources */,
-				5901DC5A29370CD200FF0A94 /* Linting */,
 				593ED24E2935CFA9007BC45A /* Frameworks */,
 				593ED24F2935CFA9007BC45A /* Resources */,
 			);
@@ -258,49 +236,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		5901DC5929370CAE00FF0A94 /* Linting */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(PODS_PODFILE_DIR_PATH)/Sources/GBPeerJs/GBPeerJs",
-			);
-			name = Linting;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\" lint --config \"${PODS_PODFILE_DIR_PATH}/.swiftlint.yml\" --strict\n";
-		};
-		5901DC5A29370CD200FF0A94 /* Linting */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(PODS_PODFILE_DIR_PATH)/Sources/GBPeerJs/GBPeerJsTests",
-			);
-			name = Linting;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\" lint --config \"${PODS_PODFILE_DIR_PATH}/.swiftlint_test.yml\" --strict\n";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		593ED2432935CFA9007BC45A /* Sources */ = {

@@ -3,7 +3,7 @@
 //
 
 import Foundation
-import WebRTC
+import LiveKitWebRTC
 
 enum IceServerSource {
     case coturn
@@ -15,7 +15,7 @@ enum IceServerSource {
 }
 
 enum IceServerHelper {
-    static func getIceServers(for source: IceServerSource, completion: @escaping ([RTCIceServer]) -> Void) {
+    static func getIceServers(for source: IceServerSource, completion: @escaping ([LKRTCIceServer]) -> Void) {
         switch source {
         case .coturn: fetchCoturnIceServer(completion: completion)
         case .metered: fetchMeteredIceServer(completion: completion)
@@ -28,12 +28,12 @@ enum IceServerHelper {
 
     // swiftlint:disable all
 
-    private static func fetchCoturnIceServer(completion: ([RTCIceServer]) -> Void) {
+    private static func fetchCoturnIceServer(completion: ([LKRTCIceServer]) -> Void) {
         let iceServers = [
-            RTCIceServer(
+            LKRTCIceServer(
                     urlStrings: ["stun:stun.l.google.com:19302"]
             ),
-            RTCIceServer(
+            LKRTCIceServer(
                     urlStrings: ["turn:stream2.geniebook.com:3478"],
                     username: "coturn-prod",
                     credential: "VO1DGjtUzdxqANjxO27P5o2M1xKOgJd7"
@@ -42,7 +42,7 @@ enum IceServerHelper {
         completion(iceServers)
     }
 
-    private static func fetchMeteredIceServer(completion: @escaping ([RTCIceServer]) -> Void) {
+    private static func fetchMeteredIceServer(completion: @escaping ([LKRTCIceServer]) -> Void) {
         struct Ice: Decodable {
             var urls: String?
             var username: String?
@@ -62,11 +62,11 @@ enum IceServerHelper {
                 completion([])
                 return
             }
-            let iceServers: [RTCIceServer] = ices.compactMap({
+            let iceServers: [LKRTCIceServer] = ices.compactMap({
                 guard let urls = $0.urls else {
                     return nil
                 }
-                return RTCIceServer(urlStrings: [urls], username: $0.username, credential: $0.credential, tlsCertPolicy: .insecureNoCheck)
+                return LKRTCIceServer(urlStrings: [urls], username: $0.username, credential: $0.credential, tlsCertPolicy: .insecureNoCheck)
             })
             DispatchQueue.main.async {
                 completion(iceServers)
@@ -76,27 +76,27 @@ enum IceServerHelper {
         task.resume()
     }
 
-    private static func fetchMeteredStaticIceServer(completion: @escaping ([RTCIceServer]) -> Void) {
+    private static func fetchMeteredStaticIceServer(completion: @escaping ([LKRTCIceServer]) -> Void) {
         let iceServers = [
-            RTCIceServer(
+            LKRTCIceServer(
                     urlStrings: ["stun:stun.relay.metered.ca:80"]
             ),
-            RTCIceServer(
+            LKRTCIceServer(
                     urlStrings: ["turn:a.relay.metered.ca:80"],
                     username: "f6719a28c0c5342e9be05d99",
                     credential: "oep2e6f6Sx1DTW9N"
             ),
-            RTCIceServer(
+            LKRTCIceServer(
                     urlStrings: ["turn:a.relay.metered.ca:80?transport=tcp"],
                     username: "f6719a28c0c5342e9be05d99",
                     credential: "oep2e6f6Sx1DTW9N"
             ),
-            RTCIceServer(
+            LKRTCIceServer(
                     urlStrings: ["turn:a.relay.metered.ca:443"],
                     username: "f6719a28c0c5342e9be05d99",
                     credential: "oep2e6f6Sx1DTW9N"
             ),
-            RTCIceServer(
+            LKRTCIceServer(
                     urlStrings: ["turn:a.relay.metered.ca:443?transport=tcp"],
                     username: "f6719a28c0c5342e9be05d99",
                     credential: "oep2e6f6Sx1DTW9N"
@@ -105,7 +105,7 @@ enum IceServerHelper {
         completion(iceServers)
     }
 
-    private static func fetchXirsysIceServer(completion: @escaping ([RTCIceServer]) -> Void) {
+    private static func fetchXirsysIceServer(completion: @escaping ([LKRTCIceServer]) -> Void) {
         struct Ice: Decodable {
             var s: String?
             var v: IceV?
@@ -145,16 +145,16 @@ enum IceServerHelper {
                 completion([])
                 return
             }
-            let stuns: [RTCIceServer] = iceServers.urls?
+            let stuns: [LKRTCIceServer] = iceServers.urls?
                     .filter({ $0.contains("stun:") })
                     .compactMap {
-                        RTCIceServer(urlStrings: [$0], username: iceServers.username, credential: iceServers.credential, tlsCertPolicy: .insecureNoCheck)
+                        LKRTCIceServer(urlStrings: [$0], username: iceServers.username, credential: iceServers.credential, tlsCertPolicy: .insecureNoCheck)
                     } ?? []
 
-            let turns: [RTCIceServer] = iceServers.urls?
+            let turns: [LKRTCIceServer] = iceServers.urls?
                     .filter({ $0.contains("turn:") })
                     .compactMap {
-                        RTCIceServer(urlStrings: [$0], username: iceServers.username, credential: iceServers.credential, tlsCertPolicy: .insecureNoCheck)
+                        LKRTCIceServer(urlStrings: [$0], username: iceServers.username, credential: iceServers.credential, tlsCertPolicy: .insecureNoCheck)
                     } ?? []
 
             DispatchQueue.main.async {
@@ -165,12 +165,12 @@ enum IceServerHelper {
         task.resume()
     }
 
-    private static func fetchXirsisStaticIceServer(completion: @escaping ([RTCIceServer]) -> Void) {
+    private static func fetchXirsisStaticIceServer(completion: @escaping ([LKRTCIceServer]) -> Void) {
         let iceServers = [
-            RTCIceServer(
+            LKRTCIceServer(
                     urlStrings: ["stun:hk-turn1.xirsys.com"]
             ),
-            RTCIceServer(
+            LKRTCIceServer(
                     urlStrings: [
                         "turn:hk-turn1.xirsys.com:80?transport=udp",
                         "turn:hk-turn1.xirsys.com:3478?transport=udp",
@@ -186,7 +186,7 @@ enum IceServerHelper {
         completion(iceServers)
     }
 
-    private static func fetchTwilioIceServer(completion: @escaping ([RTCIceServer]) -> Void) {
+    private static func fetchTwilioIceServer(completion: @escaping ([LKRTCIceServer]) -> Void) {
         struct Ice: Decodable {
             var ice_servers: [IceServer]?
         }
@@ -219,11 +219,11 @@ enum IceServerHelper {
                 completion([])
                 return
             }
-            let iceServers: [RTCIceServer] = ices.compactMap({
+            let iceServers: [LKRTCIceServer] = ices.compactMap({
                 guard let urls = $0.urls else {
                     return nil
                 }
-                return RTCIceServer(urlStrings: [urls], username: $0.username, credential: $0.credential, tlsCertPolicy: .insecureNoCheck)
+                return LKRTCIceServer(urlStrings: [urls], username: $0.username, credential: $0.credential, tlsCertPolicy: .insecureNoCheck)
             })
 
             DispatchQueue.main.async {

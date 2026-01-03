@@ -11,7 +11,6 @@
 		593ED2522935CFA9007BC45A /* GBPeerJs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 593ED2472935CFA9007BC45A /* GBPeerJs.framework */; };
 		593ED2572935CFA9007BC45A /* GBPeerJsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593ED2562935CFA9007BC45A /* GBPeerJsTests.swift */; };
 		593ED2582935CFA9007BC45A /* GBPeerJs.h in Headers */ = {isa = PBXBuildFile; fileRef = 593ED24A2935CFA9007BC45A /* GBPeerJs.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		599297112F09256C003A4C65 /* WebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 599297102F09256C003A4C65 /* WebRTC */; };
 		599297142F0925B0003A4C65 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 599297132F0925B0003A4C65 /* Starscream */; };
 		599297172F092687003A4C65 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 599297162F092687003A4C65 /* RxSwift */; };
 		5992971A2F0926AB003A4C65 /* LifetimeTracker in Frameworks */ = {isa = PBXBuildFile; productRef = 599297192F0926AB003A4C65 /* LifetimeTracker */; };
@@ -96,7 +95,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				DAE3C726BE474CB1552C4672 /* Pods_GBPeerJs.framework in Frameworks */,
-				599297112F09256C003A4C65 /* WebRTC in Frameworks */,
 				5992971D2F09A1DF003A4C65 /* LiveKitWebRTC in Frameworks */,
 				599297172F092687003A4C65 /* RxSwift in Frameworks */,
 				5992971A2F0926AB003A4C65 /* LifetimeTracker in Frameworks */,
@@ -800,14 +798,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		5992970F2F09256C003A4C65 /* XCRemoteSwiftPackageReference "WebRTC" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/stasel/WebRTC.git";
-			requirement = {
-				kind = exactVersion;
-				version = 129.0.0;
-			};
-		};
 		599297122F0925B0003A4C65 /* XCRemoteSwiftPackageReference "Starscream" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/daltoniam/Starscream.git";
@@ -843,11 +833,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		599297102F09256C003A4C65 /* WebRTC */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 5992970F2F09256C003A4C65 /* XCRemoteSwiftPackageReference "WebRTC" */;
-			productName = WebRTC;
-		};
 		599297132F0925B0003A4C65 /* Starscream */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 599297122F0925B0003A4C65 /* XCRemoteSwiftPackageReference "Starscream" */;

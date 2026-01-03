@@ -3,11 +3,11 @@
 //
 
 import Foundation
-import WebRTC
+import LiveKitWebRTC
 import RxSwift
 
 public protocol GBPeerMediaConnectionDelegate: AnyObject {
-    func mediaConnection(_ sender: GBPeerMediaConnection, onRemoteStreamAdded: RTCMediaStream)
+    func mediaConnection(_ sender: GBPeerMediaConnection, onRemoteStreamAdded: LKRTCMediaStream)
     func mediaConnection(_ sender: GBPeerMediaConnection, onClose: ())
     func mediaConnection(_ sender: GBPeerMediaConnection, onError: Error)
     func mediaConnection(_ sender: GBPeerMediaConnection, onIceStateChanged: LKRTCIceConnectionState)
@@ -20,8 +20,8 @@ public class GBPeerMediaConnection: GBPeerConnection {
     private let logger: ILogger = Logger.shared
 
     private var negotiator: INegotiator?
-    private var localStream: RTCMediaStream?
-    private var remoteStream: RTCMediaStream?
+    private var localStream: LKRTCMediaStream?
+    private var remoteStream: LKRTCMediaStream?
 
     private let remoteOfferPayload: [String: Any]
 
@@ -32,11 +32,11 @@ public class GBPeerMediaConnection: GBPeerConnection {
     var type: ConnectionType = .media
 
     var originator: Bool
-    var peerConnection: RTCPeerConnection?
+    var peerConnection: LKRTCPeerConnection?
 
     weak var provider: IPeer?
     public weak var delegate: GBPeerMediaConnectionDelegate?
-    private var mediaOfferConstraint: RTCMediaConstraints?
+    private var mediaOfferConstraint: LKRTCMediaConstraints?
 
     init(
             peer: String,
@@ -99,7 +99,7 @@ public class GBPeerMediaConnection: GBPeerConnection {
 }
 
 private extension GBPeerMediaConnection {
-    func doAddStream(_ remoteStream: RTCMediaStream) {
+    func doAddStream(_ remoteStream: LKRTCMediaStream) {
         logger.log("Receiving stream", remoteStream.streamId)
 
         self.remoteStream = remoteStream
@@ -117,11 +117,11 @@ private extension GBPeerMediaConnection {
                let payload = message["payload"] as? [String: Any],
                let sdp = payload["sdp"] as? [String: Any] {
 
-                let constraint: RTCMediaConstraints
+                let constraint: LKRTCMediaConstraints
                 if let mediaOfferConstraint = mediaOfferConstraint {
                     constraint = mediaOfferConstraint
                 } else {
-                    constraint = RTCMediaConstraints(
+                    constraint = LKRTCMediaConstraints(
                             mandatoryConstraints: nil,
                             optionalConstraints: nil
                     )
@@ -188,7 +188,7 @@ private extension GBPeerMediaConnection {
                 }
                 let sdpMid = candidate["sdpMid"] as? String
                 negotiator?.handleCandidate(
-                                RTCIceCandidate(
+                                LKRTCIceCandidate(
                                         sdp: candidateString,
                                         sdpMLineIndex: sdpMLineIndex32,
                                         sdpMid: sdpMid
@@ -295,7 +295,7 @@ private extension GBPeerMediaConnection {
 }
 
 extension GBPeerMediaConnection: IConnection {
-    func setPeerConnection(_ peer: RTCPeerConnection) {
+    func setPeerConnection(_ peer: LKRTCPeerConnection) {
         peerConnection = peer
     }
 
@@ -303,7 +303,7 @@ extension GBPeerMediaConnection: IConnection {
         peerConnection = nil
     }
 
-    func addStream(_ stream: RTCMediaStream) {
+    func addStream(_ stream: LKRTCMediaStream) {
         doAddStream(stream)
     }
 

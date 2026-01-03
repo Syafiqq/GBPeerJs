@@ -3,26 +3,26 @@
 //
 
 import Foundation
-import WebRTC
+import LiveKitWebRTC
 
 public struct GBPeerBuilder {
-    let peerFactory: RTCPeerConnectionFactory
+    let peerFactory: LKRTCPeerConnectionFactory
 
     // swiftlint:disable:next unneeded_synthesized_initializer
-    internal init(peerFactory: RTCPeerConnectionFactory) {
+    internal init(peerFactory: LKRTCPeerConnectionFactory) {
         self.peerFactory = peerFactory
     }
 }
 
 public struct GBPeerConnectionBuilder {
     let peerBuilder: GBPeerBuilder
-    let peerConstraint: RTCMediaConstraints
-    let peerConfigBuilder: (RTCConfiguration) -> Void
+    let peerConstraint: LKRTCMediaConstraints
+    let peerConfigBuilder: (LKRTCConfiguration) -> Void
 
     public init(
             peerBuilder: GBPeerBuilder,
-            peerConstraint: RTCMediaConstraints,
-            peerConfigBuilder: @escaping (RTCConfiguration) -> Void
+            peerConstraint: LKRTCMediaConstraints,
+            peerConfigBuilder: @escaping (LKRTCConfiguration) -> Void
     ) {
         self.peerBuilder = peerBuilder
         self.peerConstraint = peerConstraint
@@ -31,11 +31,15 @@ public struct GBPeerConnectionBuilder {
 }
 
 public struct GBPeerMediaStream {
-    let stream: RTCMediaStream
+    let stream: LKRTCMediaStream
     let peerBuilder: GBPeerConnectionBuilder
-    let offerConstraint: RTCMediaConstraints
+    let offerConstraint: LKRTCMediaConstraints
 
-    public init(stream: RTCMediaStream, peerBuilder: GBPeerConnectionBuilder, offerConstraint: RTCMediaConstraints) {
+    public init(
+        stream: LKRTCMediaStream,
+        peerBuilder: GBPeerConnectionBuilder,
+        offerConstraint: LKRTCMediaConstraints
+    ) {
         self.stream = stream
         self.peerBuilder = peerBuilder
         self.offerConstraint = offerConstraint
@@ -44,7 +48,7 @@ public struct GBPeerMediaStream {
 
 public enum GBPeerMedia {
     public static func getMediaBuilder(
-            peerFactoryBuilder: () -> RTCPeerConnectionFactory
+            peerFactoryBuilder: () -> LKRTCPeerConnectionFactory
     ) -> GBPeerBuilder {
         GBPeerBuilder(peerFactory: peerFactoryBuilder())
     }

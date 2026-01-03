@@ -18,9 +18,9 @@ PeerJs Swift port
 
   s.swift_version = '5.6'
 
-  s.dependency 'LanguageManager-iOS', '~> 1.2.6-beta.2'
+  s.dependency 'LanguageManager-iOS', '~> 1.3.1-beta.1'
   s.dependency 'WebRTC-SDK', '= 129.6668.01-beta.1'
   s.dependency 'RxSwift', '~> 6'
   s.dependency 'Starscream', '~> 4'
-  s.dependency 'LifetimeTracker', '= 1.7.1'
+  s.dependency 'LifetimeTracker', '= 1.8.4'
 end

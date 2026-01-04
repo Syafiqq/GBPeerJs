@@ -10,7 +10,6 @@
 		593ED2522935CFA9007BC45A /* GBPeerJs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 593ED2472935CFA9007BC45A /* GBPeerJs.framework */; };
 		599297142F0925B0003A4C65 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 599297132F0925B0003A4C65 /* Starscream */; };
 		599297172F092687003A4C65 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 599297162F092687003A4C65 /* RxSwift */; };
-		5992971A2F0926AB003A4C65 /* LifetimeTracker in Frameworks */ = {isa = PBXBuildFile; productRef = 599297192F0926AB003A4C65 /* LifetimeTracker */; };
 		5992971D2F09A1DF003A4C65 /* LiveKitWebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 5992971C2F09A1DF003A4C65 /* LiveKitWebRTC */; };
 /* End PBXBuildFile section */
 
@@ -52,7 +51,6 @@
 			files = (
 				5992971D2F09A1DF003A4C65 /* LiveKitWebRTC in Frameworks */,
 				599297172F092687003A4C65 /* RxSwift in Frameworks */,
-				5992971A2F0926AB003A4C65 /* LifetimeTracker in Frameworks */,
 				599297142F0925B0003A4C65 /* Starscream in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -512,14 +510,6 @@
 				minimumVersion = 6.9.1;
 			};
 		};
-		599297182F0926AB003A4C65 /* XCRemoteSwiftPackageReference "LifetimeTracker" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/krzysztofzablocki/LifetimeTracker.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.8.5;
-			};
-		};
 		5992971B2F09A1DF003A4C65 /* XCRemoteSwiftPackageReference "webrtc-xcframework" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/livekit/webrtc-xcframework.git";
@@ -540,11 +530,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 599297152F092687003A4C65 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
-		};
-		599297192F0926AB003A4C65 /* LifetimeTracker */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 599297182F0926AB003A4C65 /* XCRemoteSwiftPackageReference "LifetimeTracker" */;
-			productName = LifetimeTracker;
 		};
 		5992971C2F09A1DF003A4C65 /* LiveKitWebRTC */ = {
 			isa = XCSwiftPackageProductDependency;

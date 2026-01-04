@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		593ED2522935CFA9007BC45A /* GBPeerJs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 593ED2472935CFA9007BC45A /* GBPeerJs.framework */; };
-		593ED2572935CFA9007BC45A /* GBPeerJsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593ED2562935CFA9007BC45A /* GBPeerJsTests.swift */; };
 		599297142F0925B0003A4C65 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 599297132F0925B0003A4C65 /* Starscream */; };
 		599297172F092687003A4C65 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 599297162F092687003A4C65 /* RxSwift */; };
 		5992971A2F0926AB003A4C65 /* LifetimeTracker in Frameworks */ = {isa = PBXBuildFile; productRef = 599297192F0926AB003A4C65 /* LifetimeTracker */; };
@@ -28,7 +27,6 @@
 /* Begin PBXFileReference section */
 		593ED2472935CFA9007BC45A /* GBPeerJs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GBPeerJs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		593ED2512935CFA9007BC45A /* GBPeerJsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GBPeerJsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		593ED2562935CFA9007BC45A /* GBPeerJsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBPeerJsTests.swift; sourceTree = "<group>"; };
 		59403FD12947695000426541 /* Script */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Script; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -44,6 +42,7 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		599297A82F0A51DD003A4C65 /* GBPeerJs */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (599297BF2F0A51DD003A4C65 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = GBPeerJs; sourceTree = "<group>"; };
+		599297C12F0A526C003A4C65 /* GBPeerJsTests */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = GBPeerJsTests; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -74,7 +73,7 @@
 			children = (
 				59403FD12947695000426541 /* Script */,
 				599297A82F0A51DD003A4C65 /* GBPeerJs */,
-				593ED2552935CFA9007BC45A /* GBPeerJsTests */,
+				599297C12F0A526C003A4C65 /* GBPeerJsTests */,
 				593ED2482935CFA9007BC45A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -86,14 +85,6 @@
 				593ED2512935CFA9007BC45A /* GBPeerJsTests.xctest */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		593ED2552935CFA9007BC45A /* GBPeerJsTests */ = {
-			isa = PBXGroup;
-			children = (
-				593ED2562935CFA9007BC45A /* GBPeerJsTests.swift */,
-			);
-			path = GBPeerJsTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -142,6 +133,9 @@
 			);
 			dependencies = (
 				593ED2542935CFA9007BC45A /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				599297C12F0A526C003A4C65 /* GBPeerJsTests */,
 			);
 			name = GBPeerJsTests;
 			productName = GBPeerJsTests;
@@ -223,7 +217,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				593ED2572935CFA9007BC45A /* GBPeerJsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

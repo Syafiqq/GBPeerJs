@@ -2,6 +2,15 @@
   "originHash" : "9de7a6806560612ee11607ba8de1501f11a9300a159b3dd5ff61253b8ed32339",
   "pins" : [
     {
+      "identity" : "lifetimetracker",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/krzysztofzablocki/LifetimeTracker.git",
+      "state" : {
+        "revision" : "30d347811bfcf2f37ef0c2ed7e866269c4f836ad",
+        "version" : "1.8.5"
+      }
+    },
+    {
       "identity" : "rxswift",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/ReactiveX/RxSwift.git",

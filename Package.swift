@@ -3,6 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "GBPeerJs",
+    defaultLocalization: "en",
     platforms: [
         .iOS(.v13),
     ],
@@ -21,7 +22,13 @@ let package = Package(
     targets: [
         .target(
             name: "GBPeerJs",
-            dependencies: [],
+            dependencies: [
+                .product(name: "Starscream", package: "Starscream"),
+                .product(name: "RxSwift", package: "RxSwift"),
+                .product(name: "RxCocoa", package: "RxSwift"),
+                .product(name: "LifetimeTracker", package: "LifetimeTracker"),
+                .product(name: "LiveKitWebRTC", package: "webrtc-xcframework")
+            ],
             path: "Sources/GBPeerJs/GBPeerJs"
         ),
         .testTarget(

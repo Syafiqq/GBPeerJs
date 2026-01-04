@@ -7,16 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		593ED24C2935CFA9007BC45A /* GBPeerJs.docc in Sources */ = {isa = PBXBuildFile; fileRef = 593ED24B2935CFA9007BC45A /* GBPeerJs.docc */; };
 		593ED2522935CFA9007BC45A /* GBPeerJs.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 593ED2472935CFA9007BC45A /* GBPeerJs.framework */; };
 		593ED2572935CFA9007BC45A /* GBPeerJsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 593ED2562935CFA9007BC45A /* GBPeerJsTests.swift */; };
-		593ED2582935CFA9007BC45A /* GBPeerJs.h in Headers */ = {isa = PBXBuildFile; fileRef = 593ED24A2935CFA9007BC45A /* GBPeerJs.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		599297142F0925B0003A4C65 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 599297132F0925B0003A4C65 /* Starscream */; };
 		599297172F092687003A4C65 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 599297162F092687003A4C65 /* RxSwift */; };
 		5992971A2F0926AB003A4C65 /* LifetimeTracker in Frameworks */ = {isa = PBXBuildFile; productRef = 599297192F0926AB003A4C65 /* LifetimeTracker */; };
 		5992971D2F09A1DF003A4C65 /* LiveKitWebRTC in Frameworks */ = {isa = PBXBuildFile; productRef = 5992971C2F09A1DF003A4C65 /* LiveKitWebRTC */; };
-		59D1458D2936F74000339673 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 59D1458F2936F74000339673 /* Localizable.strings */; };
-		65B8CB4C5DBA6103913DF02C /* GBPeerJs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CCF436BFA68301C842E8 /* GBPeerJs.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,21 +27,23 @@
 
 /* Begin PBXFileReference section */
 		593ED2472935CFA9007BC45A /* GBPeerJs.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = GBPeerJs.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		593ED24A2935CFA9007BC45A /* GBPeerJs.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GBPeerJs.h; sourceTree = "<group>"; };
-		593ED24B2935CFA9007BC45A /* GBPeerJs.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = GBPeerJs.docc; sourceTree = "<group>"; };
 		593ED2512935CFA9007BC45A /* GBPeerJsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GBPeerJsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		593ED2562935CFA9007BC45A /* GBPeerJsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GBPeerJsTests.swift; sourceTree = "<group>"; };
 		59403FD12947695000426541 /* Script */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Script; sourceTree = "<group>"; };
-		59D1458E2936F74000339673 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		59D145902936F77900339673 /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/Localizable.strings; sourceTree = "<group>"; };
-		59D145912936F79A00339673 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Localizable.strings; sourceTree = "<group>"; };
-		59D145922936F81B00339673 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		65B8CCF436BFA68301C842E8 /* GBPeerJs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GBPeerJs.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		599297BF2F0A51DD003A4C65 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			publicHeaders = (
+				GBPeerJs.h,
+			);
+			target = 593ED2462935CFA9007BC45A /* GBPeerJs */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		599297472F09AA7F003A4C65 /* Presentation */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Presentation; sourceTree = "<group>"; };
-		5992975B2F09AA85003A4C65 /* Common */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Common; sourceTree = "<group>"; };
+		599297A82F0A51DD003A4C65 /* GBPeerJs */ = {isa = PBXFileSystemSynchronizedRootGroup; exceptions = (599297BF2F0A51DD003A4C65 /* PBXFileSystemSynchronizedBuildFileExceptionSet */, ); explicitFileTypes = {}; explicitFolders = (); path = GBPeerJs; sourceTree = "<group>"; };
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				59403FD12947695000426541 /* Script */,
-				593ED2492935CFA9007BC45A /* GBPeerJs */,
+				599297A82F0A51DD003A4C65 /* GBPeerJs */,
 				593ED2552935CFA9007BC45A /* GBPeerJsTests */,
 				593ED2482935CFA9007BC45A /* Products */,
 			);
@@ -90,33 +88,12 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		593ED2492935CFA9007BC45A /* GBPeerJs */ = {
-			isa = PBXGroup;
-			children = (
-				593ED24A2935CFA9007BC45A /* GBPeerJs.h */,
-				593ED24B2935CFA9007BC45A /* GBPeerJs.docc */,
-				65B8CCF436BFA68301C842E8 /* GBPeerJs.swift */,
-				59D145852936F0B700339673 /* i18n */,
-				599297472F09AA7F003A4C65 /* Presentation */,
-				5992975B2F09AA85003A4C65 /* Common */,
-			);
-			path = GBPeerJs;
-			sourceTree = "<group>";
-		};
 		593ED2552935CFA9007BC45A /* GBPeerJsTests */ = {
 			isa = PBXGroup;
 			children = (
 				593ED2562935CFA9007BC45A /* GBPeerJsTests.swift */,
 			);
 			path = GBPeerJsTests;
-			sourceTree = "<group>";
-		};
-		59D145852936F0B700339673 /* i18n */ = {
-			isa = PBXGroup;
-			children = (
-				59D1458F2936F74000339673 /* Localizable.strings */,
-			);
-			path = i18n;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -126,7 +103,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				593ED2582935CFA9007BC45A /* GBPeerJs.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -147,8 +123,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				599297472F09AA7F003A4C65 /* Presentation */,
-				5992975B2F09AA85003A4C65 /* Common */,
+				599297A82F0A51DD003A4C65 /* GBPeerJs */,
 			);
 			name = GBPeerJs;
 			productName = GBPeerJs;
@@ -224,7 +199,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				59D1458D2936F74000339673 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -242,8 +216,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				593ED24C2935CFA9007BC45A /* GBPeerJs.docc in Sources */,
-				65B8CB4C5DBA6103913DF02C /* GBPeerJs.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,20 +236,6 @@
 			targetProxy = 593ED2532935CFA9007BC45A /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
-
-/* Begin PBXVariantGroup section */
-		59D1458F2936F74000339673 /* Localizable.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				59D1458E2936F74000339673 /* en */,
-				59D145902936F77900339673 /* id */,
-				59D145912936F79A00339673 /* vi */,
-				59D145922936F81B00339673 /* zh-Hans */,
-			);
-			name = Localizable.strings;
-			sourceTree = "<group>";
-		};
-/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		593ED2592935CFA9007BC45A /* Debug */ = {

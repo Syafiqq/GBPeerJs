@@ -173,10 +173,6 @@
 			);
 			mainGroup = 593ED23D2935CFA9007BC45A;
 			packageReferences = (
-				599297122F0925B0003A4C65 /* XCRemoteSwiftPackageReference "Starscream" */,
-				599297152F092687003A4C65 /* XCRemoteSwiftPackageReference "RxSwift" */,
-				599297182F0926AB003A4C65 /* XCRemoteSwiftPackageReference "LifetimeTracker" */,
-				5992971B2F09A1DF003A4C65 /* XCRemoteSwiftPackageReference "webrtc-xcframework" */,
 			);
 			productRefGroup = 593ED2482935CFA9007BC45A /* Products */;
 			projectDirPath = "";

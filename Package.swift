@@ -18,6 +18,7 @@ let package = Package(
         .package(url: "https://github.com/ReactiveX/RxSwift.git", from: "6.9.1"),
         .package(url: "https://github.com/krzysztofzablocki/LifetimeTracker.git", from: "1.8.5"),
         .package(url: "https://github.com/livekit/webrtc-xcframework.git", exact: "125.6422.32"),
+        .package(url: "git@bitbucket.org:beautyfu/ios-languagemanager-ios.git", exact: "1.3.1-beta.1"),
     ],
     targets: [
         .target(
@@ -28,6 +29,7 @@ let package = Package(
                 .product(name: "RxCocoa", package: "RxSwift"),
                 .product(name: "LifetimeTracker", package: "LifetimeTracker"),
                 .product(name: "LiveKitWebRTC", package: "webrtc-xcframework")
+                .product(name: "LanguageManager-iOS", package: "ios-languagemanager-ios"),
             ],
             path: "Sources/GBPeerJs/GBPeerJs"
         ),

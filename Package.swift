@@ -13,7 +13,10 @@ let package = Package(
         )
     ],
     dependencies: [
-        
+        .package(url: "https://github.com/daltoniam/Starscream.git", from: "4.0.8"),
+        .package(url: "https://github.com/ReactiveX/RxSwift.git", from: "6.9.1"),
+        .package(url: "https://github.com/krzysztofzablocki/LifetimeTracker.git", from: "1.8.5"),
+        .package(url: "https://github.com/livekit/webrtc-xcframework.git", exact: "125.6422.32"),
     ],
     targets: [
         .target(

@@ -1,13 +1,13 @@
 {
-  "originHash" : "cc64fc770531ba042cfce4d0751c03c0239b949367351785072235e06dba5c59",
+  "originHash" : "d5b39f446536ebd658c02882193dab833de6c347794550e51474d50509d54871",
   "pins" : [
     {
-      "identity" : "lifetimetracker",
+      "identity" : "gbpeerjs",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/krzysztofzablocki/LifetimeTracker.git",
+      "location" : "git@github.com:Syafiqq/GBPeerJs.git",
       "state" : {
-        "revision" : "30d347811bfcf2f37ef0c2ed7e866269c4f836ad",
-        "version" : "1.8.5"
+        "branch" : "main",
+        "revision" : "d90e798a85a644c3cd6987e981055c563e8021f1"
       }
     },
     {

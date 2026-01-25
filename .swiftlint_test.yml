@@ -74,7 +74,7 @@ analyzer_rules:
   - explicit_self
   - unused_import
 included: # paths to include during linting. `--path` is ignored if present.
-  - Sources/GBPeerJs/GBPeerJsTests
+  - Library/GBPeerJs/Tests/GBPeerJsTests
 excluded: # paths to ignore during linting. Takes precedence over `included`.
   - ./**/*Mocks.swift
   - ./**/*/*.example.swift

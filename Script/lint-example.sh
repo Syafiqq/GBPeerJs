@@ -4,5 +4,25 @@
 set -e
 set -o pipefail
 
-Pods/SwiftLint/swiftlint lint --config ".swiftlint_example.yml" --strict | sed 's/warning:/error:/g'
-Pods/SwiftLint/swiftlint lint --config ".swiftlint_example_test.yml" --strict | sed 's/warning:/error:/g'
+# Find SwiftLint from multiple sources (Brew, Pods, Mint)
+SWIFTLINT=""
+
+# Check Brew
+if command -v swiftlint &> /dev/null; then
+    SWIFTLINT="swiftlint"
+    echo "Using SwiftLint from Brew"
+# Check Pods
+elif [ -f "Pods/SwiftLint/swiftlint" ]; then
+    SWIFTLINT="Pods/SwiftLint/swiftlint"
+    echo "Using SwiftLint from Pods"
+# Check Mint
+elif command -v mint &> /dev/null; then
+    SWIFTLINT="mint run realm/SwiftLint"
+    echo "Using SwiftLint from Mint"
+else
+    echo "Error: SwiftLint not found. Please install via Brew, Pods, or Mint."
+    exit 1
+fi
+
+eval "$SWIFTLINT lint --config \".swiftlint_example.yml\" --strict" | sed 's/warning:/error:/g'
+eval "$SWIFTLINT lint --config \".swiftlint_example_test.yml\" --strict" | sed 's/warning:/error:/g'

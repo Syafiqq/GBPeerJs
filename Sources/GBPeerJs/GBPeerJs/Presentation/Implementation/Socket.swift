@@ -46,8 +46,6 @@ class Socket: ISocket {
 
         let wsProtocol = secure ? "wss://" : "ws://"
         baseUrl = "\(wsProtocol)\(host):\(port)\(path)peerjs?key=\(key)"
-
-        trackLifetime()
     }
 
     func start(id: String, token: String) {
@@ -259,13 +257,5 @@ extension Socket: WebSocketDelegate {
         case .peerClosed:
            break
         }
-    }
-}
-
-import LifetimeTracker
-
-extension Socket: LifetimeTrackable {
-    public class var lifetimeConfiguration: LifetimeConfiguration {
-        LifetimeConfiguration(maxCount: 1)
     }
 }

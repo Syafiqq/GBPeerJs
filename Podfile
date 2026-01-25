@@ -1,5 +1,5 @@
 source 'https://bitbucket.org/beautyfu/ios-pod-specs.git'
-source 'https://cdn.cocoapods.org/'
+source 'https://github.com/CocoaPods/Specs.git'
 
 workspace 'GBPeerJs'
 # Uncomment the next line to define a global platform for your project

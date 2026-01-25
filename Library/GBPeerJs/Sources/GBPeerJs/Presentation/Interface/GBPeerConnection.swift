@@ -3,7 +3,7 @@
 //
 
 import Foundation
-import WebRTC
+import LiveKitWebRTC
 
 public protocol GBPeerConnection: AnyObject {
     func answer(stream: GBPeerMediaStream)

@@ -3,7 +3,7 @@
 //
 
 import Foundation
-import WebRTC
+import LiveKitWebRTC
 import RxSwift
 
 class Negotiator: NSObject, INegotiator {
@@ -20,7 +20,7 @@ class Negotiator: NSObject, INegotiator {
     func startConnection(
             stream: GBPeerMediaStream? = nil,
             originator: Bool = false,
-            mediaOfferConstraint: RTCMediaConstraints,
+            mediaOfferConstraint: LKRTCMediaConstraints,
             remoteOfferSdp: String,
             remoteOfferSdpType: String
     ) -> Completable {
@@ -37,7 +37,7 @@ class Negotiator: NSObject, INegotiator {
             type: String,
             sdp: String,
             sdpType: String,
-            mediaOfferConstraint: RTCMediaConstraints
+            mediaOfferConstraint: LKRTCMediaConstraints
     ) -> Completable {
         doHandleSDP(
                 type: type,
@@ -47,7 +47,7 @@ class Negotiator: NSObject, INegotiator {
         )
     }
 
-    func handleCandidate(_ ice: RTCIceCandidate) -> Completable {
+    func handleCandidate(_ ice: LKRTCIceCandidate) -> Completable {
         doHandleCandidate(ice)
     }
 
@@ -66,7 +66,7 @@ private extension Negotiator {
             // swiftlint:disable:previous function_body_length
             stream: GBPeerMediaStream? = nil,
             originator: Bool = false,
-            mediaOfferConstraint: RTCMediaConstraints,
+            mediaOfferConstraint: LKRTCMediaConstraints,
             remoteOfferSdp: String,
             remoteOfferSdpType: String
     ) -> Completable {
@@ -97,7 +97,7 @@ private extension Negotiator {
                             /*if connection?.type == .data {
                                 const dataConnection = <DataConnection > (<unknown > self.connection)
 
-                                const config: RTCDataChannelInit = {
+                                const config: LKRTCDataChannelInit = {
                                     ordered: !!options.reliable
                                 }
 
@@ -162,10 +162,10 @@ private extension Negotiator {
     /** Start a PC. */
     func startPeerConnection(
             peerBuilder: GBPeerConnectionBuilder
-    ) throws -> RTCPeerConnection {
-        logger.log("Creating RTCPeerConnection.")
+    ) throws -> LKRTCPeerConnection {
+        logger.log("Creating LKRTCPeerConnection.")
 
-        let config = RTCConfiguration()
+        let config = LKRTCConfiguration()
         peerBuilder.peerConfigBuilder(config)
         guard let peerConnection = peerBuilder.peerBuilder.peerFactory
                 .peerConnection(with: config, constraints: peerBuilder.peerConstraint, delegate: nil) else {
@@ -178,7 +178,7 @@ private extension Negotiator {
     }
 
     /** Set up various WebRTC listeners. */
-    func setupListeners(peerConnection: RTCPeerConnection) {
+    func setupListeners(peerConnection: LKRTCPeerConnection) {
         // ICE CANDIDATES.
         logger.log("Listening for ICE candidates.")
         // peerConnection.onicecandidate
@@ -232,8 +232,8 @@ private extension Negotiator {
     }
 
     // swiftlint:disable:next function_body_length
-    func makeOffer(mediaConstraint: RTCMediaConstraints) -> Completable {
-        func createOfferAsync(mediaConstraint: RTCMediaConstraints) -> Single<RTCSessionDescription> {
+    func makeOffer(mediaConstraint: LKRTCMediaConstraints) -> Completable {
+        func createOfferAsync(mediaConstraint: LKRTCMediaConstraints) -> Single<LKRTCSessionDescription> {
             Single.create { [weak self] observer in
                 guard let self = self else {
                     observer(.failure(RxError.disposed(object: Self.self)))
@@ -266,7 +266,7 @@ private extension Negotiator {
             }
         }
 
-        func setLocalDescriptionAsync(session: RTCSessionDescription) -> Completable {
+        func setLocalDescriptionAsync(session: LKRTCSessionDescription) -> Completable {
             Completable.create(subscribe: { [weak self] observer in
                 guard let self = self else {
                     observer(.error(RxError.disposed(object: Self.self)))
@@ -334,7 +334,7 @@ private extension Negotiator {
                                         .andThen(Single.just(session))
                             })
                             .subscribe(
-                                    onSuccess: { [weak self] (session: RTCSessionDescription) in
+                                    onSuccess: { [weak self] (session: LKRTCSessionDescription) in
                                         guard let self = self else {
                                             observer(.error(RxError.disposed(object: Self.self)))
                                             return
@@ -356,7 +356,7 @@ private extension Negotiator {
                                                 payload: PeerJsOfferRequestEntity.Payload(
                                                         sdp: PeerJsOfferRequestEntity.SDP(
                                                                 sdp: session.sdp,
-                                                                type: RTCSessionDescription.string(for: session.type)
+                                                                type: LKRTCSessionDescription.string(for: session.type)
                                                         ),
                                                         type: self.connection?.type.rawValue ?? "",
                                                         connectionId: self.connection?.connectionId ?? "",
@@ -401,8 +401,8 @@ private extension Negotiator {
     }
 
     // swiftlint:disable:next function_body_length
-    func makeAnswer(mediaConstraint: RTCMediaConstraints) -> Completable {
-        func createAnswerAsync(mediaConstraint: RTCMediaConstraints) -> Single<RTCSessionDescription> {
+    func makeAnswer(mediaConstraint: LKRTCMediaConstraints) -> Completable {
+        func createAnswerAsync(mediaConstraint: LKRTCMediaConstraints) -> Single<LKRTCSessionDescription> {
             Single.create { [weak self] observer in
                 guard let self = self else {
                     observer(.failure(RxError.disposed(object: Self.self)))
@@ -435,7 +435,7 @@ private extension Negotiator {
             }
         }
 
-        func setLocalDescriptionAsync(session: RTCSessionDescription) -> Completable {
+        func setLocalDescriptionAsync(session: LKRTCSessionDescription) -> Completable {
             Completable.create(subscribe: { [weak self] observer in
                 guard let self = self else {
                     observer(.error(RxError.disposed(object: Self.self)))
@@ -503,7 +503,7 @@ private extension Negotiator {
                                         .andThen(Single.just(session))
                             })
                             .subscribe(
-                                    onSuccess: { [weak self] (session: RTCSessionDescription) in
+                                    onSuccess: { [weak self] (session: LKRTCSessionDescription) in
                                         guard let self = self else {
                                             observer(.error(RxError.disposed(object: Self.self)))
                                             return
@@ -514,7 +514,7 @@ private extension Negotiator {
                                                 payload: PeerJsOfferRequestEntity.Payload(
                                                         sdp: PeerJsOfferRequestEntity.SDP(
                                                                 sdp: session.sdp,
-                                                                type: RTCSessionDescription.string(for: session.type)
+                                                                type: LKRTCSessionDescription.string(for: session.type)
                                                         ),
                                                         type: self.connection?.type.rawValue ?? "",
                                                         connectionId: self.connection?.connectionId ?? "",
@@ -564,9 +564,9 @@ private extension Negotiator {
             type: String,
             sdp: String,
             sdpType: String,
-            mediaOfferConstraint: RTCMediaConstraints
+            mediaOfferConstraint: LKRTCMediaConstraints
     ) -> Completable {
-        func setRemoteDescriptionAsync(session: RTCSessionDescription) -> Completable {
+        func setRemoteDescriptionAsync(session: LKRTCSessionDescription) -> Completable {
             Completable.create(subscribe: { [weak self] observer in
                 guard let self = self else {
                     observer(.error(RxError.disposed(object: Self.self)))
@@ -602,7 +602,7 @@ private extension Negotiator {
                         return Disposables.create()
                     }
 
-                    let sdp = RTCSessionDescription(type: RTCSessionDescription.type(for: sdpType), sdp: sdp)
+                    let sdp = LKRTCSessionDescription(type: LKRTCSessionDescription.type(for: sdpType), sdp: sdp)
                     self.logger.log("Setting remote description", sdp.sdp)
 
                     var bag = [Disposable]()
@@ -652,9 +652,9 @@ private extension Negotiator {
     }
 
     /** Handle a candidate. */
-    func doHandleCandidate(_ ice: RTCIceCandidate) -> Completable {
+    func doHandleCandidate(_ ice: LKRTCIceCandidate) -> Completable {
         // swiftlint:disable:previous function_body_length
-        func addIceCandidateAsync(ice: RTCIceCandidate) -> Completable {
+        func addIceCandidateAsync(ice: LKRTCIceCandidate) -> Completable {
             Completable.create(subscribe: { [weak self] observer in
                 guard let self = self else {
                     observer(.error(RxError.disposed(object: Self.self)))
@@ -731,13 +731,13 @@ private extension Negotiator {
     }
 
     func addTracksToConnection(
-            stream: RTCMediaStream,
-            peerConnection: RTCPeerConnection
+            stream: LKRTCMediaStream,
+            peerConnection: LKRTCPeerConnection
     ) {
         logger.log("add tracks from stream \(stream.streamId) to peer connection")
 
         /*guard (peerConnection.canAddTrack) else {
-            logger.error("Your browser does't support RTCPeerConnection#addTrack. Ignored.")
+            logger.error("Your browser does't support LKRTCPeerConnection#addTrack. Ignored.")
             return
         }*/
 
@@ -751,7 +751,7 @@ private extension Negotiator {
     }
 
     func addStreamToMediaConnection(
-            stream: RTCMediaStream,
+            stream: LKRTCMediaStream,
             mediaConnection: IConnection
     ) {
         logger.log("add stream \(stream.streamId) to media connection \(mediaConnection.connectionId)")
@@ -760,11 +760,11 @@ private extension Negotiator {
     }
 }
 
-extension Negotiator: RTCPeerConnectionDelegate {
-    func peerConnection(_ peerConnection: RTCPeerConnection, didChange stateChanged: RTCSignalingState) {
+extension Negotiator: LKRTCPeerConnectionDelegate {
+    func peerConnection(_ peerConnection: LKRTCPeerConnection, didChange stateChanged: LKRTCSignalingState) {
     }
 
-    func peerConnection(_ peerConnection: RTCPeerConnection, didAdd stream: RTCMediaStream) {
+    func peerConnection(_ peerConnection: LKRTCPeerConnection, didAdd stream: LKRTCMediaStream) {
         logger.log("Received remote stream")
 
         guard let peerId = connection?.peer,
@@ -777,13 +777,13 @@ extension Negotiator: RTCPeerConnectionDelegate {
         addStreamToMediaConnection(stream: stream, mediaConnection: connection)
     }
 
-    func peerConnection(_ peerConnection: RTCPeerConnection, didRemove stream: RTCMediaStream) {
+    func peerConnection(_ peerConnection: LKRTCPeerConnection, didRemove stream: LKRTCMediaStream) {
     }
 
-    func peerConnectionShouldNegotiate(_ peerConnection: RTCPeerConnection) {
+    func peerConnectionShouldNegotiate(_ peerConnection: LKRTCPeerConnection) {
     }
 
-    func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceConnectionState) {
+    func peerConnection(_ peerConnection: LKRTCPeerConnection, didChange newState: LKRTCIceConnectionState) {
         logger.log("peerConnection - didChange -\(newState)")
         switch peerConnection.iceConnectionState {
         case .failed:
@@ -803,10 +803,10 @@ extension Negotiator: RTCPeerConnectionDelegate {
         connection?.emitIceStateChanged(peerConnection.iceConnectionState)
     }
 
-    func peerConnection(_ peerConnection: RTCPeerConnection, didChange newState: RTCIceGatheringState) {
+    func peerConnection(_ peerConnection: LKRTCPeerConnection, didChange newState: LKRTCIceGatheringState) {
     }
 
-    func peerConnection(_ peerConnection: RTCPeerConnection, didGenerate candidate: RTCIceCandidate) {
+    func peerConnection(_ peerConnection: LKRTCPeerConnection, didGenerate candidate: LKRTCIceCandidate) {
         guard peerConnection.iceConnectionState != .completed,
               !candidate.sdp.isEmpty else {
             return
@@ -838,10 +838,10 @@ extension Negotiator: RTCPeerConnectionDelegate {
         }
     }
 
-    func peerConnection(_ peerConnection: RTCPeerConnection, didRemove candidates: [RTCIceCandidate]) {
+    func peerConnection(_ peerConnection: LKRTCPeerConnection, didRemove candidates: [LKRTCIceCandidate]) {
     }
 
-    func peerConnection(_ peerConnection: RTCPeerConnection, didOpen dataChannel: RTCDataChannel) {
+    func peerConnection(_ peerConnection: LKRTCPeerConnection, didOpen dataChannel: LKRTCDataChannel) {
         logger.log("Received data channel")
 
         /*const dataChannel = evt.channel

@@ -58,6 +58,8 @@ public class GBPeer {
         logger.debug = true
 
         initialize(userId)
+
+        trackLifetime()
     }
 
     public func call(
@@ -505,5 +507,13 @@ extension GBPeer: SocketDelegate {
 
     func socketJs(onError error: Error?) {
         abort(error)
+    }
+}
+
+import LifetimeTracker
+
+extension GBPeer: LifetimeTrackable {
+    public class var lifetimeConfiguration: LifetimeConfiguration {
+        LifetimeConfiguration(maxCount: 1)
     }
 }

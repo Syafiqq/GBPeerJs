@@ -3,11 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0F35F090BA815AEECCCFAD8E /* Pods_GBPeerJsExampleTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FA45B8C4696D0CBC88488962 /* Pods_GBPeerJsExampleTests.framework */; };
 		5962A4B32935DFA100183658 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5962A4B22935DFA100183658 /* AppDelegate.swift */; };
 		5962A4B72935DFA100183658 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5962A4B62935DFA100183658 /* ViewController.swift */; };
 		5962A4BA2935DFA100183658 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5962A4B82935DFA100183658 /* Main.storyboard */; };
@@ -16,11 +15,10 @@
 		5962A4CA2935DFA200183658 /* GBPeerJsExampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5962A4C92935DFA200183658 /* GBPeerJsExampleTests.swift */; };
 		5962A4D42935DFA200183658 /* GBPeerJsExampleUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5962A4D32935DFA200183658 /* GBPeerJsExampleUITests.swift */; };
 		5962A4D62935DFA200183658 /* GBPeerJsExampleUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5962A4D52935DFA200183658 /* GBPeerJsExampleUITestsLaunchTests.swift */; };
+		59CF3C252F26187200A3C69A /* GBPeerJs in Frameworks */ = {isa = PBXBuildFile; productRef = 59CF3C242F26187200A3C69A /* GBPeerJs */; };
 		65B8C5B5E3B2C451BAEC7A3C /* ViewControllerCallAsTeacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CFF5A966C62BB4DE37FE /* ViewControllerCallAsTeacher.swift */; };
 		65B8CA2DE320081858B034AE /* IceServerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8C100C7EEA5B961662278 /* IceServerHelper.swift */; };
 		65B8CFF19171573CAAB0FC5C /* ViewControllerCallAsStudent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65B8CA0115DD857EFE75DD0E /* ViewControllerCallAsStudent.swift */; };
-		8AE6DF00C2621EBAF89816B8 /* Pods_GBPeerJsExample_GBPeerJsExampleUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B918DDD2951E369B2EAC3AA8 /* Pods_GBPeerJsExample_GBPeerJsExampleUITests.framework */; };
-		A3F62B095EBD54CB58E525AF /* Pods_GBPeerJsExample.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1B7F02D18FDAAAFE64A644C9 /* Pods_GBPeerJsExample.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,10 +38,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		59E0D41D2A4E63E2004CA3D2 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
-		000691E42DCB89CE2C2240A0 /* Pods-GBPeerJsExampleTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GBPeerJsExampleTests.release.xcconfig"; path = "Target Support Files/Pods-GBPeerJsExampleTests/Pods-GBPeerJsExampleTests.release.xcconfig"; sourceTree = "<group>"; };
-		107C63735F152D798633262C /* Pods-GBPeerJsExample.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GBPeerJsExample.debug.xcconfig"; path = "Target Support Files/Pods-GBPeerJsExample/Pods-GBPeerJsExample.debug.xcconfig"; sourceTree = "<group>"; };
-		1B7F02D18FDAAAFE64A644C9 /* Pods_GBPeerJsExample.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GBPeerJsExample.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5962A4AF2935DFA100183658 /* GBPeerJsExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GBPeerJsExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5962A4B22935DFA100183658 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5962A4B62935DFA100183658 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -59,12 +67,6 @@
 		65B8C100C7EEA5B961662278 /* IceServerHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IceServerHelper.swift; sourceTree = "<group>"; };
 		65B8CA0115DD857EFE75DD0E /* ViewControllerCallAsStudent.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerCallAsStudent.swift; sourceTree = "<group>"; };
 		65B8CFF5A966C62BB4DE37FE /* ViewControllerCallAsTeacher.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewControllerCallAsTeacher.swift; sourceTree = "<group>"; };
-		716D753FD77C149DDE6A5FE1 /* Pods-GBPeerJsExample-GBPeerJsExampleUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GBPeerJsExample-GBPeerJsExampleUITests.debug.xcconfig"; path = "Target Support Files/Pods-GBPeerJsExample-GBPeerJsExampleUITests/Pods-GBPeerJsExample-GBPeerJsExampleUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		A26519B706EE68860F1FFA54 /* Pods-GBPeerJsExampleTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GBPeerJsExampleTests.debug.xcconfig"; path = "Target Support Files/Pods-GBPeerJsExampleTests/Pods-GBPeerJsExampleTests.debug.xcconfig"; sourceTree = "<group>"; };
-		B918DDD2951E369B2EAC3AA8 /* Pods_GBPeerJsExample_GBPeerJsExampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GBPeerJsExample_GBPeerJsExampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BCCB58961561174508C7E298 /* Pods-GBPeerJsExample-GBPeerJsExampleUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GBPeerJsExample-GBPeerJsExampleUITests.release.xcconfig"; path = "Target Support Files/Pods-GBPeerJsExample-GBPeerJsExampleUITests/Pods-GBPeerJsExample-GBPeerJsExampleUITests.release.xcconfig"; sourceTree = "<group>"; };
-		D90A4A70DAD81C3A9E0C6105 /* Pods-GBPeerJsExample.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GBPeerJsExample.release.xcconfig"; path = "Target Support Files/Pods-GBPeerJsExample/Pods-GBPeerJsExample.release.xcconfig"; sourceTree = "<group>"; };
-		FA45B8C4696D0CBC88488962 /* Pods_GBPeerJsExampleTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_GBPeerJsExampleTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,7 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A3F62B095EBD54CB58E525AF /* Pods_GBPeerJsExample.framework in Frameworks */,
+				59CF3C252F26187200A3C69A /* GBPeerJs in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,7 +82,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0F35F090BA815AEECCCFAD8E /* Pods_GBPeerJsExampleTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,7 +89,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8AE6DF00C2621EBAF89816B8 /* Pods_GBPeerJsExample_GBPeerJsExampleUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -102,7 +102,6 @@
 				5962A4C82935DFA200183658 /* GBPeerJsExampleTests */,
 				5962A4D22935DFA200183658 /* GBPeerJsExampleUITests */,
 				5962A4B02935DFA100183658 /* Products */,
-				D9FE830C5F04C8342434C256 /* Pods */,
 				8127A5D3838CD9E3B9355832 /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -153,25 +152,8 @@
 		8127A5D3838CD9E3B9355832 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1B7F02D18FDAAAFE64A644C9 /* Pods_GBPeerJsExample.framework */,
-				B918DDD2951E369B2EAC3AA8 /* Pods_GBPeerJsExample_GBPeerJsExampleUITests.framework */,
-				FA45B8C4696D0CBC88488962 /* Pods_GBPeerJsExampleTests.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		D9FE830C5F04C8342434C256 /* Pods */ = {
-			isa = PBXGroup;
-			children = (
-				107C63735F152D798633262C /* Pods-GBPeerJsExample.debug.xcconfig */,
-				D90A4A70DAD81C3A9E0C6105 /* Pods-GBPeerJsExample.release.xcconfig */,
-				716D753FD77C149DDE6A5FE1 /* Pods-GBPeerJsExample-GBPeerJsExampleUITests.debug.xcconfig */,
-				BCCB58961561174508C7E298 /* Pods-GBPeerJsExample-GBPeerJsExampleUITests.release.xcconfig */,
-				A26519B706EE68860F1FFA54 /* Pods-GBPeerJsExampleTests.debug.xcconfig */,
-				000691E42DCB89CE2C2240A0 /* Pods-GBPeerJsExampleTests.release.xcconfig */,
-			);
-			name = Pods;
-			path = ../../Pods;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -181,12 +163,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5962A4D92935DFA200183658 /* Build configuration list for PBXNativeTarget "GBPeerJsExample" */;
 			buildPhases = (
-				BBBECF9CB0601125C46736F7 /* [CP] Check Pods Manifest.lock */,
 				5962A4AB2935DFA100183658 /* Sources */,
-				5901DC5B29370CFA00FF0A94 /* Linting */,
 				5962A4AC2935DFA100183658 /* Frameworks */,
 				5962A4AD2935DFA100183658 /* Resources */,
-				A6516F984BD8140B620082AC /* [CP] Embed Pods Frameworks */,
+				59E0D41D2A4E63E2004CA3D2 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -201,12 +181,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5962A4DC2935DFA200183658 /* Build configuration list for PBXNativeTarget "GBPeerJsExampleTests" */;
 			buildPhases = (
-				646648FF6C1CD8F232EC83CD /* [CP] Check Pods Manifest.lock */,
 				5962A4C12935DFA200183658 /* Sources */,
-				5901DC5C29370D1700FF0A94 /* Linting */,
 				5962A4C22935DFA200183658 /* Frameworks */,
 				5962A4C32935DFA200183658 /* Resources */,
-				8CDE72A3834EDAFB55C172F8 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -222,12 +199,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5962A4DF2935DFA200183658 /* Build configuration list for PBXNativeTarget "GBPeerJsExampleUITests" */;
 			buildPhases = (
-				EBC09674F79931B0422C2BE6 /* [CP] Check Pods Manifest.lock */,
 				5962A4CB2935DFA200183658 /* Sources */,
-				5901DC5D29370D2900FF0A94 /* Linting */,
 				5962A4CC2935DFA200183658 /* Frameworks */,
 				5962A4CD2935DFA200183658 /* Resources */,
-				37EAB5CE6BDE044E8D7AA23C /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -271,6 +245,9 @@
 				Base,
 			);
 			mainGroup = 5962A4A62935DFA100183658;
+			packageReferences = (
+				59CF3C232F26187200A3C69A /* XCLocalSwiftPackageReference "../../Library/GBPeerJs" */,
+			);
 			productRefGroup = 5962A4B02935DFA100183658 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -308,185 +285,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		37EAB5CE6BDE044E8D7AA23C /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GBPeerJsExample-GBPeerJsExampleUITests/Pods-GBPeerJsExample-GBPeerJsExampleUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GBPeerJsExample-GBPeerJsExampleUITests/Pods-GBPeerJsExample-GBPeerJsExampleUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GBPeerJsExample-GBPeerJsExampleUITests/Pods-GBPeerJsExample-GBPeerJsExampleUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5901DC5B29370CFA00FF0A94 /* Linting */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(PODS_PODFILE_DIR_PATH)/Examples/GBPeerJsExample/GBPeerJsExample",
-			);
-			name = Linting;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\" lint --config \"${PODS_PODFILE_DIR_PATH}/.swiftlint_example.yml\" --strict\n";
-		};
-		5901DC5C29370D1700FF0A94 /* Linting */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"$(PODS_PODFILE_DIR_PATH)/Examples/GBPeerJsExample/GBPeerJsExampleTests",
-			);
-			name = Linting;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\" lint --config \"${PODS_PODFILE_DIR_PATH}/.swiftlint_example_test.yml\" --strict\n";
-		};
-		5901DC5D29370D2900FF0A94 /* Linting */ = {
-			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = Linting;
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\" lint --config \"${PODS_PODFILE_DIR_PATH}/.swiftlint_example_test.yml\" --strict\n";
-		};
-		646648FF6C1CD8F232EC83CD /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-GBPeerJsExampleTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		8CDE72A3834EDAFB55C172F8 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GBPeerJsExampleTests/Pods-GBPeerJsExampleTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GBPeerJsExampleTests/Pods-GBPeerJsExampleTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GBPeerJsExampleTests/Pods-GBPeerJsExampleTests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A6516F984BD8140B620082AC /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GBPeerJsExample/Pods-GBPeerJsExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-GBPeerJsExample/Pods-GBPeerJsExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-GBPeerJsExample/Pods-GBPeerJsExample-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		BBBECF9CB0601125C46736F7 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-GBPeerJsExample-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		EBC09674F79931B0422C2BE6 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-GBPeerJsExample-GBPeerJsExampleUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		5962A4AB2935DFA100183658 /* Sources */ = {
@@ -671,7 +469,6 @@
 		};
 		5962A4DA2935DFA200183658 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 107C63735F152D798633262C /* Pods-GBPeerJsExample.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -704,7 +501,6 @@
 		};
 		5962A4DB2935DFA200183658 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D90A4A70DAD81C3A9E0C6105 /* Pods-GBPeerJsExample.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -737,7 +533,6 @@
 		};
 		5962A4DD2935DFA200183658 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A26519B706EE68860F1FFA54 /* Pods-GBPeerJsExampleTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -760,7 +555,6 @@
 		};
 		5962A4DE2935DFA200183658 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 000691E42DCB89CE2C2240A0 /* Pods-GBPeerJsExampleTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -783,7 +577,6 @@
 		};
 		5962A4E02935DFA200183658 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 716D753FD77C149DDE6A5FE1 /* Pods-GBPeerJsExample-GBPeerJsExampleUITests.debug.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -805,7 +598,6 @@
 		};
 		5962A4E12935DFA200183658 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = BCCB58961561174508C7E298 /* Pods-GBPeerJsExample-GBPeerJsExampleUITests.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -865,6 +657,20 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		59CF3C232F26187200A3C69A /* XCLocalSwiftPackageReference "../../Library/GBPeerJs" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../Library/GBPeerJs;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		59CF3C242F26187200A3C69A /* GBPeerJs */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = GBPeerJs;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5962A4A72935DFA100183658 /* Project object */;
 }

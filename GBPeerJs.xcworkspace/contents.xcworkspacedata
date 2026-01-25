@@ -2,15 +2,12 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:Sources/GBPeerJs/GBPeerJs.xcodeproj">
+      location = "group:Library/GBPeerJs">
    </FileRef>
    <FileRef
       location = "group:Examples/GBPeerJsExample/GBPeerJsExample.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Properties/Properties.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:Pods/Pods.xcodeproj">
    </FileRef>
 </Workspace>

@@ -120,3 +120,5 @@ iOSInjectionProject/
 
 /sfq
 /Script/pod-lint.sh
+/.bundle
+/vendor

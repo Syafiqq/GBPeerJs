@@ -70,7 +70,7 @@ analyzer_rules:
   - explicit_self
   - unused_import
 included: # paths to include during linting. `--path` is ignored if present.
-  - Sources/GBPeerJs/GBPeerJs
+  - Library/GBPeerJs/Sources/GBPeerJs
 identifier_name:
   allowed_symbols:
     - _

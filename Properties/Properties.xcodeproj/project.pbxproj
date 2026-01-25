@@ -8,15 +8,10 @@
 
 /* Begin PBXFileReference section */
 		59C604692946B677000468E8 /* Patch */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Patch; path = ../Patch; sourceTree = "<group>"; };
-		59C6046A2946B777000468E8 /* Gemfile.lock */ = {isa = PBXFileReference; lastKnownFileType = text; name = Gemfile.lock; path = ../Gemfile.lock; sourceTree = "<group>"; };
-		59C6046F2946B931000468E8 /* Podfile.lock */ = {isa = PBXFileReference; lastKnownFileType = text; name = Podfile.lock; path = ../Podfile.lock; sourceTree = "<group>"; };
-		59CBA81D2939C7FD0037E7B4 /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Gemfile; path = ../Gemfile; sourceTree = "<group>"; };
 		59CBA81E2939C7FD0037E7B4 /* .swiftlint_test.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .swiftlint_test.yml; path = ../.swiftlint_test.yml; sourceTree = "<group>"; };
 		59CBA81F2939C7FD0037E7B4 /* .swiftlint_example.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .swiftlint_example.yml; path = ../.swiftlint_example.yml; sourceTree = "<group>"; };
-		59CBA8202939C7FD0037E7B4 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		59CBA8212939C7FD0037E7B4 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .swiftlint.yml; path = ../.swiftlint.yml; sourceTree = "<group>"; };
 		59CBA8222939C7FD0037E7B4 /* .swiftlint_example_test.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .swiftlint_example_test.yml; path = ../.swiftlint_example_test.yml; sourceTree = "<group>"; };
-		59CBA8232939C7FD0037E7B4 /* GBPeerJs.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = GBPeerJs.podspec; path = ../GBPeerJs.podspec; sourceTree = "<group>"; };
 		59CBA8242939C7FD0037E7B4 /* Script */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Script; path = ../Script; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -28,11 +23,6 @@
 				59CBA81E2939C7FD0037E7B4 /* .swiftlint_test.yml */,
 				59CBA81F2939C7FD0037E7B4 /* .swiftlint_example.yml */,
 				59CBA8222939C7FD0037E7B4 /* .swiftlint_example_test.yml */,
-				59CBA8202939C7FD0037E7B4 /* Podfile */,
-				59C6046F2946B931000468E8 /* Podfile.lock */,
-				59CBA81D2939C7FD0037E7B4 /* Gemfile */,
-				59C6046A2946B777000468E8 /* Gemfile.lock */,
-				59CBA8232939C7FD0037E7B4 /* GBPeerJs.podspec */,
 				59C604692946B677000468E8 /* Patch */,
 				59CBA8242939C7FD0037E7B4 /* Script */,
 			);

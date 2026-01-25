@@ -1,0 +1,94 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXFileReference section */
+		59C604692946B677000468E8 /* Patch */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Patch; path = ../Patch; sourceTree = "<group>"; };
+		59C6046A2946B777000468E8 /* Gemfile.lock */ = {isa = PBXFileReference; lastKnownFileType = text; name = Gemfile.lock; path = ../Gemfile.lock; sourceTree = "<group>"; };
+		59C6046F2946B931000468E8 /* Podfile.lock */ = {isa = PBXFileReference; lastKnownFileType = text; name = Podfile.lock; path = ../Podfile.lock; sourceTree = "<group>"; };
+		59CBA81D2939C7FD0037E7B4 /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Gemfile; path = ../Gemfile; sourceTree = "<group>"; };
+		59CBA81E2939C7FD0037E7B4 /* .swiftlint_test.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .swiftlint_test.yml; path = ../.swiftlint_test.yml; sourceTree = "<group>"; };
+		59CBA81F2939C7FD0037E7B4 /* .swiftlint_example.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .swiftlint_example.yml; path = ../.swiftlint_example.yml; sourceTree = "<group>"; };
+		59CBA8202939C7FD0037E7B4 /* Podfile */ = {isa = PBXFileReference; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		59CBA8212939C7FD0037E7B4 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .swiftlint.yml; path = ../.swiftlint.yml; sourceTree = "<group>"; };
+		59CBA8222939C7FD0037E7B4 /* .swiftlint_example_test.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .swiftlint_example_test.yml; path = ../.swiftlint_example_test.yml; sourceTree = "<group>"; };
+		59CBA8232939C7FD0037E7B4 /* GBPeerJs.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = GBPeerJs.podspec; path = ../GBPeerJs.podspec; sourceTree = "<group>"; };
+		59CBA8242939C7FD0037E7B4 /* Script */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Script; path = ../Script; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXGroup section */
+		59CBA8162939C7CB0037E7B4 = {
+			isa = PBXGroup;
+			children = (
+				59CBA8212939C7FD0037E7B4 /* .swiftlint.yml */,
+				59CBA81E2939C7FD0037E7B4 /* .swiftlint_test.yml */,
+				59CBA81F2939C7FD0037E7B4 /* .swiftlint_example.yml */,
+				59CBA8222939C7FD0037E7B4 /* .swiftlint_example_test.yml */,
+				59CBA8202939C7FD0037E7B4 /* Podfile */,
+				59C6046F2946B931000468E8 /* Podfile.lock */,
+				59CBA81D2939C7FD0037E7B4 /* Gemfile */,
+				59C6046A2946B777000468E8 /* Gemfile.lock */,
+				59CBA8232939C7FD0037E7B4 /* GBPeerJs.podspec */,
+				59C604692946B677000468E8 /* Patch */,
+				59CBA8242939C7FD0037E7B4 /* Script */,
+			);
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXProject section */
+		59CBA8172939C7CB0037E7B4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastUpgradeCheck = 1410;
+			};
+			buildConfigurationList = 59CBA81A2939C7CB0037E7B4 /* Build configuration list for PBXProject "Properties" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 59CBA8162939C7CB0037E7B4;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+			);
+		};
+/* End PBXProject section */
+
+/* Begin XCBuildConfiguration section */
+		59CBA81B2939C7CB0037E7B4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		59CBA81C2939C7CB0037E7B4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		59CBA81A2939C7CB0037E7B4 /* Build configuration list for PBXProject "Properties" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59CBA81B2939C7CB0037E7B4 /* Debug */,
+				59CBA81C2939C7CB0037E7B4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 59CBA8172939C7CB0037E7B4 /* Project object */;
+}

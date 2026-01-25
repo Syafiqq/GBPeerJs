@@ -76,8 +76,6 @@ public class GBPeerMediaConnection: GBPeerConnection {
                     )
                     .disposed(by: classBag)
         }
-
-        trackLifetime()
     }
 
     public func answer(stream: GBPeerMediaStream) {
@@ -321,13 +319,5 @@ extension GBPeerMediaConnection: IConnection {
 
     func handleMessage(message: [String: Any]) {
         doHandleMessage(message: message)
-    }
-}
-
-import LifetimeTracker
-
-extension GBPeerMediaConnection: LifetimeTrackable {
-    public class var lifetimeConfiguration: LifetimeConfiguration {
-        LifetimeConfiguration(maxCount: 1)
     }
 }

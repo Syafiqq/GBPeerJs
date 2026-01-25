@@ -1,6 +1,7 @@
 Pod::Spec.new do |s|
   s.name                    = "GBPeerJs"
-  s.version                 = "1.4.7"
+  s.version                 = "2.0.4"
+#  s.peer_js_version         = "1.4.7"
   s.summary                 = "Summary"
   s.description             = <<-DESC
 PeerJs Swift port
@@ -18,9 +19,8 @@ PeerJs Swift port
 
   s.swift_version = '5.6'
 
-  s.dependency 'LanguageManager-iOS', '~> 1.2.6-beta.2'
+  s.dependency 'LanguageManager-iOS', '~> 1.3.1-beta.1'
   s.dependency 'WebRTC-SDK', '= 129.6668.01-beta.1'
   s.dependency 'RxSwift', '~> 6'
   s.dependency 'Starscream', '~> 4'
-  s.dependency 'LifetimeTracker', '= 1.7.1'
 end

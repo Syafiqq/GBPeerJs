@@ -12,7 +12,6 @@
 		59CBA81F2939C7FD0037E7B4 /* .swiftlint_example.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .swiftlint_example.yml; path = ../.swiftlint_example.yml; sourceTree = "<group>"; };
 		59CBA8212939C7FD0037E7B4 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .swiftlint.yml; path = ../.swiftlint.yml; sourceTree = "<group>"; };
 		59CBA8222939C7FD0037E7B4 /* .swiftlint_example_test.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; name = .swiftlint_example_test.yml; path = ../.swiftlint_example_test.yml; sourceTree = "<group>"; };
-		59CBA8232939C7FD0037E7B4 /* GBPeerJs.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; name = GBPeerJs.podspec; path = ../GBPeerJs.podspec; sourceTree = "<group>"; };
 		59CBA8242939C7FD0037E7B4 /* Script */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Script; path = ../Script; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -24,7 +23,6 @@
 				59CBA81E2939C7FD0037E7B4 /* .swiftlint_test.yml */,
 				59CBA81F2939C7FD0037E7B4 /* .swiftlint_example.yml */,
 				59CBA8222939C7FD0037E7B4 /* .swiftlint_example_test.yml */,
-				59CBA8232939C7FD0037E7B4 /* GBPeerJs.podspec */,
 				59C604692946B677000468E8 /* Patch */,
 				59CBA8242939C7FD0037E7B4 /* Script */,
 			);
